@@ -1,7 +1,19 @@
 'use strict';
 
-const $ = (s, e = document) => e.querySelector(s);
-const $$ = (s, e = document) => Array.from(e.querySelectorAll(s));
+const $ = (s, e = document) => (e && e.querySelector ? e.querySelector(s) : null);
+const $$ = (s, e = document) => (e && e.querySelectorAll ? Array.from(e.querySelectorAll(s)) : []);
+
+/**
+ * on(selector, event, handler [, root])
+ * Safe addEventListener helper – silently skips if element not found.
+ * Prevents "Cannot read properties of null (reading 'addEventListener')".
+ */
+const on = (selector, event, handler, root = document) => {
+  const el = typeof selector === 'string' ? $(selector, root) : selector;
+  if (el) el.addEventListener(event, handler);
+  return el;
+};
+window.on = on;
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const num = v => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
 const r2 = x => Math.round((x + Number.EPSILON) * 100) / 100;

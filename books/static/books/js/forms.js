@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 if (typeof window !== 'undefined') {
   try {
@@ -369,7 +369,7 @@ const Modal = (() => {
 
     const el = document.createElement('div');
     el.className = 'mo';
-    el.innerHTML = `<div class="md ${wide ? 'wide' : ''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="mh"><h2>${esc(title)}</h2><div style="display:flex;align-items:center;gap:10px;margin-left:auto;">${headerActions || ''}<button type="button" class="x" data-close aria-label="Close">✕</button></div></div><div class="mb">${body}</div>${footer ? `<div class="mf">${footer}</div>` : ''}</div>`;
+    el.innerHTML = `<div class="md ${wide ? 'wide' : ''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="mh"><h2>${esc(title)}</h2><div style="display:flex;align-items:center;gap:10px;margin-left:auto;">${headerActions || ''}<button type="button" class="x" data-close aria-label="Close">âœ•</button></div></div><div class="mb">${body}</div>${footer ? `<div class="mf">${footer}</div>` : ''}</div>`;
     $('#modal-root').appendChild(el);
     const m = { el, body: $('.mb', el), beforeClose: null, prev: document.activeElement, onScreen: false, closed: false };
     m.close = () => {
@@ -443,8 +443,8 @@ function confirmBox({ title, message, okText = 'Confirm', danger = false }) {
 
       footer: `<button class="btn" type="button" data-close>Cancel</button><button class="btn ${danger ? 'd' : 'p'}" type="button" data-ok>${esc(okText)}</button>`,
     });
-    $('[data-ok]', m.el).addEventListener('click', () => { fin(true); m.close(); });
-    $('[data-ok]', m.el).focus();
+    const okBtn = $('[data-ok]', m.el);
+    if (okBtn) { okBtn.addEventListener('click', () => { fin(true); m.close(); }); okBtn.focus(); }
   });
 }
 
@@ -468,25 +468,25 @@ function fld(o) {
     };
 
     if (n === 'customer' || n === 'customer_id' || l.includes('customer')) {
-      addOptionIfNotPresent('__new_customer__', '+ Add New Customer…');
+      addOptionIfNotPresent('__new_customer__', '+ Add New Customerâ€¦');
     } else if (n === 'vendor' || n === 'vendor_id' || l.includes('vendor')) {
-      addOptionIfNotPresent('__new_vendor__', '+ Add New Vendor…');
+      addOptionIfNotPresent('__new_vendor__', '+ Add New Vendorâ€¦');
     } else if (n === 'item' || n === 'item_id' || l.includes('item') || l.includes('product')) {
-      addOptionIfNotPresent('__new_item__', '+ Add New Item…');
+      addOptionIfNotPresent('__new_item__', '+ Add New Itemâ€¦');
     } else if (n === 'salesperson' || n === 'salesperson_id' || l.includes('salesperson') || l.includes('sales person')) {
-      addOptionIfNotPresent('__new_salesperson__', '+ Add New Salesperson…');
+      addOptionIfNotPresent('__new_salesperson__', '+ Add New Salespersonâ€¦');
     } else if (n.includes('warehouse') || l.includes('warehouse')) {
-      addOptionIfNotPresent('__new_warehouse__', '+ Add New Warehouse…');
+      addOptionIfNotPresent('__new_warehouse__', '+ Add New Warehouseâ€¦');
     } else if (n.includes('employee') || l.includes('employee')) {
-      addOptionIfNotPresent('__new_employee__', '+ Add New Employee…');
+      addOptionIfNotPresent('__new_employee__', '+ Add New Employeeâ€¦');
     } else if (n.includes('category') || l.includes('category')) {
-      addOptionIfNotPresent('__new_category__', '+ Add New Category…');
+      addOptionIfNotPresent('__new_category__', '+ Add New Categoryâ€¦');
     } else if (n.includes('price') || l.includes('price list')) {
-      addOptionIfNotPresent('__new_pricelist__', '+ Add New Price List…');
+      addOptionIfNotPresent('__new_pricelist__', '+ Add New Price Listâ€¦');
     } else if (n.includes('account') || l.includes('account')) {
-      addOptionIfNotPresent('__new_account__', '+ Add New Account…');
+      addOptionIfNotPresent('__new_account__', '+ Add New Accountâ€¦');
     } else if (n.includes('project') || l.includes('project')) {
-      addOptionIfNotPresent('__new_project__', '+ Add New Project…');
+      addOptionIfNotPresent('__new_project__', '+ Add New Projectâ€¦');
     }
     ctl = `<select class="in" id="${id}" name="${o.name}"${req} ${at}>${opts(optionsList, v)}</select>`;
   }
@@ -689,7 +689,7 @@ const TdsEngine = {
           <option value="10" ${lRate === 10 ? 'selected' : ''}>10% (194J/I)</option>
           <option value="20" ${lRate === 20 ? 'selected' : ''}>20% (206AA)</option>
         </select>
-        <div class="l-tds-amt" style="font-size:11px;color:#dc2626;text-align:right;margin-top:2px;font-weight:600;display:${lRate > 0 && isLine ? 'block' : 'none'};">- ₹0.00</div>
+        <div class="l-tds-amt" style="font-size:11px;color:#dc2626;text-align:right;margin-top:2px;font-weight:600;display:${lRate > 0 && isLine ? 'block' : 'none'};">- â‚¹0.00</div>
       </td>
     `;
   },
@@ -1000,7 +1000,7 @@ async function handleQuickCreateSelect(selectEl, customCallback, customCancelCal
 }
 window.handleQuickCreateSelect = handleQuickCreateSelect;
 
-function setupSearchableSelect(selectEl, { placeholder = 'Search or select…', onNew = null } = {}) {
+function setupSearchableSelect(selectEl, { placeholder = 'Search or selectâ€¦', onNew = null } = {}) {
   if (!selectEl || selectEl._searchableInit) return;
   selectEl._searchableInit = true;
 
@@ -1018,7 +1018,7 @@ function setupSearchableSelect(selectEl, { placeholder = 'Search or select…', 
   input.style.cssText = 'width:100%;height:36px;padding-right:28px;cursor:pointer;';
 
   const arrow = document.createElement('span');
-  arrow.innerHTML = '▾';
+  arrow.innerHTML = 'â–¾';
   arrow.style.cssText = 'position:absolute;right:10px;pointer-events:none;color:var(--tx-muted);font-size:12px;';
 
   const menu = document.createElement('div');
@@ -1098,7 +1098,7 @@ function setupSearchableSelect(selectEl, { placeholder = 'Search or select…', 
 
       const metaPhone = opt.dataset?.phone || '';
       const metaEmail = opt.dataset?.email || '';
-      const meta = [metaPhone, metaEmail].filter(Boolean).join(' · ');
+      const meta = [metaPhone, metaEmail].filter(Boolean).join(' Â· ');
 
       if (meta) {
         item.innerHTML = `<div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(opt.text)}</div><div style="font-size:11px;color:var(--tx-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(meta)}</div>`;
@@ -1133,7 +1133,7 @@ function setupSearchableSelect(selectEl, { placeholder = 'Search or select…', 
     const newOpt = optsList.find(o => o.value.startsWith('__new_') || o.value === '__add_new__' || (o.text && o.text.toLowerCase().includes('+ add new')));
     const addAction = document.createElement('div');
     addAction.style.cssText = 'padding:8px 12px;font-size:12.5px;font-weight:600;color:var(--accent, #2563eb);cursor:pointer;background:var(--surface-glass-subtle, #f8fafc);border-top:1px solid var(--bd);display:flex;align-items:center;gap:6px;';
-    addAction.innerHTML = `<i class="fa-solid fa-plus" style="font-size:11px;"></i> ${newOpt ? esc(newOpt.text) : '+ Add New…'}`;
+    addAction.innerHTML = `<i class="fa-solid fa-plus" style="font-size:11px;"></i> ${newOpt ? esc(newOpt.text) : '+ Add Newâ€¦'}`;
     addAction.addEventListener('mousedown', e => {
       e.preventDefault();
       closeMenu();
@@ -1366,22 +1366,22 @@ const GST_TREATMENT_OPTIONS_VENDOR = [
 
 const LANGUAGE_OPTIONS = [
   ['English', 'English'],
-  ['Hindi', 'Hindi (हिंदी)'],
-  ['Tamil', 'Tamil (தமிழ்)'],
-  ['Malayalam', 'Malayalam (മലയാളം)'],
-  ['Kannada', 'Kannada (ಕನ್ನಡ)'],
-  ['Telugu', 'Telugu (తెలుగు)'],
-  ['Marathi', 'Marathi (मराठी)'],
-  ['Gujarati', 'Gujarati (ગુજરાતી)'],
-  ['Bengali', 'Bengali (বাংলা)']
+  ['Hindi', 'Hindi (à¤¹à¤¿à¤‚à¤¦à¥€)'],
+  ['Tamil', 'Tamil (à®¤à®®à®¿à®´à¯)'],
+  ['Malayalam', 'Malayalam (à´®à´²à´¯à´¾à´³à´‚)'],
+  ['Kannada', 'Kannada (à²•à²¨à³à²¨à²¡)'],
+  ['Telugu', 'Telugu (à°¤à±†à°²à±à°—à±)'],
+  ['Marathi', 'Marathi (à¤®à¤°à¤¾à¤ à¥€)'],
+  ['Gujarati', 'Gujarati (àª—à«àªœàª°àª¾àª¤à«€)'],
+  ['Bengali', 'Bengali (à¦¬à¦¾à¦‚à¦²à¦¾)']
 ];
 
 const CURRENCY_OPTIONS = [
-  ['INR', 'INR - Indian Rupee (₹)'],
+  ['INR', 'INR - Indian Rupee (â‚¹)'],
   ['USD', 'USD - US Dollar ($)'],
-  ['EUR', 'EUR - Euro (€)'],
-  ['GBP', 'GBP - British Pound (£)'],
-  ['AED', 'AED - UAE Dirham (د.إ)'],
+  ['EUR', 'EUR - Euro (â‚¬)'],
+  ['GBP', 'GBP - British Pound (Â£)'],
+  ['AED', 'AED - UAE Dirham (Ø¯.Ø¥)'],
   ['SGD', 'SGD - Singapore Dollar (S$)']
 ];
 
@@ -1401,7 +1401,7 @@ const TDS_OPTIONS = [
   ['194J', '194J - Fees for Professional or Technical Services (2% / 10%)'],
   ['194I_LAND', '194I - Rent on Land, Building or Furniture (10%)'],
   ['194I_PLANT', '194I - Rent on Plant, Machinery or Equipment (2%)'],
-  ['194Q', '194Q - Purchase of Goods exceeding ₹50 Lakhs (0.1%)'],
+  ['194Q', '194Q - Purchase of Goods exceeding â‚¹50 Lakhs (0.1%)'],
   ['194H', '194H - Commission or Brokerage (5%)']
 ];
 
@@ -1469,7 +1469,7 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
       </div>
       <ul style="font-size:13px;line-height:1.7;color:#334155;padding-left:20px;margin-bottom:16px;">
         <li><b>B2B Invoicing:</b> Requires the recipient's verified 15-digit GSTIN, legal name, billing and shipping address, Place of Supply, HSN/SAC code, and distinct line-item tax breakdown (CGST+SGST or IGST). It acts as the legal basis for the buyer to claim Input Tax Credit (ITC) under Section 16.</li>
-        <li><b>B2C Invoicing:</b> Issued to end consumers. Can be tax-inclusive or tax-exclusive. If the value exceeds ₹50,000 for inter-state supplies, customer name, address, and state must be recorded.</li>
+        <li><b>B2C Invoicing:</b> Issued to end consumers. Can be tax-inclusive or tax-exclusive. If the value exceeds â‚¹50,000 for inter-state supplies, customer name, address, and state must be recorded.</li>
         <li><b>E-Invoicing & Compliance:</b> Businesses meeting notified turnover thresholds must upload B2B invoices to the Invoice Registration Portal (IRP) to generate an IRN and QR code before issuing.</li>
       </ul>
     `,
@@ -1631,9 +1631,9 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
               <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:12px;">
                 <div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">Example (GST 18%):</div>
                 <table style="width:100%;border-collapse:collapse;font-size:12px;">
-                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">Item Price:</td><td style="padding:4px 0;text-align:right;font-weight:600;">₹1,000.00</td></tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">GST (18%):</td><td style="padding:4px 0;text-align:right;font-weight:600;color:#2563eb;">₹180.00</td></tr>
-                  <tr style="font-weight:700;color:#0f172a;"><td style="padding:6px 0;">Final Total:</td><td style="padding:6px 0;text-align:right;font-size:13px;color:#16a34a;">₹1,180.00</td></tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">Item Price:</td><td style="padding:4px 0;text-align:right;font-weight:600;">â‚¹1,000.00</td></tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">GST (18%):</td><td style="padding:4px 0;text-align:right;font-weight:600;color:#2563eb;">â‚¹180.00</td></tr>
+                  <tr style="font-weight:700;color:#0f172a;"><td style="padding:6px 0;">Final Total:</td><td style="padding:6px 0;text-align:right;font-size:13px;color:#16a34a;">â‚¹1,180.00</td></tr>
                 </table>
               </div>
 
@@ -1659,7 +1659,7 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
                 <div style="display:flex;align-items:center;gap:10px;">
                   <select class="in" id="so-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                     <option value="">Search or type customer name...</option>
-                    <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+                    <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
                     ${parties.map(p => `<option value="${p.id}" ${String(soCustomer) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
                   </select>
                   <button type="button" class="btn p" id="btn-so-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -1683,14 +1683,14 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
               <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:12px;">
                 <div style="font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:6px;">Example (GST 18%):</div>
                 <table style="width:100%;border-collapse:collapse;font-size:12px;">
-                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">Entered / Final Price:</td><td style="padding:4px 0;text-align:right;font-weight:600;">₹1,000.00</td></tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">Taxable Value (Base):</td><td style="padding:4px 0;text-align:right;font-weight:600;">₹847.46</td></tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">GST Included (18%):</td><td style="padding:4px 0;text-align:right;font-weight:600;color:#2563eb;">₹152.54</td></tr>
-                  <tr style="font-weight:700;color:#0f172a;"><td style="padding:6px 0;">Final Total:</td><td style="padding:6px 0;text-align:right;font-size:13px;color:#16a34a;">₹1,000.00</td></tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">Entered / Final Price:</td><td style="padding:4px 0;text-align:right;font-weight:600;">â‚¹1,000.00</td></tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">Taxable Value (Base):</td><td style="padding:4px 0;text-align:right;font-weight:600;">â‚¹847.46</td></tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:4px 0;color:#475569;">GST Included (18%):</td><td style="padding:4px 0;text-align:right;font-weight:600;color:#2563eb;">â‚¹152.54</td></tr>
+                  <tr style="font-weight:700;color:#0f172a;"><td style="padding:6px 0;">Final Total:</td><td style="padding:6px 0;text-align:right;font-size:13px;color:#16a34a;">â‚¹1,000.00</td></tr>
                 </table>
                 <div style="font-size:11px;color:#64748b;margin-top:6px;padding-top:6px;border-top:1px dashed #e2e8f0;">
-                  <code>Taxable Value = Total Price ÷ (1 + GST Rate) = ₹1,000 ÷ 1.18 = ₹847.46</code><br>
-                  <code>GST Amount = Total Price − Taxable Value = ₹1,000 − ₹847.46 = ₹152.54</code>
+                  <code>Taxable Value = Total Price Ã· (1 + GST Rate) = â‚¹1,000 Ã· 1.18 = â‚¹847.46</code><br>
+                  <code>GST Amount = Total Price âˆ’ Taxable Value = â‚¹1,000 âˆ’ â‚¹847.46 = â‚¹152.54</code>
                 </div>
               </div>
 
@@ -1744,7 +1744,7 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
             <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:18px;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                 <span style="background:#dcfce7;color:#15803d;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;">Category 1</span>
-                <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0;">B2B – Business to Business</h3>
+                <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0;">B2B â€“ Business to Business</h3>
               </div>
               <p style="margin:0 0 10px 0;color:#475569;font-size:12.5px;">
                 B2B refers to transactions between two registered or business entities.
@@ -1761,23 +1761,23 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
                   <li><b>Itemized Tax Breakdown:</b> Explicit lines for Taxable Value, CGST, SGST, IGST, and applicable Cess.</li>
                   <li><b>Reverse Charge Mechanism (RCM):</b> Explicit indication of whether tax is payable on reverse charge.</li>
                   <li><b>Credit & Debit Notes:</b> Formal Section 34 vouchers adjusting original invoice value or tax.</li>
-                  <li><b>E-Invoicing & E-Way Bills:</b> Mandatory IRN / QR code generation on IRP for eligible turnover; E-way bills for consignments &gt; ₹50,000.</li>
+                  <li><b>E-Invoicing & E-Way Bills:</b> Mandatory IRN / QR code generation on IRP for eligible turnover; E-way bills for consignments &gt; â‚¹50,000.</li>
                 </ul>
               </div>
 
               <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:12px;">
                 <div style="font-size:11.5px;font-weight:700;color:#1e3a8a;margin-bottom:6px;">Practical B2B Examples:</div>
                 <div style="font-size:11.5px;color:#475569;margin-bottom:8px;">
-                  <b>1. Intra-State (Kerala Supplier → Kerala Customer):</b><br>
-                  Goods worth ₹10,000 (before GST) at 18%:<br>
-                  Taxable Value: ₹10,000.00 · CGST (9%): ₹900.00 · SGST (9%): ₹900.00<br>
-                  <b>Total Invoice: ₹11,800.00</b>
+                  <b>1. Intra-State (Kerala Supplier â†’ Kerala Customer):</b><br>
+                  Goods worth â‚¹10,000 (before GST) at 18%:<br>
+                  Taxable Value: â‚¹10,000.00 Â· CGST (9%): â‚¹900.00 Â· SGST (9%): â‚¹900.00<br>
+                  <b>Total Invoice: â‚¹11,800.00</b>
                 </div>
                 <div style="font-size:11.5px;color:#475569;">
-                  <b>2. Inter-State (Kerala Supplier → Karnataka Customer):</b><br>
-                  Goods worth ₹10,000 (before GST) at 18%:<br>
-                  Taxable Value: ₹10,000.00 · IGST (18%): ₹1,800.00<br>
-                  <b>Total Invoice: ₹11,800.00</b>
+                  <b>2. Inter-State (Kerala Supplier â†’ Karnataka Customer):</b><br>
+                  Goods worth â‚¹10,000 (before GST) at 18%:<br>
+                  Taxable Value: â‚¹10,000.00 Â· IGST (18%): â‚¹1,800.00<br>
+                  <b>Total Invoice: â‚¹11,800.00</b>
                 </div>
               </div>
             </div>
@@ -1786,7 +1786,7 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
             <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:18px;">
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                 <span style="background:#f3e8ff;color:#7e22ce;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;">Category 2</span>
-                <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0;">B2C – Business to Consumer</h3>
+                <h3 style="font-size:15px;font-weight:700;color:#0f172a;margin:0;">B2C â€“ Business to Consumer</h3>
               </div>
               <p style="margin:0 0 10px 0;color:#475569;font-size:12.5px;">
                 B2C refers to transactions where a business sells goods or services to an end consumer.
@@ -1795,14 +1795,14 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
               <div style="font-size:12px;color:#334155;margin-bottom:12px;">
                 <b style="color:#0f172a;">Essential B2C Invoicing Requirements:</b>
                 <ul style="margin:4px 0 0 0;padding-left:18px;color:#475569;line-height:1.5;">
-                  <li><b>Consumer Details:</b> Name & contact recorded (mandatory if invoice value exceeds ₹50,000).</li>
-                  <li><b>Billing Address:</b> Mandatory to record address if invoice value exceeds ₹50,000.</li>
+                  <li><b>Consumer Details:</b> Name & contact recorded (mandatory if invoice value exceeds â‚¹50,000).</li>
+                  <li><b>Billing Address:</b> Mandatory to record address if invoice value exceeds â‚¹50,000.</li>
                   <li><b>Place of Supply:</b> Established by location of recipient or delivery destination.</li>
                   <li><b>Intra vs Inter-State:</b> CGST+SGST for local consumer sales; IGST for out-of-state consumer sales.</li>
                   <li><b>Tax-Inclusive / Exclusive:</b> Retail environments commonly quote final consumer prices (MRP).</li>
                   <li><b>HSN / SAC:</b> Disclosed at line level or invoice summary level.</li>
                   <li><b>Invoice vs Bill of Supply:</b> Tax invoice issued for taxable goods; Bill of Supply for exempt goods or composition dealers.</li>
-                  <li><b>Consumer Compliance:</b> Reported in Table 7 (B2C Others) or Table 5 (B2C Large &gt; ₹2.5 Lakhs inter-state) of GSTR-1.</li>
+                  <li><b>Consumer Compliance:</b> Reported in Table 7 (B2C Others) or Table 5 (B2C Large &gt; â‚¹2.5 Lakhs inter-state) of GSTR-1.</li>
                 </ul>
               </div>
 
@@ -1810,10 +1810,10 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
                 <div style="font-size:11.5px;font-weight:700;color:#15803d;margin-bottom:6px;">Practical B2C Example:</div>
                 <div style="font-size:11.5px;color:#475569;">
                   <b>Kerala Retail Shop Sale (Tax Inclusive at 18%):</b><br>
-                  Final Selling Price: ₹1,000.00<br>
-                  Taxable Value: ₹847.46<br>
-                  CGST (9%): ₹76.27 · SGST (9%): ₹76.27 (Total GST: ₹152.54)<br>
-                  <b>Final Customer Payment: ₹1,000.00</b>
+                  Final Selling Price: â‚¹1,000.00<br>
+                  Taxable Value: â‚¹847.46<br>
+                  CGST (9%): â‚¹76.27 Â· SGST (9%): â‚¹76.27 (Total GST: â‚¹152.54)<br>
+                  <b>Final Customer Payment: â‚¹1,000.00</b>
                 </div>
               </div>
             </div>
@@ -1821,7 +1821,7 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
 
           <!-- B2B vs B2C Comparison Table -->
           <div>
-            <h4 style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:10px;">B2B and B2C – Important Differences</h4>
+            <h4 style="font-size:14px;font-weight:700;color:#0f172a;margin-bottom:10px;">B2B and B2C â€“ Important Differences</h4>
             <div style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;">
               <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
                 <thead style="background:#f1f5f9;border-bottom:2px solid #cbd5e1;">
@@ -1887,8 +1887,8 @@ function openGstPricingExplainerModal(contextKind = 'invoices') {
           <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:14px;font-size:12px;color:#334155;">
             <b style="color:#0f172a;">Statutory Place of Supply & Rounding Rules:</b>
             <ul style="margin:4px 0 0 0;padding-left:18px;color:#475569;line-height:1.5;">
-              <li><b>Intra-State Supply:</b> Supplier State == Place of Supply State → Tax divided equally into <b>CGST</b> (50%) and <b>SGST/UTGST</b> (50%).</li>
-              <li><b>Inter-State Supply:</b> Supplier State != Place of Supply State → Tax collected as <b>IGST</b> (100%).</li>
+              <li><b>Intra-State Supply:</b> Supplier State == Place of Supply State â†’ Tax divided equally into <b>CGST</b> (50%) and <b>SGST/UTGST</b> (50%).</li>
+              <li><b>Inter-State Supply:</b> Supplier State != Place of Supply State â†’ Tax collected as <b>IGST</b> (100%).</li>
               <li><b>Section 170 Rounding:</b> Under Section 170 of the Central Goods and Services Tax (CGST) Act, 2017, the final amount of tax, interest, penalty, fine, or any other sum payable is rounded off to the nearest whole rupee (fractions of 50 paise or more rounded up, less than 50 paise disregarded).</li>
             </ul>
           </div>
@@ -1942,7 +1942,7 @@ function renderDiscountCell(l = {}, extraClasses = '') {
   const dVal = isAmt
     ? (l.discount_amount != null ? l.discount_amount : (l.discount || 0))
     : (l.discount_percent != null ? l.discount_percent : (l.discount || 0));
-  const sym = isAmt ? '₹' : '%';
+  const sym = isAmt ? 'â‚¹' : '%';
   const extraDiscCls = extraClasses ? ' ' + extraClasses + '-discount' : '';
   const extraTypeCls = extraClasses ? ' ' + extraClasses + '-discount-type' : '';
   return `
@@ -1951,13 +1951,13 @@ function renderDiscountCell(l = {}, extraClasses = '') {
         <input class="in l-disc${extraDiscCls}" type="number" step="0.01" min="0" value="${esc(dVal)}" style="text-align:right;flex:1;min-width:45px;height:34px;box-sizing:border-box;" aria-label="Discount">
         <input type="hidden" class="l-disc-type${extraTypeCls}" value="${dType}">
         <div class="disc-dropdown-container" style="position:relative;display:inline-block;">
-          <button type="button" class="btn-disc-toggle" style="height:34px;min-width:42px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;gap:3px;border:1px solid #cbd5e1;background:#fff;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;color:#0f172a;" title="Switch discount type (% or ₹)">
+          <button type="button" class="btn-disc-toggle" style="height:34px;min-width:42px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;gap:3px;border:1px solid #cbd5e1;background:#fff;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;color:#0f172a;" title="Switch discount type (% or â‚¹)">
             <span class="disc-current-symbol">${sym}</span>
-            <span style="font-size:10px;color:#475569;margin-left:2px;">▾</span>
+            <span style="font-size:10px;color:#475569;margin-left:2px;">â–¾</span>
           </button>
           <div class="disc-dropdown-menu" style="display:none;position:absolute;top:calc(100% + 4px);right:0;background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.12);padding:4px;z-index:9999;min-width:48px;flex-direction:column;gap:3px;box-sizing:border-box;">
             <button type="button" class="disc-opt-btn ${!isAmt ? 'active' : ''}" data-type="percent" style="width:100%;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:${!isAmt ? '#2563eb' : 'transparent'};color:${!isAmt ? '#ffffff' : '#334155'};border-radius:6px;font-size:13.5px;font-weight:600;cursor:pointer;">%</button>
-            <button type="button" class="disc-opt-btn ${isAmt ? 'active' : ''}" data-type="amount" style="width:100%;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:${isAmt ? '#2563eb' : 'transparent'};color:${isAmt ? '#ffffff' : '#334155'};border-radius:6px;font-size:13.5px;font-weight:600;cursor:pointer;">₹</button>
+            <button type="button" class="disc-opt-btn ${isAmt ? 'active' : ''}" data-type="amount" style="width:100%;height:32px;display:flex;align-items:center;justify-content:center;border:none;background:${isAmt ? '#2563eb' : 'transparent'};color:${isAmt ? '#ffffff' : '#334155'};border-radius:6px;font-size:13.5px;font-weight:600;cursor:pointer;">â‚¹</button>
           </div>
         </div>
       </div>
@@ -1966,7 +1966,7 @@ function renderDiscountCell(l = {}, extraClasses = '') {
 }
 window.renderDiscountCell = renderDiscountCell;
 
-// Global dropdown toggle & option selector for Discount cell (% or ₹)
+// Global dropdown toggle & option selector for Discount cell (% or â‚¹)
 document.addEventListener('click', e => {
   const toggleBtn = e.target.closest('.btn-disc-toggle');
   if (toggleBtn) {
@@ -2006,7 +2006,7 @@ document.addEventListener('click', e => {
         typeInp.value = newType;
       }
       if (symSpan) {
-        symSpan.textContent = newType === 'amount' ? '₹' : '%';
+        symSpan.textContent = newType === 'amount' ? 'â‚¹' : '%';
       }
 
       if (menu) {
@@ -2049,7 +2049,7 @@ function openSignatureModal(doc = {}, kind = 'invoices', onSigned = null) {
   const docTitle = isOrgSetting ? 'Company Default Signature' : `${doc.number ? doc.number : (kind || 'Document').replace('-', ' ').toUpperCase()} Signature`;
 
   const m = Modal.open({
-    title: `✍️ Digital Signature · ${docTitle}`,
+    title: `âœï¸ Digital Signature Â· ${docTitle}`,
     wide: true,
     body: `
       <div class="sig-modal-container" style="display:flex;flex-direction:column;gap:16px;">
@@ -2465,16 +2465,16 @@ async function partyForm(kind, id, onDone, onCancel) {
           <div class="gst-prefill-ctrls" id="gst_prefill_ctrls" style="display:none;gap:6px;align-items:center;margin-top:6px;">
             <input class="in gst-prefill-mini-in" id="gst_prefill_code" placeholder="15-digit GSTIN" maxlength="15" value="${esc(r.gstin || '')}" style="height:30px;font-size:12px;">
             <button type="button" class="btn p gst-prefill-mini-btn" id="btn_trigger_gst_prefill" style="height:30px;font-size:11.5px;padding:0 10px;">Fetch</button>
-            <button type="button" class="btn ic gst-prefill-mini-close" id="btn_close_gst_prefill" title="Close">×</button>
+            <button type="button" class="btn ic gst-prefill-mini-close" id="btn_close_gst_prefill" title="Close">Ã—</button>
           </div>
         </div>
 
         <div style="display:flex;align-items:center;gap:8px;">
           <button type="button" class="btn" id="btn_party_preload_demo" style="font-size:12px;display:inline-flex;align-items:center;gap:5px;height:32px;" title="Preload sample ${entityLabel} details">
-            <i class="fa-solid fa-bolt" style="color:var(--accent);"></i> <span>⚡ Quick Fill</span>
+            <i class="fa-solid fa-bolt" style="color:var(--accent);"></i> <span>âš¡ Quick Fill</span>
           </button>
           <button type="button" class="btn" id="btn_party_import_file_trigger" style="font-size:12px;display:inline-flex;align-items:center;gap:5px;height:32px;" title="Import data from Excel/CSV/JSON into this form">
-            <i class="fa-solid fa-file-import" style="color:#10b981;"></i> <span>📁 Load File Data</span>
+            <i class="fa-solid fa-file-import" style="color:#10b981;"></i> <span>ðŸ“ Load File Data</span>
           </button>
           <input type="file" id="party_file_quick_import" accept=".xlsx,.xls,.xlsm,.csv,.tsv,.txt,.json,text/csv,text/tab-separated-values,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="display:none;">
         </div>
@@ -2482,7 +2482,7 @@ async function partyForm(kind, id, onDone, onCancel) {
 
       ${isCust ? `
         <div class="zb-form-row">
-          <label class="zb-form-label">Customer Type <span class="zb-info-tip" title="Choose whether customer is a registered business or an individual consumer">ⓘ</span></label>
+          <label class="zb-form-label">Customer Type <span class="zb-info-tip" title="Choose whether customer is a registered business or an individual consumer">â“˜</span></label>
           <div class="zb-form-ctrl">
             <div style="display:flex;align-items:center;gap:20px;height:35px;">
               <label id="pill_type_business" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--tx);">
@@ -2500,7 +2500,7 @@ async function partyForm(kind, id, onDone, onCancel) {
       ` : ''}
 
       <div class="zb-form-row">
-        <label class="zb-form-label">Primary Contact <span class="zb-info-tip" title="Designated contact person for communications">ⓘ</span></label>
+        <label class="zb-form-label">Primary Contact <span class="zb-info-tip" title="Designated contact person for communications">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div style="display:flex;gap:8px;">
             <select class="in" id="primary_salutation" name="primary_salutation" style="width:140px;flex-shrink:0;">
@@ -2526,7 +2526,7 @@ async function partyForm(kind, id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label class="zb-form-label" for="party_code">${entityLabel} Code <span class="zb-info-tip" title="Unique organization-wise identifier (e.g. ABC/${isCust ? 'CUST' : 'VEND'}/26-27/000001)">ⓘ</span></label>
+        <label class="zb-form-label" for="party_code">${entityLabel} Code <span class="zb-info-tip" title="Unique organization-wise identifier (e.g. ABC/${isCust ? 'CUST' : 'VEND'}/26-27/000001)">â“˜</span></label>
         <div class="zb-form-ctrl">
           <input class="in" id="party_code" name="code" placeholder="Auto-generated (e.g. ABC/${isCust ? 'CUST' : 'VEND'}/26-27/000001)" value="${esc(r.code || '')}" style="max-width:320px;text-transform:uppercase;">
           <div class="hp" style="font-size:11px;color:var(--tx-muted);margin-top:2px;">Unique sequential code. Leave blank to auto-generate sequentially.</div>
@@ -2534,11 +2534,11 @@ async function partyForm(kind, id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label class="zb-form-label" for="name">${entityLabel} Display Name<span class="rq">*</span> <span class="zb-info-tip" title="Display name appears on invoices and transactions">ⓘ</span></label>
+        <label class="zb-form-label" for="name">${entityLabel} Display Name<span class="rq">*</span> <span class="zb-info-tip" title="Display name appears on invoices and transactions">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div style="position:relative;display:flex;align-items:center;width:100%;">
             <input class="in" id="name" name="name" required placeholder="Select or type to add" value="${esc(r.name || '')}" style="font-weight:600;padding-right:36px;width:100%;">
-            <button type="button" class="btn ic" id="btn_toggle_display_name_dropdown" title="Quick pick display name options" style="position:absolute;right:3px;top:3px;bottom:3px;width:30px;height:auto;border:none;background:transparent;cursor:pointer;opacity:0.8;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx-muted);">▼</button>
+            <button type="button" class="btn ic" id="btn_toggle_display_name_dropdown" title="Quick pick display name options" style="position:absolute;right:3px;top:3px;bottom:3px;width:30px;height:auto;border:none;background:transparent;cursor:pointer;opacity:0.8;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx-muted);">â–¼</button>
             <div class="display-name-dropdown" id="display_name_dropdown" style="display:none;"></div>
           </div>
           <div class="er" data-err="name"></div>
@@ -2546,10 +2546,10 @@ async function partyForm(kind, id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label class="zb-form-label" for="email">Email Address <span class="zb-info-tip" title="Primary billing & communication email">ⓘ</span></label>
+        <label class="zb-form-label" for="email">Email Address <span class="zb-info-tip" title="Primary billing & communication email">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div class="zb-input-icon-wrap">
-            <span class="zb-input-icon">✉</span>
+            <span class="zb-input-icon">âœ‰</span>
             <input class="in with-icon" id="email" name="email" type="email" placeholder="billing@company.com" value="${esc(r.email || '')}">
           </div>
           <div class="er" data-err="email"></div>
@@ -2557,15 +2557,15 @@ async function partyForm(kind, id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label class="zb-form-label">Phone <span class="zb-info-tip" title="Official work and mobile telephone numbers">ⓘ</span></label>
+        <label class="zb-form-label">Phone <span class="zb-info-tip" title="Official work and mobile telephone numbers">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div style="display:flex;gap:14px;align-items:center;">
             <div style="display:flex;flex:1;">
-              <span class="zb-input-prefix">+91 <small style="font-size:9px;margin-left:2px;opacity:0.75;">▼</small></span>
+              <span class="zb-input-prefix">+91 <small style="font-size:9px;margin-left:2px;opacity:0.75;">â–¼</small></span>
               <input class="in" id="phone" name="phone" type="tel" placeholder="Work Phone" value="${esc(r.phone || '')}">
             </div>
             <div style="display:flex;flex:1;">
-              <span class="zb-input-prefix">+91 <small style="font-size:9px;margin-left:2px;opacity:0.75;">▼</small></span>
+              <span class="zb-input-prefix">+91 <small style="font-size:9px;margin-left:2px;opacity:0.75;">â–¼</small></span>
               <input class="in" id="mobile" name="mobile" type="tel" placeholder="Mobile" value="${esc(r.mobile || '')}">
             </div>
           </div>
@@ -2576,7 +2576,7 @@ async function partyForm(kind, id, onDone, onCancel) {
 
       ${isCust ? `
         <div class="zb-form-row">
-          <label class="zb-form-label" for="customer_language">Customer Language <span class="zb-info-tip" title="Language used for PDF invoices and emails">ⓘ</span></label>
+          <label class="zb-form-label" for="customer_language">Customer Language <span class="zb-info-tip" title="Language used for PDF invoices and emails">â“˜</span></label>
           <div class="zb-form-ctrl">
             <select class="in" id="customer_language" name="customer_language">
               ${LANGUAGE_OPTIONS.map(([val, lbl]) => `<option value="${val}" ${r.customer_language === val ? 'selected' : ''}>${lbl}</option>`).join('')}
@@ -2789,7 +2789,7 @@ async function partyForm(kind, id, onDone, onCancel) {
               <div>
                 <div style="display:flex;justify-content:space-between;align-items:center;height:32px;margin-bottom:14px;border-bottom:1px solid var(--bd-glass);padding-bottom:6px;box-sizing:border-box;">
                   <h4 style="margin:0;font-size:13.5px;font-weight:700;color:var(--tx);">Shipping Address</h4>
-                  <button type="button" class="btn" id="btn_copy_billing_addr" style="font-size:11px;padding:2px 8px;height:24px;line-height:1;">📋 Copy billing address</button>
+                  <button type="button" class="btn" id="btn_copy_billing_addr" style="font-size:11px;padding:2px 8px;height:24px;line-height:1;">ðŸ“‹ Copy billing address</button>
                 </div>
                 <div class="zb-form-row"><label class="zb-form-label" style="width:120px;min-width:120px;" for="shipping_attention">Attention</label><div class="zb-form-ctrl"><input class="in" id="shipping_attention" name="shipping_attention" placeholder="Receiving / Logistics" value="${esc(r.shipping_attention || '')}"><div class="er" data-err="shipping_attention"></div></div></div>
                 <div class="zb-form-row align-top"><label class="zb-form-label" style="width:120px;min-width:120px;" for="shipping_address">Address Line</label><div class="zb-form-ctrl"><textarea class="in" id="shipping_address" name="shipping_address" rows="3" placeholder="Delivery street address">${esc(r.shipping_address || '')}</textarea><div class="er" data-err="shipping_address"></div></div></div>
@@ -2878,7 +2878,7 @@ async function partyForm(kind, id, onDone, onCancel) {
 
         <div class="party-tab-pane" id="tab_documents">
           <div class="doc-upload-box" id="doc_drop_zone">
-            <div style="font-size:26px;margin-bottom:4px;">📎</div>
+            <div style="font-size:26px;margin-bottom:4px;">ðŸ“Ž</div>
             <div style="font-weight:600;margin-bottom:2px;">Upload Attachments</div>
             <div class="sub" style="font-size:12px;color:var(--tx-muted);">You can upload a maximum of 10 files, 10MB each (PDF, PNG, JPG, DOCX, CSV)</div>
             <input type="file" id="party_file_input" multiple style="display:none;" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv">
@@ -3173,7 +3173,7 @@ async function partyForm(kind, id, onDone, onCancel) {
         }
         const btn = $('#btn_trigger_gst_prefill', modal.el);
         btn.disabled = true;
-        btn.textContent = 'Fetching…';
+        btn.textContent = 'Fetchingâ€¦';
         try {
           const res = await api('compliance/gstin-lookup/' + encodeURIComponent(gstinVal) + '/');
           $('#company', modal.el).value = res.company_name || res.legal_name || '';
@@ -3240,21 +3240,23 @@ async function partyForm(kind, id, onDone, onCancel) {
           prefillCtrls.style.display = 'none';
         });
       }
-      $('#gst_prefill_code', modal.el).addEventListener('keydown', e => {
+      on('#gst_prefill_code', 'keydown', e => {
         if (e.key === 'Enter') {
           e.preventDefault();
           doPrefill();
         }
-      });
+      }, modal.el);
 
-      $('#btn_trigger_gst_prefill', modal.el).addEventListener('click', doPrefill);
+      on('#btn_trigger_gst_prefill', 'click', doPrefill, modal.el);
 
-      $('#gstin', modal.el).addEventListener('input', e => {
-        $('#gst_prefill_code', modal.el).value = e.target.value;
-      });
-      $('#gst_prefill_code', modal.el).addEventListener('input', e => {
-        $('#gstin', modal.el).value = e.target.value;
-      });
+      on('#gstin', 'input', e => {
+        const gc = $('#gst_prefill_code', modal.el);
+        if (gc) gc.value = e.target.value;
+      }, modal.el);
+      on('#gst_prefill_code', 'input', e => {
+        const gi = $('#gstin', modal.el);
+        if (gi) gi.value = e.target.value;
+      }, modal.el);
 
       const btnDn = $('#btn_toggle_display_name_dropdown', modal.el);
       const dnMenu = $('#display_name_dropdown', modal.el);
@@ -3317,15 +3319,15 @@ async function partyForm(kind, id, onDone, onCancel) {
       }
 
       if (isCust) {
-        $('#btn_copy_billing_addr', modal.el).addEventListener('click', () => {
-          $('#shipping_attention', modal.el).value = $('#billing_attention', modal.el).value;
-          $('#shipping_address', modal.el).value = $('#billing_address', modal.el).value;
-          $('#shipping_city', modal.el).value = $('#billing_city', modal.el).value;
-          $('#shipping_state', modal.el).value = $('#billing_state', modal.el).value;
-          $('#shipping_pincode', modal.el).value = $('#billing_pincode', modal.el).value;
-          $('#shipping_phone', modal.el).value = $('#billing_phone', modal.el).value;
+        on('#btn_copy_billing_addr', 'click', () => {
+          const sa = $('#shipping_attention', modal.el); if (sa) sa.value = ($('#billing_attention', modal.el) || {}).value || '';
+          const sad = $('#shipping_address', modal.el); if (sad) sad.value = ($('#billing_address', modal.el) || {}).value || '';
+          const sc = $('#shipping_city', modal.el); if (sc) sc.value = ($('#billing_city', modal.el) || {}).value || '';
+          const ss = $('#shipping_state', modal.el); if (ss) ss.value = ($('#billing_state', modal.el) || {}).value || '';
+          const sp = $('#shipping_pincode', modal.el); if (sp) sp.value = ($('#billing_pincode', modal.el) || {}).value || '';
+          const sph = $('#shipping_phone', modal.el); if (sph) sph.value = ($('#billing_phone', modal.el) || {}).value || '';
           toast('Billing address copied to shipping address.', 'ok');
-        });
+        }, modal.el);
       }
 
       const contContainer = $('#contact_persons_container', modal.el);
@@ -3348,29 +3350,29 @@ async function partyForm(kind, id, onDone, onCancel) {
             <input class="in em-input" placeholder="Email" value="${esc(c.email || '')}">
             <input class="in ph-input" placeholder="Work Phone" value="${esc(c.phone || '')}">
             <input class="in mb-input" placeholder="Mobile" value="${esc(c.mobile || '')}">
-            <button type="button" class="btn d btn-del-contact" style="padding:4px 6px;">✕</button>
+            <button type="button" class="btn d btn-del-contact" style="padding:4px 6px;">âœ•</button>
           </div>
         `).join('');
 
         $$('.contact-row-card', contContainer).forEach(card => {
           const idx = Number(card.dataset.idx);
-          card.querySelector('.sal-input').addEventListener('change', e => { contactPersonsList[idx].salutation = e.target.value; });
-          card.querySelector('.fn-input').addEventListener('input', e => { contactPersonsList[idx].first_name = e.target.value; });
-          card.querySelector('.ln-input').addEventListener('input', e => { contactPersonsList[idx].last_name = e.target.value; });
-          card.querySelector('.em-input').addEventListener('input', e => { contactPersonsList[idx].email = e.target.value; });
-          card.querySelector('.ph-input').addEventListener('input', e => { contactPersonsList[idx].phone = e.target.value; });
-          card.querySelector('.mb-input').addEventListener('input', e => { contactPersonsList[idx].mobile = e.target.value; });
-          card.querySelector('.btn-del-contact').addEventListener('click', () => {
+          const salEl = card.querySelector('.sal-input'); if (salEl) salEl.addEventListener('change', e => { contactPersonsList[idx].salutation = e.target.value; });
+          const fnEl = card.querySelector('.fn-input'); if (fnEl) fnEl.addEventListener('input', e => { contactPersonsList[idx].first_name = e.target.value; });
+          const lnEl = card.querySelector('.ln-input'); if (lnEl) lnEl.addEventListener('input', e => { contactPersonsList[idx].last_name = e.target.value; });
+          const emEl = card.querySelector('.em-input'); if (emEl) emEl.addEventListener('input', e => { contactPersonsList[idx].email = e.target.value; });
+          const phEl = card.querySelector('.ph-input'); if (phEl) phEl.addEventListener('input', e => { contactPersonsList[idx].phone = e.target.value; });
+          const mbEl = card.querySelector('.mb-input'); if (mbEl) mbEl.addEventListener('input', e => { contactPersonsList[idx].mobile = e.target.value; });
+          const delEl = card.querySelector('.btn-del-contact'); if (delEl) delEl.addEventListener('click', () => {
             contactPersonsList.splice(idx, 1);
             renderContacts();
           });
         });
       };
 
-      $('#btn_add_contact_row', modal.el).addEventListener('click', () => {
+      on('#btn_add_contact_row', 'click', () => {
         contactPersonsList.push({ salutation: 'Mr.', first_name: '', last_name: '', email: '', phone: '', mobile: '', designation: '' });
         renderContacts();
-      });
+      }, modal.el);
       renderContacts();
 
       const cfContainer = $('#custom_fields_container', modal.el);
@@ -3383,25 +3385,25 @@ async function partyForm(kind, id, onDone, onCancel) {
           <div style="display:flex;gap:8px;margin-bottom:6px;align-items:center;" data-cf-idx="${i}">
             <input class="in cf-label" placeholder="Field Label (e.g. Region / Lead Source)" value="${esc(cf.label || '')}" style="width:200px;">
             <input class="in cf-val" placeholder="Value" value="${esc(cf.value || '')}" style="flex:1;">
-            <button type="button" class="btn d btn-del-cf" style="padding:4px 8px;">✕</button>
+            <button type="button" class="btn d btn-del-cf" style="padding:4px 8px;">âœ•</button>
           </div>
         `).join('');
 
         $$('[data-cf-idx]', cfContainer).forEach(row => {
           const idx = Number(row.dataset.cfIdx);
-          row.querySelector('.cf-label').addEventListener('input', e => { customFieldsList[idx].label = e.target.value; });
-          row.querySelector('.cf-val').addEventListener('input', e => { customFieldsList[idx].value = e.target.value; });
-          row.querySelector('.btn-del-cf').addEventListener('click', () => {
+          const cfLbl = row.querySelector('.cf-label'); if (cfLbl) cfLbl.addEventListener('input', e => { customFieldsList[idx].label = e.target.value; });
+          const cfVal = row.querySelector('.cf-val'); if (cfVal) cfVal.addEventListener('input', e => { customFieldsList[idx].value = e.target.value; });
+          const cfDel = row.querySelector('.btn-del-cf'); if (cfDel) cfDel.addEventListener('click', () => {
             customFieldsList.splice(idx, 1);
             renderCustomFields();
           });
         });
       };
 
-      $('#btn_add_custom_field', modal.el).addEventListener('click', () => {
+      on('#btn_add_custom_field', 'click', () => {
         customFieldsList.push({ label: '', value: '' });
         renderCustomFields();
-      });
+      }, modal.el);
       renderCustomFields();
 
       const docListEl = $('#uploaded_files_list', modal.el);
@@ -3413,9 +3415,9 @@ async function partyForm(kind, id, onDone, onCancel) {
         }
         docListEl.innerHTML = documentsList.map((doc, i) => `
           <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:var(--surface-glass);border:1px solid var(--bd-glass);font-size:12px;">
-            <span>📄</span>
+            <span>ðŸ“„</span>
             <span><b>${esc(doc.name)}</b> (${esc(doc.size)})</span>
-            <button type="button" class="lk btn-del-doc" data-doc-idx="${i}" style="color:var(--dn);font-weight:700;margin-left:4px;">✕</button>
+            <button type="button" class="lk btn-del-doc" data-doc-idx="${i}" style="color:var(--dn);font-weight:700;margin-left:4px;">âœ•</button>
           </div>
         `).join('');
 
@@ -3661,9 +3663,9 @@ async function itemForm(id, onDone, onCancel) {
         { val: 'Employee Advance', label: 'Employee Advance' },
         { val: 'IGST TDS Receivable', label: 'IGST TDS Receivable' },
         { val: 'Input Tax Credits', label: 'Input Tax Credits' },
-        { val: 'Input CGST', label: '  • Input CGST' },
-        { val: 'Input IGST', label: '  • Input IGST' },
-        { val: 'Input SGST', label: '  • Input SGST' },
+        { val: 'Input CGST', label: '  â€¢ Input CGST' },
+        { val: 'Input IGST', label: '  â€¢ Input IGST' },
+        { val: 'Input SGST', label: '  â€¢ Input SGST' },
         { val: 'Prepaid Expenses', label: 'Prepaid Expenses' },
         { val: 'Reverse Charge Tax Input but not due', label: 'Reverse Charge Tax Input but not due' },
         { val: 'SGST TDS Receivable', label: 'SGST TDS Receivable' },
@@ -3682,9 +3684,9 @@ async function itemForm(id, onDone, onCancel) {
         { val: 'CGST TDS Payable', label: 'CGST TDS Payable' },
         { val: 'Employee Reimbursements', label: 'Employee Reimbursements' },
         { val: 'GST Payable', label: 'GST Payable' },
-        { val: 'Output CGST', label: '  • Output CGST' },
-        { val: 'Output IGST', label: '  • Output IGST' },
-        { val: 'Output SGST', label: '  • Output SGST' },
+        { val: 'Output CGST', label: '  â€¢ Output CGST' },
+        { val: 'Output IGST', label: '  â€¢ Output IGST' },
+        { val: 'Output SGST', label: '  â€¢ Output SGST' },
         { val: 'IGST TDS Payable', label: 'IGST TDS Payable' },
         { val: 'Opening Balance Adjustments', label: 'Opening Balance Adjustments' },
         { val: 'Overseas Tax Payable', label: 'Overseas Tax Payable' },
@@ -3762,7 +3764,7 @@ async function itemForm(id, onDone, onCancel) {
       <option value="28" ${curRate === 28 ? 'selected' : ''}>GST28 [28%]</option>
       <option value="40" ${curRate === 40 ? 'selected' : ''}>GST40 [40%]</option>
     </optgroup>
-    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rate…</option>
+    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rateâ€¦</option>
   `;
 
   const interOptionsHtml = `
@@ -3775,7 +3777,7 @@ async function itemForm(id, onDone, onCancel) {
       <option value="28" ${curRate === 28 ? 'selected' : ''}>IGST28 [28%]</option>
       <option value="40" ${curRate === 40 ? 'selected' : ''}>IGST40 [40%]</option>
     </optgroup>
-    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rate…</option>
+    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rateâ€¦</option>
   `;
 
   formModal({
@@ -3792,16 +3794,16 @@ async function itemForm(id, onDone, onCancel) {
     <div class="convosis-item-modal convo-item-modal zb-form-wrap">
 
       <div class="zb-form-row">
-        <label class="zb-form-label">Type <span class="zb-info-tip" title="Goods have physical inventory, services do not.">ⓘ</span></label>
+        <label class="zb-form-label">Type <span class="zb-info-tip" title="Goods have physical inventory, services do not.">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div class="convosis-radio-group convo-radio-group" style="height:35px;">
             <label class="radio-label">
               <input type="radio" name="item_type" value="goods" ${isGoods ? 'checked' : ''}>
-              <span>📦 Goods</span>
+              <span>ðŸ“¦ Goods</span>
             </label>
             <label class="radio-label">
               <input type="radio" name="item_type" value="service" ${!isGoods ? 'checked' : ''}>
-              <span>⚙️ Service</span>
+              <span>âš™ï¸ Service</span>
             </label>
           </div>
           <div class="er" data-err="item_type" role="alert"></div>
@@ -3817,14 +3819,14 @@ async function itemForm(id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label for="item_unit_select" class="zb-form-label">Unit <span class="zb-info-tip" title="Measuring unit for GST & billing">ⓘ</span></label>
+        <label for="item_unit_select" class="zb-form-label">Unit <span class="zb-info-tip" title="Measuring unit for GST & billing">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div style="display:flex;gap:8px;">
             <select class="in" id="item_unit_select" style="max-width:240px;">
-              <option value="">Select Unit…</option>
+              <option value="">Select Unitâ€¦</option>
               ${unitOptsHtml}
               ${extraUnitOpt}
-              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Unit…</option>
+              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Unitâ€¦</option>
             </select>
             <input class="in" type="text" id="item_unit" name="unit" value="${esc(r.unit || 'pcs')}" placeholder="Unit" maxlength="20" required style="max-width:140px;">
           </div>
@@ -3833,7 +3835,7 @@ async function itemForm(id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label for="item_sku" class="zb-form-label">SKU <span class="zb-info-tip" title="Stock Keeping Unit (Optional - auto-generated if left blank)">ⓘ</span></label>
+        <label for="item_sku" class="zb-form-label">SKU <span class="zb-info-tip" title="Stock Keeping Unit (Optional - auto-generated if left blank)">â“˜</span></label>
         <div class="zb-form-ctrl">
           <input class="in" type="text" id="item_sku" name="sku" value="${esc(r.sku || '')}" placeholder="Optional (e.g. PROD-001 or auto)" maxlength="60" style="text-transform:uppercase;max-width:260px;">
           <div class="er" data-err="sku" role="alert"></div>
@@ -3841,7 +3843,7 @@ async function itemForm(id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label for="item_hsn" class="zb-form-label">HSN / SAC Code <span class="zb-info-tip" title="6-digit GST classification code">ⓘ</span></label>
+        <label for="item_hsn" class="zb-form-label">HSN / SAC Code <span class="zb-info-tip" title="6-digit GST classification code">â“˜</span></label>
         <div class="zb-form-ctrl">
           <div class="hsn-search-wrap" id="hsnSearchWrap" style="position:relative;max-width:320px;">
             <input class="in" type="text" id="item_hsn" name="hsn_sac" autocomplete="off" value="${esc(r.hsn_sac || '')}" placeholder="6-digit HSN/SAC code (e.g. 847130)" maxlength="6">
@@ -3934,7 +3936,7 @@ async function itemForm(id, onDone, onCancel) {
             <select class="in" id="item_sales_account" name="sales_account">
               ${salesAccountsHtml}
               ${extraSalesOpt}
-              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Account…</option>
+              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Accountâ€¦</option>
             </select>
             <div class="er" data-err="sales_account" role="alert"></div>
           </div>
@@ -3942,7 +3944,7 @@ async function itemForm(id, onDone, onCancel) {
         <div class="zb-form-row align-top">
           <label for="item_sales_desc" class="zb-form-label">Description</label>
           <div class="zb-form-ctrl">
-            <textarea class="in" id="item_sales_desc" name="description" rows="2" placeholder="Sales description for customer invoices…">${esc(r.description || '')}</textarea>
+            <textarea class="in" id="item_sales_desc" name="description" rows="2" placeholder="Sales description for customer invoicesâ€¦">${esc(r.description || '')}</textarea>
           </div>
         </div>
       </div>
@@ -3976,21 +3978,21 @@ async function itemForm(id, onDone, onCancel) {
               <select class="in" id="item_purchase_account" name="purchase_account">
                 ${purchaseAccountsHtml}
                 ${extraPurchOpt}
-                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Account…</option>
+                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Accountâ€¦</option>
               </select>
               <div class="er" data-err="purchase_account" role="alert"></div>
             </div>
           </div>
           <div class="zb-form-row">
-            <label for="item_preferred_vendor_search" class="zb-form-label">Preferred Vendor <span class="zb-info-tip" title="Choose default vendor for purchase orders">ⓘ</span></label>
+            <label for="item_preferred_vendor_search" class="zb-form-label">Preferred Vendor <span class="zb-info-tip" title="Choose default vendor for purchase orders">â“˜</span></label>
             <div class="zb-form-ctrl">
               <div class="lookup-combobox-wrap" id="preferredVendorLookupWrap" style="position:relative;width:100%;max-width:380px;">
                 <input type="hidden" name="preferred_vendor_id" id="item_preferred_vendor" value="${curVendorId}">
                 <div class="lookup-input-box" style="position:relative;display:flex;align-items:center;width:100%;">
-                  <input class="in lookup-search-input" id="item_preferred_vendor_search" type="text" autocomplete="off" placeholder="Select or search a vendor…" value="${esc(curVendorName)}" style="padding-right:54px;cursor:pointer;">
+                  <input class="in lookup-search-input" id="item_preferred_vendor_search" type="text" autocomplete="off" placeholder="Select or search a vendorâ€¦" value="${esc(curVendorName)}" style="padding-right:54px;cursor:pointer;">
                   <div style="position:absolute;right:8px;display:flex;align-items:center;gap:4px;z-index:2;">
-                    <button type="button" class="lookup-clear-btn" id="item_preferred_vendor_clear" title="Clear vendor selection" aria-label="Clear vendor" style="background:none;border:none;cursor:pointer;color:var(--tx-muted);font-size:14px;padding:2px 4px;line-height:1;display:${curVendorId ? 'inline-block' : 'none'};">✕</button>
-                    <span class="lookup-caret" style="pointer-events:none;color:var(--tx-muted);font-size:10px;margin-right:2px;">▼</span>
+                    <button type="button" class="lookup-clear-btn" id="item_preferred_vendor_clear" title="Clear vendor selection" aria-label="Clear vendor" style="background:none;border:none;cursor:pointer;color:var(--tx-muted);font-size:14px;padding:2px 4px;line-height:1;display:${curVendorId ? 'inline-block' : 'none'};">âœ•</button>
+                    <span class="lookup-caret" style="pointer-events:none;color:var(--tx-muted);font-size:10px;margin-right:2px;">â–¼</span>
                   </div>
                 </div>
                 <div class="lookup-dropdown-menu pop" id="item_preferred_vendor_menu" role="listbox" style="position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:220px;overflow-y:auto;z-index:100;padding:4px;box-shadow:var(--shadow-glass-lg, 0 10px 25px rgba(0,0,0,0.15));border-radius:8px;background:var(--surface-glass-solid, #ffffff);border:1px solid var(--bd, #cbd5e1);display:none;"></div>
@@ -4001,7 +4003,7 @@ async function itemForm(id, onDone, onCancel) {
           <div class="zb-form-row align-top">
             <label for="item_purchase_desc" class="zb-form-label">Description</label>
             <div class="zb-form-ctrl">
-              <textarea class="in" id="item_purchase_desc" rows="2" placeholder="Purchase description for vendor bills…"></textarea>
+              <textarea class="in" id="item_purchase_desc" rows="2" placeholder="Purchase description for vendor billsâ€¦"></textarea>
             </div>
           </div>
         </div>
@@ -4019,12 +4021,12 @@ async function itemForm(id, onDone, onCancel) {
         </div>
         <div id="inventoryBody" style="${r.track_inventory ? '' : 'display:none;'}">
           <div class="zb-form-row">
-            <label for="item_warehouse" class="zb-form-label">Warehouse Code <span class="zb-info-tip" title="Primary storage warehouse or sub-warehouse">ⓘ</span></label>
+            <label for="item_warehouse" class="zb-form-label">Warehouse Code <span class="zb-info-tip" title="Primary storage warehouse or sub-warehouse">â“˜</span></label>
             <div class="zb-form-ctrl">
               <select class="in" id="item_warehouse" name="warehouse_id" style="max-width:280px;">
-                <option value="">Select Warehouse…</option>
+                <option value="">Select Warehouseâ€¦</option>
                 ${(warehouses || []).map(w => `<option value="${w.id}" ${(String(w.id) === String(r.warehouse_id) || w.code === r.warehouse_code) ? 'selected' : ''}>${esc(w.code)} - ${esc(w.name)}${w.is_sub_warehouse ? ' (Sub)' : ''}</option>`).join('')}
-                <option value="__new_warehouse__">+ Add New Warehouse…</option>
+                <option value="__new_warehouse__">+ Add New Warehouseâ€¦</option>
               </select>
             </div>
           </div>
@@ -4048,7 +4050,7 @@ async function itemForm(id, onDone, onCancel) {
               <select class="in" id="item_inventory_account" name="inventory_account">
                 ${inventoryAccountsHtml}
                 ${extraInvOpt}
-                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Account…</option>
+                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Accountâ€¦</option>
               </select>
             </div>
           </div>
@@ -4372,7 +4374,7 @@ async function itemForm(id, onDone, onCancel) {
           if (btnRetry) {
             btnRetry.addEventListener('click', async e => {
               e.stopPropagation();
-              btnRetry.textContent = 'Loading…';
+              btnRetry.textContent = 'Loadingâ€¦';
               btnRetry.disabled = true;
               try {
                 vendorRecords = await api('lookup/vendors/');
@@ -4394,7 +4396,7 @@ async function itemForm(id, onDone, onCancel) {
           const clearOpt = document.createElement('div');
           clearOpt.className = 'lookup-opt-clear';
           clearOpt.style.cssText = 'padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12px;color:var(--tx-muted);font-style:italic;';
-          clearOpt.textContent = '— None (No preferred vendor) —';
+          clearOpt.textContent = 'â€” None (No preferred vendor) â€”';
           clearOpt.addEventListener('mousedown', e => {
             e.preventDefault();
             selectVendor('', '');
@@ -4438,7 +4440,7 @@ async function itemForm(id, onDone, onCancel) {
         addBtn.style.cssText = 'padding:8px 10px;margin-top:4px;border-top:1px solid var(--bd-glass, rgba(0,0,0,0.08));color:var(--accent);font-weight:600;font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:6px;';
         addBtn.innerHTML = `
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ Add New Vendor…</span>
+          <span>+ Add New Vendorâ€¦</span>
         `;
         addBtn.addEventListener('mousedown', async e => {
           e.preventDefault();
@@ -4809,7 +4811,7 @@ async function openManageSalespersonsModal({ onSelect, onListUpdated }) {
     return list.map(sp => `
       <tr style="border-bottom:1px solid #e2e8f0;">
         <td style="padding:10px 12px;font-weight:600;color:#0f172a;">${esc(sp.name)}</td>
-        <td style="padding:10px 12px;color:#475569;">${esc(sp.email || '—')}</td>
+        <td style="padding:10px 12px;color:#475569;">${esc(sp.email || 'â€”')}</td>
         <td style="padding:10px 12px;"><span style="background:#ecfdf5;color:#059669;font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;">Active</span></td>
         <td style="padding:10px 12px;text-align:right;">
           <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;">
@@ -5190,7 +5192,7 @@ async function setupProjectSelectorForCustomer(selectEl, customerId, selectedPro
       selectEl.innerHTML = `
         <option value="">Select Project</option>
         ${projects.map(p => `<option value="${useProjectId ? p.id : esc(p.name)}" ${useProjectId ? `data-project-name="${esc(p.name)}"` : ''} ${String(p.id) === String(selectedProject) || p.name === selectedProject ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
-        ${useProjectId ? '<option value="__new_project__">+ Add New Project…</option>' : ''}
+        ${useProjectId ? '<option value="__new_project__">+ Add New Projectâ€¦</option>' : ''}
       `;
       return projects;
     } else {
@@ -5289,8 +5291,8 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
     id ? api(`${kind}/${id}/`).catch(() => null) : null
   ]);
   const itemOpts = [
-    ['', '— Custom line —'],
-    ['__new_item__', '+ Add New Item…'],
+    ['', 'â€” Custom line â€”'],
+    ['__new_item__', '+ Add New Itemâ€¦'],
     ...items.map(i => [i.id, i.name + (i.sku ? ' (' + i.sku + ')' : '')])
   ];
   const isSalesOrderOrQuote = (kind === 'sales-orders' || kind === 'quotes');
@@ -5299,7 +5301,7 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
   if (!r.lines || !r.lines.length) r.lines = [{}];
   const byId = Object.fromEntries(items.map(i => [String(i.id), i]));
   const row = l => `<tr class="ln"><td><select class="in l-item" aria-label="Item">${opts(itemOpts, l.item)}</select><input class="in l-desc" aria-label="Description" placeholder="Description" maxlength="500" value="${esc(l.description || '')}"></td><td><input class="in l-hsn" aria-label="HSN/SAC" maxlength="10" value="${esc(l.hsn_sac || '')}"></td><td><input class="in l-qty" type="number" step="0.001" min="0" aria-label="Quantity" value="${esc(l.quantity || 1)}"></td><td><input class="in l-rate" type="number" step="0.01" min="0" aria-label="Rate" value="${esc(l.rate == null ? '' : l.rate)}"></td>${renderDiscountCell(l)}<td><select class="in l-gst" aria-label="GST rate">${opts(GST_SLABS.map(x => [x, x + '%']), l.gst_rate != null ? num(l.gst_rate) : 18)}</select></td>${TdsEngine.renderLineCell(l, docTdsMode)}
-      <td class="r l-amt">—</td><td><button type="button" class="btn ic" data-rm aria-label="Remove line">×</button></td></tr>`;
+      <td class="r l-amt">â€”</td><td><button type="button" class="btn ic" data-rm aria-label="Remove line">Ã—</button></td></tr>`;
   const docTdsMode = r ? (r.tds_mode || 'none') : 'none';
   const docTdsRate = r ? num(r.tds_tax_rate || 0) : 0;
   const partyId = r.party_id || r.customer_id || r.vendor_id || r.customer || r.vendor || '';
@@ -5340,7 +5342,7 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="doc-party-select" name="${pk}" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;border-radius:8px !important;border:1px solid #e2e8f0 !important;background:#ffffff !important;font-size:13px !important;color:#0f172a !important;">
                 <option value="">${inv ? 'Select or add a customer' : 'Select or add a vendor'}</option>
-                <option value="${inv ? '__new_customer__' : '__new_vendor__'}" style="color:var(--accent,#0284c7);font-weight:600;">${inv ? '+ Add New Customer…' : '+ Add New Vendor…'}</option>
+                <option value="${inv ? '__new_customer__' : '__new_vendor__'}" style="color:var(--accent,#0284c7);font-weight:600;">${inv ? '+ Add New Customerâ€¦' : '+ Add New Vendorâ€¦'}</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(partyId) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-doc-party-lookup" title="${inv ? 'Search / Add Customer' : 'Search / Add Vendor'}" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -5365,7 +5367,7 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
                 value: docPartyType,
                 help: `GSTIN: <span id="doc-party-gstin" style="font-weight:600;">${esc(initialGstin)}</span>`
               }),
-              fld({ name: 'place_of_supply', label: 'Place of supply', type: 'select', opts: STATES, value: r.place_of_supply || APP.org.state, help: 'Same state as your organization → CGST + SGST; otherwise IGST.' }),
+              fld({ name: 'place_of_supply', label: 'Place of supply', type: 'select', opts: STATES, value: r.place_of_supply || APP.org.state, help: 'Same state as your organization â†’ CGST + SGST; otherwise IGST.' }),
               fld({ name: 'branch', label: 'Branch', value: r.branch || '', ph: 'Optional branch' }),
               fld({ name: 'location', label: 'Location', value: r.location || 'HO Kottayam' }),
               fld({ name: 'date', label: 'Date', type: 'date', req: 1, value: r.date }),
@@ -5394,7 +5396,7 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
                   <th style="min-width:240px">Item / Description</th>
                   <th>HSN/SAC</th>
                   <th>Qty</th>
-                  <th>Rate (₹)</th>
+                  <th>Rate (â‚¹)</th>
                   <th>Discount</th>
                   <th class="th-tax-explainer" data-doc-kind="${kind}" style="cursor:pointer;" title="Click for GST Rates, Tax Exclusive & B2B/B2C Rules">GST <i class="fa-solid fa-circle-info" style="font-size:11px;color:#2563eb;"></i></th>
                   <th class="th-tds" style="width:130px;text-align:left;display:${docTdsMode === 'line' ? '' : 'none'};">TDS</th>
@@ -5409,16 +5411,16 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
           <button type="button" class="btn" data-add style="margin-top:10px; font-weight:600;">+ Add line</button>
 
           <div class="tot" aria-live="polite" style="margin-top:20px; margin-left:auto; margin-right:0; width:340px; max-width:100%; box-sizing:border-box;">
-            <div><span>Taxable value</span><b data-t="sub">₹0.00</b></div>
-            <div data-t-row="cgst"><span>CGST</span><b data-t="cgst">₹0.00</b></div>
-            <div data-t-row="sgst"><span>SGST</span><b data-t="sgst">₹0.00</b></div>
-            <div data-t-row="igst"><span>IGST</span><b data-t="igst">₹0.00</b></div>
+            <div><span>Taxable value</span><b data-t="sub">â‚¹0.00</b></div>
+            <div data-t-row="cgst"><span>CGST</span><b data-t="cgst">â‚¹0.00</b></div>
+            <div data-t-row="sgst"><span>SGST</span><b data-t="sgst">â‚¹0.00</b></div>
+            <div data-t-row="igst"><span>IGST</span><b data-t="igst">â‚¹0.00</b></div>
             ${TdsEngine.renderTotalsSection('doc', docTdsMode, docTdsRate)}
-            <div class="gt"><span>Total</span><b data-t="total">₹0.00</b></div>
+            <div class="gt"><span>Total</span><b data-t="total">â‚¹0.00</b></div>
           </div>
 
           <div class="zb-form-wrap" style="margin-top:20px;">
-            ${fld({ name: 'notes', label: 'Notes', type: 'textarea', value: r.notes != null ? r.notes : defaultDocNotes, ph: isSalesOrderOrQuote ? 'Notes for the customer…' : '', col: 'c2' })}
+            ${fld({ name: 'notes', label: 'Notes', type: 'textarea', value: r.notes != null ? r.notes : defaultDocNotes, ph: isSalesOrderOrQuote ? 'Notes for the customerâ€¦' : '', col: 'c2' })}
             ${inv ? fld({ name: 'terms', label: 'Terms & conditions', type: 'textarea', value: r.terms != null ? r.terms : (APP.org.terms_default || 'Due on Receipt'), col: 'c2' }) : ''}
           </div>
 
@@ -5517,7 +5519,7 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
           const lAmtEl = $('.l-tds-amt', tr);
           if (lAmtEl) {
             lAmtEl.style.display = lineTds > 0 ? 'block' : 'none';
-            lAmtEl.textContent = lineTds > 0 ? `- ₹${inr(lineTds).replace('₹', '').trim()}` : '';
+            lAmtEl.textContent = lineTds > 0 ? `- â‚¹${inr(lineTds).replace('â‚¹', '').trim()}` : '';
           }
         } else {
           const lAmtEl = $('.l-tds-amt', tr);
@@ -5531,12 +5533,12 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
       if (tdsMode === 'line') {
         finalTdsDeduction = totalLineTds;
         const lineAmtEl = form.querySelector('.doc-tds-line-amt');
-        if (lineAmtEl) lineAmtEl.textContent = `- ${inr(totalLineTds).replace('₹', '').trim()}`;
+        if (lineAmtEl) lineAmtEl.textContent = `- ${inr(totalLineTds).replace('â‚¹', '').trim()}`;
       } else if (tdsMode === 'transaction') {
         const txnRate = num(form.querySelector('.doc-tds-rate-select')?.value) || 0;
         finalTdsDeduction = Math.round((t.sub * (txnRate / 100)) * 100) / 100;
         const txnAmtEl = form.querySelector('.doc-tds-amt');
-        if (txnAmtEl) txnAmtEl.textContent = `- ${inr(finalTdsDeduction).replace('₹', '').trim()}`;
+        if (txnAmtEl) txnAmtEl.textContent = `- ${inr(finalTdsDeduction).replace('â‚¹', '').trim()}`;
       }
 
       const totalGrand = Math.max(0, Math.round((t.sub + t.cgst + t.sgst + t.igst - finalTdsDeduction) * 100) / 100);
@@ -5656,9 +5658,9 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
     const renderAttach = () => {
       let h = '';
       if (r.attachments && r.attachments.length) {
-        h += r.attachments.map(a => `<div class="attach-file-badge"><span>📎 ${esc(a.filename)} (${fmtBytes(a.file_size)})</span><button type="button" data-del-att="${a.id}" title="Remove file">×</button></div>`).join('');
+        h += r.attachments.map(a => `<div class="attach-file-badge"><span>ðŸ“Ž ${esc(a.filename)} (${fmtBytes(a.file_size)})</span><button type="button" data-del-att="${a.id}" title="Remove file">Ã—</button></div>`).join('');
       }
-      h += pendingFiles.map((f, i) => `<div class="attach-file-badge" style="border-style:dashed;"><span>📎 ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span><button type="button" data-rem-pen="${i}" title="Remove file">×</button></div>`).join('');
+      h += pendingFiles.map((f, i) => `<div class="attach-file-badge" style="border-style:dashed;"><span>ðŸ“Ž ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span><button type="button" data-rem-pen="${i}" title="Remove file">Ã—</button></div>`).join('');
       if (!h) h = '<span class="sub" style="font-size:12px;">No files attached yet.</span>';
       attachBox.innerHTML = h;
     };
@@ -5839,19 +5841,19 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
     title: `${id ? 'Edit' : 'New'} ${docTitleLower}${id ? ' ' + r.number : ''}`, wide: true,
     actions: id ? [{ label: 'Update ' + docTitle, value: 'update', primary: true }, { label: 'Save as draft', value: 'draft' }] : [{ label: 'Save as draft', value: 'draft' }, { label: inv ? 'Save & send' : 'Save & approve', value: 'post', primary: true }],
     body: `<div class="zb-form-wrap">${[
-      fld({ name: pk, label: inv ? 'Customer' : 'Vendor', type: 'select', req: 1, opts: [['', 'Select…'], ...parties.map(p => [p.id, p.name])], value: partyId }),
-      fld({ name: 'place_of_supply', label: 'Place of supply', type: 'select', opts: STATES, value: r.place_of_supply || APP.org.state, help: 'Same state as your organization → CGST + SGST; otherwise IGST.' }),
+      fld({ name: pk, label: inv ? 'Customer' : 'Vendor', type: 'select', req: 1, opts: [['', 'Selectâ€¦'], ...parties.map(p => [p.id, p.name])], value: partyId }),
+      fld({ name: 'place_of_supply', label: 'Place of supply', type: 'select', opts: STATES, value: r.place_of_supply || APP.org.state, help: 'Same state as your organization â†’ CGST + SGST; otherwise IGST.' }),
       fld({ name: 'date', label: 'Date', type: 'date', req: 1, value: r.date }),
       fld({ name: 'due_date', label: 'Due date', type: 'date', value: due0 }),
       fld({ name: 'order_number', label: 'Order Number', value: r.order_number || '', ph: 'e.g. 653248543' }),
       inv ? '' : fld({ name: 'vendor_ref', label: 'Vendor reference', value: r.vendor_ref }),
     ].join('')}</div>
     <h3 style="margin:16px 0 6px;font-size:14px">Line items</h3>
-    <div class="tw"><table class="lt"><thead><tr><th style="min-width:230px">Item / description</th><th>HSN/SAC</th><th>Qty</th><th>Rate (₹)</th><th>Disc %</th><th class="th-tax-explainer" data-doc-kind="${kind}" style="cursor:pointer;" title="Click for GST Rates, Tax Exclusive & B2B/B2C Rules">GST <i class="fa-solid fa-circle-info" style="font-size:11px;color:#2563eb;"></i></th><th class="r">Amount</th><th></th></tr></thead><tbody id="lines">${r.lines.map(row).join('')}</tbody></table></div>
+    <div class="tw"><table class="lt"><thead><tr><th style="min-width:230px">Item / description</th><th>HSN/SAC</th><th>Qty</th><th>Rate (â‚¹)</th><th>Disc %</th><th class="th-tax-explainer" data-doc-kind="${kind}" style="cursor:pointer;" title="Click for GST Rates, Tax Exclusive & B2B/B2C Rules">GST <i class="fa-solid fa-circle-info" style="font-size:11px;color:#2563eb;"></i></th><th class="r">Amount</th><th></th></tr></thead><tbody id="lines">${r.lines.map(row).join('')}</tbody></table></div>
     <div class="er" data-err="lines" role="alert"></div>
     <button type="button" class="btn" data-add style="margin-top:8px">+ Add line</button>
-    <div class="tot" aria-live="polite"><div><span>Taxable value</span><b data-t="sub">₹0.00</b></div><div data-t-row="cgst"><span>CGST</span><b data-t="cgst">₹0.00</b></div><div data-t-row="sgst"><span>SGST</span><b data-t="sgst">₹0.00</b></div><div data-t-row="igst"><span>IGST</span><b data-t="igst">₹0.00</b></div><div class="gt"><span>Total</span><b data-t="total">₹0.00</b></div></div>
-    <div class="zb-form-wrap" style="margin-top:14px">${fld({ name: 'notes', label: 'Notes', type: 'textarea', value: r.notes != null ? r.notes : defaultDocNotes, ph: isSalesOrderOrQuote ? 'Notes for the customer…' : '', col: 'c2' })}${inv ? fld({ name: 'terms', label: 'Terms & conditions', type: 'textarea', value: r.terms != null ? r.terms : (APP.org.terms_default || 'Due on Receipt'), col: 'c2' }) : ''}</div>
+    <div class="tot" aria-live="polite"><div><span>Taxable value</span><b data-t="sub">â‚¹0.00</b></div><div data-t-row="cgst"><span>CGST</span><b data-t="cgst">â‚¹0.00</b></div><div data-t-row="sgst"><span>SGST</span><b data-t="sgst">â‚¹0.00</b></div><div data-t-row="igst"><span>IGST</span><b data-t="igst">â‚¹0.00</b></div><div class="gt"><span>Total</span><b data-t="total">â‚¹0.00</b></div></div>
+    <div class="zb-form-wrap" style="margin-top:14px">${fld({ name: 'notes', label: 'Notes', type: 'textarea', value: r.notes != null ? r.notes : defaultDocNotes, ph: isSalesOrderOrQuote ? 'Notes for the customerâ€¦' : '', col: 'c2' })}${inv ? fld({ name: 'terms', label: 'Terms & conditions', type: 'textarea', value: r.terms != null ? r.terms : (APP.org.terms_default || 'Due on Receipt'), col: 'c2' }) : ''}</div>
     <div style="margin-top:14px;padding:12px;border:1px solid var(--bd-glass);border-radius:8px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
         <label style="font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px;">
@@ -5941,9 +5943,9 @@ async function docForm(kind, id, targetEl, onDone, extraOpts = {}) {
       const renderAttach = () => {
         let h = '';
         if (r.attachments && r.attachments.length) {
-          h += r.attachments.map(a => `<div class="attach-file-badge"><span>📎 ${esc(a.filename)} (${fmtBytes(a.file_size)})</span><button type="button" data-del-att="${a.id}" title="Remove file">×</button></div>`).join('');
+          h += r.attachments.map(a => `<div class="attach-file-badge"><span>ðŸ“Ž ${esc(a.filename)} (${fmtBytes(a.file_size)})</span><button type="button" data-del-att="${a.id}" title="Remove file">Ã—</button></div>`).join('');
         }
-        h += pendingFiles.map((f, i) => `<div class="attach-file-badge" style="border-style:dashed;"><span>📎 ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span><button type="button" data-rem-pen="${i}" title="Remove file">×</button></div>`).join('');
+        h += pendingFiles.map((f, i) => `<div class="attach-file-badge" style="border-style:dashed;"><span>ðŸ“Ž ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span><button type="button" data-rem-pen="${i}" title="Remove file">Ã—</button></div>`).join('');
         if (!h) h = '<span class="sub" style="font-size:12px;">No files attached yet.</span>';
         attachBox.innerHTML = h;
       };
@@ -6075,20 +6077,20 @@ async function recordDocumentPaymentModal(doc, kind = 'invoices', onDone) {
   let bankAccounts = await api('lookup/bank-accounts/').catch(() => []);
 
   const buildBankOpts = (accs, selId) => {
-    let out = '<option value="">Select Bank Account…</option>';
+    let out = '<option value="">Select Bank Accountâ€¦</option>';
     accs.forEach(b => {
       const isSel = String(b.id) === String(selId) ? 'selected' : '';
       const label = b.display_name || `${b.name} - ${b.bank_name} (${b.account_number})`;
       out += `<option value="${b.id}" ${isSel}>${esc(label)}</option>`;
     });
-    out += '<option value="__add_new__" style="color:#2563eb;font-weight:600;">+ Add New Bank Account…</option>';
+    out += '<option value="__add_new__" style="color:#2563eb;font-weight:600;">+ Add New Bank Accountâ€¦</option>';
     return out;
   };
 
   const initialAmount = r2(balanceDue);
 
   const m = Modal.open({
-    title: `Record Payment · ${isInvoice ? 'Invoice' : 'Bill'} ${esc(d.number)}`,
+    title: `Record Payment Â· ${isInvoice ? 'Invoice' : 'Bill'} ${esc(d.number)}`,
     wide: false,
     body: `
       <div style="background:var(--surface-glass-subtle, #f8fafc);border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:16px;">
@@ -6125,7 +6127,7 @@ async function recordDocumentPaymentModal(doc, kind = 'invoices', onDone) {
         </div>
 
         <div class="fe" style="grid-column:span 1;">
-          <label class="fl">Payment Amount (₹) <span class="req">*</span></label>
+          <label class="fl">Payment Amount (â‚¹) <span class="req">*</span></label>
           <input class="in" type="number" name="amount" id="pm-pay-amount" required min="0.01" step="0.01" max="${balanceDue}" value="${initialAmount}" style="font-weight:700;font-size:14px;color:#0f172a;">
           <div id="pm-amount-err" style="color:#dc2626;font-size:11px;margin-top:3px;display:none;font-weight:500;"></div>
         </div>
@@ -6161,7 +6163,7 @@ async function recordDocumentPaymentModal(doc, kind = 'invoices', onDone) {
 
         <div style="grid-column:span 2;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
           <span style="font-size:13px;color:#166534;font-weight:500;">Remaining Balance after Payment:</span>
-          <b style="font-size:14px;color:#15803d;" id="pm-calc-remaining">₹0.00</b>
+          <b style="font-size:14px;color:#15803d;" id="pm-calc-remaining">â‚¹0.00</b>
         </div>
       </form>
     `,
@@ -6191,7 +6193,7 @@ async function recordDocumentPaymentModal(doc, kind = 'invoices', onDone) {
       errBox.textContent = `Amount cannot exceed outstanding balance of ${inr(balanceDue)}.`;
       errBox.style.display = 'block';
       submitBtn.disabled = true;
-      remBox.textContent = '₹0.00';
+      remBox.textContent = 'â‚¹0.00';
       return;
     }
     errBox.style.display = 'none';
@@ -6227,7 +6229,7 @@ async function recordDocumentPaymentModal(doc, kind = 'invoices', onDone) {
     const selAccName = selAcc ? selAcc.name : 'Bank Account';
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spin"></span> Recording…';
+    submitBtn.innerHTML = '<span class="spin"></span> Recordingâ€¦';
 
     const endpoint = isInvoice ? 'payments-received/' : 'payments-made/';
     const docKey = isInvoice ? 'invoice' : 'bill';
@@ -6295,12 +6297,12 @@ async function paymentReceivedForm(pre = {}) {
   const customerId = data.customer_id || data.customer || data.party_id || data.party || '';
   const customer = customers.find(item => String(item.id) === String(customerId));
   const bankOpts = [
-    ['', 'Select Bank or Cash Account…'],
+    ['', 'Select Bank or Cash Accountâ€¦'],
     ...bankAccounts.map(item => [
       item.id,
       `${item.display_name || item.name}${item.account_type === 'cash' ? ' (Cash)' : ''}`,
     ]),
-    ['__add_new__', '+ Add New Bank Account…'],
+    ['__add_new__', '+ Add New Bank Accountâ€¦'],
   ];
   const stateOptions = GST_STATE_OPTIONS.map(([value, label]) => {
     const clean = String(value).replace(/^\[\d+\]\s*/, '');
@@ -6338,7 +6340,7 @@ async function paymentReceivedForm(pre = {}) {
       const options = String(field.options || '').split(',').map(item => item.trim()).filter(Boolean);
       return fld({
         name: inputName, label: field.label, req: field.required,
-        type: 'select', opts: [['', 'Select…'], ...options.map(item => [item, item])], value,
+        type: 'select', opts: [['', 'Selectâ€¦'], ...options.map(item => [item, item])], value,
       });
     }
     if (field.field_type === 'checkbox') {
@@ -6464,8 +6466,8 @@ async function paymentReceivedForm(pre = {}) {
         <label class="customer-select-outer-label" for="pay-customer">Customer Name*</label>
         <div style="display:flex;align-items:center;gap:10px;">
           <select class="in" id="pay-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
-            <option value="">Select Customer…</option>
-            <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+            <option value="">Select Customerâ€¦</option>
+            <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
             ${customers.map(item => `<option value="${item.id}" ${String(customerId) === String(item.id) ? 'selected' : ''}>${esc(item.name)}</option>`).join('')}
           </select>
           <button type="button" class="btn p" id="btn-pay-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -6557,7 +6559,7 @@ async function paymentReceivedForm(pre = {}) {
               <div>
                 <label class="pay-card-label required" for="pay-pos">Place of Supply</label>
                 <select class="in" id="pay-pos" name="place_of_supply" required style="width:100%;box-sizing:border-box;padding:0 8px;">
-                  ${opts([['', 'Select State…'], ...stateOptions], toState(data.place_of_supply || (customer && (customer.place_of_supply || customer.state))))}
+                  ${opts([['', 'Select Stateâ€¦'], ...stateOptions], toState(data.place_of_supply || (customer && (customer.place_of_supply || customer.state))))}
                 </select>
               </div>
             </div>
@@ -6566,7 +6568,7 @@ async function paymentReceivedForm(pre = {}) {
           <div class="pay-card-field">
             <label class="pay-card-label" for="pay-business-location">Branch</label>
             <select class="in" id="pay-business-location" name="branch_id" style="width:100%;box-sizing:border-box;padding:0 8px;">
-              <option value="">Select Branch…</option>
+              <option value="">Select Branchâ€¦</option>
               ${locations.map(item => `<option value="${item.id}" ${String(data.business_location_id || '') === String(item.id) ? 'selected' : ''}>${esc(item.name)}${item.is_default ? ' (Default)' : ''}</option>`).join('')}
             </select>
           </div>
@@ -6645,11 +6647,11 @@ async function paymentReceivedForm(pre = {}) {
       </section>
 
       <div class="cs" style="margin-top:20px;">
-        <div><span>Applied</span><b id="payment-applied">₹0.00</b></div>
-        <div><span>Income TDS</span><b id="payment-tds-amount">₹0.00</b></div>
-        <div><span>Tax</span><b id="payment-tax-amount">₹0.00</b></div>
-        <div><span>Unapplied / Advance Balance</span><b id="payment-unapplied">₹0.00</b></div>
-        <div><span>Net Deposit</span><b id="payment-net-deposit">₹0.00</b></div>
+        <div><span>Applied</span><b id="payment-applied">â‚¹0.00</b></div>
+        <div><span>Income TDS</span><b id="payment-tds-amount">â‚¹0.00</b></div>
+        <div><span>Tax</span><b id="payment-tax-amount">â‚¹0.00</b></div>
+        <div><span>Unapplied / Advance Balance</span><b id="payment-unapplied">â‚¹0.00</b></div>
+        <div><span>Net Deposit</span><b id="payment-net-deposit">â‚¹0.00</b></div>
       </div>
     `,
     onReady: (form, modal) => {
@@ -6664,14 +6666,14 @@ async function paymentReceivedForm(pre = {}) {
       const formData = existing || {};
 
       setupSearchableSelect(customerSelect, {
-        placeholder: 'Search customers…',
+        placeholder: 'Search customersâ€¦',
         onNew: () => partyForm('customers', null, async added => {
           const fresh = await api('lookup/customers/');
           const freshCustomers = Array.isArray(fresh) ? fresh : (fresh.results || []);
           customers.splice(0, customers.length, ...freshCustomers);
-          customerSelect.innerHTML = '<option value="">Select Customer…</option>' +
+          customerSelect.innerHTML = '<option value="">Select Customerâ€¦</option>' +
             freshCustomers.map(item => `<option value="${item.id}">${esc(item.name)}</option>`).join('') +
-            '<option value="__new_customer__">+ Add New Customer…</option>';
+            '<option value="__new_customer__">+ Add New Customerâ€¦</option>';
           const newCustomer = freshCustomers.find(item => String(item.id) === String(added.id));
           if (newCustomer) {
             customerSelect.value = newCustomer.id;
@@ -6680,12 +6682,12 @@ async function paymentReceivedForm(pre = {}) {
         }),
       });
       if (bankSelect) setupSearchableSelect(bankSelect, {
-        placeholder: 'Search bank or cash accounts…',
+        placeholder: 'Search bank or cash accountsâ€¦',
         onNew: () => bankAccountForm(null, async created => {
           const fresh = await api('lookup/bank-accounts/');
-          bankSelect.innerHTML = '<option value="">Select Bank or Cash Account…</option>' +
+          bankSelect.innerHTML = '<option value="">Select Bank or Cash Accountâ€¦</option>' +
             fresh.map(item => `<option value="${item.id}">${esc(item.display_name || item.name)}</option>`).join('') +
-            '<option value="__add_new__">+ Add New Bank Account…</option>';
+            '<option value="__add_new__">+ Add New Bank Accountâ€¦</option>';
           if (created && created.id) bankSelect.value = created.id;
           if (bankSelect._searchableSync) bankSelect._searchableSync();
         }),
@@ -6730,7 +6732,7 @@ async function paymentReceivedForm(pre = {}) {
         recipients = [];
         customerDetail = null;
         $('#payment-email-recipients', form).innerHTML = picked
-          ? '<span class="sub">Loading customer contacts…</span>'
+          ? '<span class="sub">Loading customer contactsâ€¦</span>'
           : '';
         if (!picked) {
           $('#payment-customer-type', form).value = '';
@@ -6775,8 +6777,8 @@ async function paymentReceivedForm(pre = {}) {
       };
       const renderFiles = () => {
         fileList.innerHTML = [
-          ...existingFiles.map(file => `<div class="btn" style="display:flex;gap:8px;align-items:center;"><a href="${esc(file.url || '#')}" target="_blank" rel="noopener">${esc(file.filename)}</a><button type="button" class="lk" data-remove-existing="${file.id}" aria-label="Remove ${esc(file.filename)}">×</button></div>`),
-          ...pendingFiles.map((file, index) => `<div class="btn" style="display:flex;gap:8px;align-items:center;">${esc(file.filename)}<button type="button" class="lk" data-remove-pending="${index}" aria-label="Remove ${esc(file.filename)}">×</button></div>`),
+          ...existingFiles.map(file => `<div class="btn" style="display:flex;gap:8px;align-items:center;"><a href="${esc(file.url || '#')}" target="_blank" rel="noopener">${esc(file.filename)}</a><button type="button" class="lk" data-remove-existing="${file.id}" aria-label="Remove ${esc(file.filename)}">Ã—</button></div>`),
+          ...pendingFiles.map((file, index) => `<div class="btn" style="display:flex;gap:8px;align-items:center;">${esc(file.filename)}<button type="button" class="lk" data-remove-pending="${index}" aria-label="Remove ${esc(file.filename)}">Ã—</button></div>`),
         ].join('');
       };
       const loadInvoices = async () => {
@@ -6841,9 +6843,9 @@ async function paymentReceivedForm(pre = {}) {
       form.addEventListener('input', updateSummary);
       form.addEventListener('change', updateSummary);
       emailInput.addEventListener('change', toggleEmail);
-      $('#payment-date-from', form).addEventListener('change', loadInvoices);
-      $('#payment-date-to', form).addEventListener('change', loadInvoices);
-      $('#payment-edit-pan', form).addEventListener('click', () => {
+      on('#payment-date-from', 'change', loadInvoices, form);
+      on('#payment-date-to', 'change', loadInvoices, form);
+      on('#payment-edit-pan', 'click', () => {
         const id = customerSelect.value;
         if (id && !id.startsWith('__')) partyForm('customers', id, async updated => {
           if (String(customerSelect.value) === String(updated.id)) {
@@ -6904,7 +6906,7 @@ async function paymentReceivedForm(pre = {}) {
           }
         }
       });
-      $('#payment-files', form).addEventListener('change', async event => {
+      on('#payment-files', 'change', async event => {
         const files = Array.from(event.target.files || []);
         if (existingFiles.length + pendingFiles.length + files.length > 10) {
           form.querySelector('[data-err="attachments"]').textContent = 'A payment can have no more than 10 files.';
@@ -6936,9 +6938,9 @@ async function paymentReceivedForm(pre = {}) {
           const fresh = await api('lookup/customers/');
           const freshCustomers = Array.isArray(fresh) ? fresh : (fresh.results || []);
           customers.splice(0, customers.length, ...freshCustomers);
-          customerSelect.innerHTML = '<option value="">Select Customer…</option>' +
+          customerSelect.innerHTML = '<option value="">Select Customerâ€¦</option>' +
             freshCustomers.map(item => `<option value="${item.id}">${esc(item.name)}</option>`).join('') +
-            '<option value="__new_customer__">+ Add New Customer…</option>';
+            '<option value="__new_customer__">+ Add New Customerâ€¦</option>';
           const newCustomer = freshCustomers.find(item => String(item.id) === String(added.id));
           if (newCustomer) {
             customerSelect.value = newCustomer.id;
@@ -7041,16 +7043,16 @@ async function paymentForm(kind, pre = {}) {
   const dataObj = existing || (typeof pre === 'object' ? pre : {});
   const partyVal = dataObj.party_id || dataObj.customer_id || dataObj.vendor_id || dataObj.party || dataObj[pk] || '';
   const bankOpts = [
-    ['', 'Select Bank Account…'],
+    ['', 'Select Bank Accountâ€¦'],
     ...bankAccounts.map(b => [b.id, b.display_name || `${b.name} (${b.bank_name})`]),
-    ['__add_new__', '+ Add New Bank Account…']
+    ['__add_new__', '+ Add New Bank Accountâ€¦']
   ];
   formModal({
     title: payId ? (rec ? `Edit payment received ${dataObj.number || ''}` : `Edit payment made ${dataObj.number || ''}`) : (rec ? 'Record payment received' : 'Record payment made'), wide: true,
     body: `<div class="zb-form-wrap">${[
-      fld({ name: pk, label: rec ? 'Customer' : 'Vendor', type: 'select', req: 1, opts: [['', 'Select…'], ...parties.map(p => [p.id, p.name])], value: partyVal }),
+      fld({ name: pk, label: rec ? 'Customer' : 'Vendor', type: 'select', req: 1, opts: [['', 'Selectâ€¦'], ...parties.map(p => [p.id, p.name])], value: partyVal }),
       fld({ name: 'date', label: 'Payment date', type: 'date', req: 1, value: dataObj.date || APP.today }),
-      fld({ name: 'amount', label: 'Amount (₹)', type: 'number', req: 1, value: dataObj.amount || '', attrs: 'min="0.01" step="0.01"' }),
+      fld({ name: 'amount', label: 'Amount (â‚¹)', type: 'number', req: 1, value: dataObj.amount || '', attrs: 'min="0.01" step="0.01"' }),
       fld({ name: 'mode', label: 'Payment mode', type: 'select', opts: [['bank_transfer', 'Bank transfer'], ['upi', 'UPI'], ['cash', 'Cash'], ['cheque', 'Cheque'], ['card', 'Card'], ['other', 'Other']], value: dataObj.mode || 'bank_transfer' }),
       fld({ name: 'bank_account_id', label: rec ? 'Deposit to Bank Account' : 'Paid from Bank Account', type: 'select', req: 1, opts: bankOpts, value: dataObj.bank_account_id || (bankAccounts.length ? bankAccounts[0].id : '') }),
       fld({ name: 'reference', label: 'Reference number', value: dataObj.reference || '' }),
@@ -7059,7 +7061,7 @@ async function paymentForm(kind, pre = {}) {
     <h3 style="margin:16px 0 6px;font-size:14px">Apply to ${rec ? 'invoices' : 'bills'}</h3>
     <div id="alloc"><div class="sub">Select a ${pk} to see outstanding ${docs}.</div></div>
     <div class="er" data-err="allocations" role="alert"></div>
-    <div class="cs" style="margin-top:10px"><div><span>Applied</span><b id="ap">₹0.00</b></div><div><span>Unapplied (kept as credit on payment)</span><b id="un">₹0.00</b></div></div>`,
+    <div class="cs" style="margin-top:10px"><div><span>Applied</span><b id="ap">â‚¹0.00</b></div><div><span>Unapplied (kept as credit on payment)</span><b id="un">â‚¹0.00</b></div></div>`,
     onReady: (form, m) => {
       let list = [];
       const sum = () => $$('.al-in', form).reduce((a, i) => a + num(i.value), 0);
@@ -7071,7 +7073,7 @@ async function paymentForm(kind, pre = {}) {
         try {
           const p = await api(`${docs}/?` + qs({ open: 1, [pk]: pid, page_size: 100, ordering: 'due_date' }));
           list = p.results;
-          box.innerHTML = list.length ? `<div class="tw"><table><thead><tr><th>Number</th><th>Due</th><th class="r">Balance due</th><th class="r" style="width:150px">Apply (₹)</th></tr></thead><tbody>${list.map(d => `<tr><td>${esc(d.number)}</td><td>${fd(d.due_date)}</td><td class="r">${inr(d.balance)}</td><td><input class="in al-in r" type="number" min="0" step="0.01" max="${esc(d.balance)}" data-id="${d.id}" aria-label="Apply to ${esc(d.number)}"></td></tr>`).join('')}</tbody></table></div><button type="button" class="btn" data-auto style="margin-top:8px">Auto-apply (oldest due first)</button>` : `<div class="sub">No outstanding ${docs} for this ${pk}. The full amount will remain unapplied.</div>`;
+          box.innerHTML = list.length ? `<div class="tw"><table><thead><tr><th>Number</th><th>Due</th><th class="r">Balance due</th><th class="r" style="width:150px">Apply (â‚¹)</th></tr></thead><tbody>${list.map(d => `<tr><td>${esc(d.number)}</td><td>${fd(d.due_date)}</td><td class="r">${inr(d.balance)}</td><td><input class="in al-in r" type="number" min="0" step="0.01" max="${esc(d.balance)}" data-id="${d.id}" aria-label="Apply to ${esc(d.number)}"></td></tr>`).join('')}</tbody></table></div><button type="button" class="btn" data-auto style="margin-top:8px">Auto-apply (oldest due first)</button>` : `<div class="sub">No outstanding ${docs} for this ${pk}. The full amount will remain unapplied.</div>`;
           if (pre && pre.doc) { const i = $(`.al-in[data-id="${pre.doc}"]`, form); if (i) { const d = list.find(x => String(x.id) === String(pre.doc)); i.value = d.balance; if (!form.elements.amount.value) form.elements.amount.value = d.balance; } pre.doc = null; }
           if (existing && existing.allocations) {
             for (const alloc of existing.allocations) {
@@ -7090,9 +7092,9 @@ async function paymentForm(kind, pre = {}) {
           if (bankEl.value === '__add_new__') {
             bankAccountForm(null, async newAcc => {
               const fresh = await api('lookup/bank-accounts/').catch(() => []);
-              bankEl.innerHTML = '<option value="">Select Bank Account…</option>' +
+              bankEl.innerHTML = '<option value="">Select Bank Accountâ€¦</option>' +
                 fresh.map(b => `<option value="${b.id}" ${newAcc && newAcc.id === b.id ? 'selected' : ''}>${esc(b.display_name || b.name)}</option>`).join('') +
-                '<option value="__add_new__" style="color:#2563eb;font-weight:600;">+ Add New Bank Account…</option>';
+                '<option value="__add_new__" style="color:#2563eb;font-weight:600;">+ Add New Bank Accountâ€¦</option>';
             });
           }
         });
@@ -7744,7 +7746,7 @@ function renderCustomFieldsHtml(customFields = [], rec = null, prefix = 'cf') {
       return `<div class="transaction-card-field">
         <label class="transaction-card-label ${field.required ? 'required' : ''}" for="${prefix}-cf-${esc(field.name)}">${esc(field.label)}${field.required ? '*' : ''}</label>
         <select class="in transaction-custom-field" id="${prefix}-cf-${esc(field.name)}" data-custom-field="${esc(field.name)}" ${required}>
-          <option value="">Select…</option>
+          <option value="">Selectâ€¦</option>
           ${options.map(option => `<option value="${esc(option)}" ${String(value) === option ? 'selected' : ''}>${esc(option)}</option>`).join('')}
         </select>
       </div>`;
@@ -7861,9 +7863,9 @@ async function paymentMadeForm(pre = {}) {
   const payNum = dataObj.number || (numberPreview && (numberPreview.next_number || numberPreview.number)) || 'PM-000001';
 
   const bankOpts = [
-    ['', 'Select Bank Account…'],
+    ['', 'Select Bank Accountâ€¦'],
     ...bankAccounts.map(b => [b.id, b.display_name || `${b.name} (${b.bank_name})`]),
-    ['__add_new__', '+ Add New Bank Account…']
+    ['__add_new__', '+ Add New Bank Accountâ€¦']
   ];
 
   formModal({
@@ -7877,8 +7879,8 @@ async function paymentMadeForm(pre = {}) {
           <label class="customer-select-outer-label" for="pay-vendor">Vendor Name*</label>
           <div style="display:flex;align-items:center;gap:10px;">
             <select class="in" id="pay-vendor" name="vendor" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
-              <option value="">Select Vendor…</option>
-              <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendor…</option>
+              <option value="">Select Vendorâ€¦</option>
+              <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendorâ€¦</option>
               ${parties.map(item => `<option value="${item.id}" ${String(vendorId) === String(item.id) ? 'selected' : ''}>${esc(item.name)}</option>`).join('')}
             </select>
             <button type="button" class="btn p" id="btn-pay-vendor-lookup" title="Search / Add Vendor" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -7943,7 +7945,7 @@ async function paymentMadeForm(pre = {}) {
           </div>
 
           <div class="transaction-card-field">
-            <label class="transaction-card-label required" for="paym-amount">Amount Paid (₹)</label>
+            <label class="transaction-card-label required" for="paym-amount">Amount Paid (â‚¹)</label>
             <input class="in" type="number" id="paym-amount" name="amount" value="${dataObj.amount || ''}" min="0.01" step="0.01" required placeholder="0.00" style="width:100%;box-sizing:border-box;padding:0 12px;">
           </div>
 
@@ -7965,7 +7967,7 @@ async function paymentMadeForm(pre = {}) {
         <div class="transaction-card">
           <div class="transaction-card-field">
             <label class="transaction-card-label" for="paym-notes">Notes</label>
-            <textarea class="in" id="paym-notes" name="notes" rows="2" placeholder="Internal notes…" style="width:100%;box-sizing:border-box;">${esc(dataObj.notes || '')}</textarea>
+            <textarea class="in" id="paym-notes" name="notes" rows="2" placeholder="Internal notesâ€¦" style="width:100%;box-sizing:border-box;">${esc(dataObj.notes || '')}</textarea>
           </div>
           ${renderCustomFieldsCardContent(paymCustomFields, dataObj, 'Payments Made', 'paym')}
         </div>
@@ -7974,7 +7976,7 @@ async function paymentMadeForm(pre = {}) {
       <h3 style="margin:20px 0 8px;font-size:14px;font-weight:700;color:var(--tx,#1e293b);">Apply to Bills</h3>
       <div id="alloc"><div class="sub">Select a vendor to see outstanding bills.</div></div>
       <div class="er" data-err="allocations" role="alert"></div>
-      <div class="cs" style="margin-top:10px"><div><span>Applied</span><b id="ap">₹0.00</b></div><div><span>Unapplied (kept as credit on payment)</span><b id="un">₹0.00</b></div></div>
+      <div class="cs" style="margin-top:10px"><div><span>Applied</span><b id="ap">â‚¹0.00</b></div><div><span>Unapplied (kept as credit on payment)</span><b id="un">â‚¹0.00</b></div></div>
     `,
     onReady: (form, m) => {
       bindTransactionSeriesToBusinessLocation(
@@ -8003,7 +8005,7 @@ async function paymentMadeForm(pre = {}) {
         try {
           const p = await api('bills/?' + qs({ open: 1, vendor: pid, page_size: 100, ordering: 'due_date' }));
           list = p.results;
-          box.innerHTML = list.length ? `<div class="tw"><table><thead><tr><th>Number</th><th>Due</th><th class="r">Balance due</th><th class="r" style="width:150px">Apply (₹)</th></tr></thead><tbody>${list.map(d => `<tr><td>${esc(d.number)}</td><td>${fd(d.due_date)}</td><td class="r">${inr(d.balance)}</td><td><input class="in al-in r" type="number" min="0" step="0.01" max="${esc(d.balance)}" data-id="${d.id}" aria-label="Apply to ${esc(d.number)}"></td></tr>`).join('')}</tbody></table></div><button type="button" class="btn" data-auto style="margin-top:8px">Auto-apply (oldest due first)</button>` : `<div class="sub">No outstanding bills for this vendor. The full amount will remain unapplied.</div>`;
+          box.innerHTML = list.length ? `<div class="tw"><table><thead><tr><th>Number</th><th>Due</th><th class="r">Balance due</th><th class="r" style="width:150px">Apply (â‚¹)</th></tr></thead><tbody>${list.map(d => `<tr><td>${esc(d.number)}</td><td>${fd(d.due_date)}</td><td class="r">${inr(d.balance)}</td><td><input class="in al-in r" type="number" min="0" step="0.01" max="${esc(d.balance)}" data-id="${d.id}" aria-label="Apply to ${esc(d.number)}"></td></tr>`).join('')}</tbody></table></div><button type="button" class="btn" data-auto style="margin-top:8px">Auto-apply (oldest due first)</button>` : `<div class="sub">No outstanding bills for this vendor. The full amount will remain unapplied.</div>`;
           if (pre && pre.doc) { const i = $(`.al-in[data-id="${pre.doc}"]`, form); if (i) { const d = list.find(x => String(x.id) === String(pre.doc)); i.value = d.balance; if (!form.elements.amount.value) form.elements.amount.value = d.balance; } pre.doc = null; }
           if (existing && existing.allocations) {
             for (const alloc of existing.allocations) {
@@ -8090,9 +8092,9 @@ async function paymentMadeForm(pre = {}) {
           if (bankEl.value === '__add_new__') {
             bankAccountForm(null, async newAcc => {
               const fresh = await api('lookup/bank-accounts/').catch(() => []);
-              bankEl.innerHTML = '<option value="">Select Bank Account…</option>' +
+              bankEl.innerHTML = '<option value="">Select Bank Accountâ€¦</option>' +
                 fresh.map(b => `<option value="${b.id}" ${newAcc && newAcc.id === b.id ? 'selected' : ''}>${esc(b.display_name || b.name)}</option>`).join('') +
-                '<option value="__add_new__" style="color:#2563eb;font-weight:600;">+ Add New Bank Account…</option>';
+                '<option value="__add_new__" style="color:#2563eb;font-weight:600;">+ Add New Bank Accountâ€¦</option>';
             });
           }
         });
@@ -8195,16 +8197,16 @@ async function adjustForm(preItem, targetEl, onDone) {
           <div style="flex:1;">
             <select class="in adj-row-item" style="width:100%;height:36px;border-radius:6px;border:1px solid #cbd5e1;padding:0 10px;font-size:13px;background:#fff;">
               <option value="">Type or click to select an item.</option>
-              <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+              <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
               ${items.map(it => `<option value="${it.id}" ${String(l.item || l.id || preItemSelection) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
             </select>
             <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
               <select class="in adj-row-project" style="font-size:12px;height:28px;padding:2px 24px 2px 8px;border-radius:4px;border:1px solid #cbd5e1;background:#fff;color:#475569;min-width:160px;max-width:240px;width:auto;box-sizing:border-box;">
-                <option value="">💼 Select a project ▾</option>
+                <option value="">ðŸ’¼ Select a project â–¾</option>
                 ${projects.map(p => `<option value="${p.id}" ${String(l.project) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
-                <option value="__new_project__">+ Add New Project…</option>
+                <option value="__new_project__">+ Add New Projectâ€¦</option>
               </select>
-              <input class="in adj-row-tags" placeholder="🏷 Reporting Tags ▾" value="${esc(l.reporting_tags || '')}" style="font-size:12px;height:28px;padding:2px 8px;width:160px;border-radius:4px;border:1px solid #cbd5e1;background:#fff;color:#475569;">
+              <input class="in adj-row-tags" placeholder="ðŸ· Reporting Tags â–¾" value="${esc(l.reporting_tags || '')}" style="font-size:12px;height:28px;padding:2px 8px;width:160px;border-radius:4px;border:1px solid #cbd5e1;background:#fff;color:#475569;">
             </div>
           </div>
         </div>
@@ -8219,7 +8221,7 @@ async function adjustForm(preItem, targetEl, onDone) {
         <input type="text" class="in adj-row-qty-adj" value="${l.quantity_adjusted != null ? (num(l.quantity_adjusted) > 0 ? '+' : '') + l.quantity_adjusted : ''}" placeholder="Eg. +10, -10" style="text-align:right;height:36px;border-radius:6px;border:1px solid #cbd5e1;padding:0 10px;font-size:13px;width:100%;">
       </td>
       <td style="width:40px;padding:12px 8px;text-align:center;vertical-align:top;">
-        <button type="button" class="btn ic adj-row-del" style="border:none;background:none;color:#94a3b8;font-size:18px;cursor:pointer;padding-top:4px;" title="Remove row">×</button>
+        <button type="button" class="btn ic adj-row-del" style="border:none;background:none;color:#94a3b8;font-size:18px;cursor:pointer;padding-top:4px;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -8270,7 +8272,7 @@ async function adjustForm(preItem, targetEl, onDone) {
           <label style="width:160px;font-weight:500;font-size:13px;color:#ef4444;">Account*</label>
           <select class="in" id="adj-account" name="account" required style="width:340px;height:36px;border-radius:6px;border:1px solid #cbd5e1;padding:0 12px;font-size:13px;background:#fff;">
             ${accountOptionsHtml}
-            <option value="__new_account__">+ Add New Account…</option>
+            <option value="__new_account__">+ Add New Accountâ€¦</option>
           </select>
         </div>
 
@@ -8308,7 +8310,7 @@ async function adjustForm(preItem, targetEl, onDone) {
               <select class="in" id="adj-warehouse" name="warehouse" style="flex:1;height:34px;border-radius:6px;border:1px solid #cbd5e1;padding:0 10px;font-size:12px;background:#fff;">
                 <option value="">Default Warehouse (All Locations)</option>
                 ${warehouses.map((w, idx) => `<option value="${w.id}" ${idx === 0 ? 'selected' : ''}>${esc(w.code)} - ${esc(w.name)}${w.is_sub_warehouse ? ' (Sub)' : ''}</option>`).join('')}
-                <option value="__new_warehouse__" style="color:var(--accent,#2563eb);font-weight:600;">+ Add New Warehouse…</option>
+                <option value="__new_warehouse__" style="color:var(--accent,#2563eb);font-weight:600;">+ Add New Warehouseâ€¦</option>
               </select>
             </div>
             <div style="display:flex;align-items:center;gap:16px;">
@@ -8360,7 +8362,7 @@ async function adjustForm(preItem, targetEl, onDone) {
           <label style="display:block;font-size:13px;font-weight:500;color:#334155;margin-bottom:8px;">Attach File(s) to inventory adjustment</label>
           <input type="file" id="adj-file-input" multiple style="display:none;">
           <button type="button" class="btn" id="btn-adj-upload" style="background:#fff;border:1px solid #cbd5e1;border-radius:6px;padding:7px 14px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:#334155;">
-            <i class="fa-solid fa-upload"></i> Upload File ▾
+            <i class="fa-solid fa-upload"></i> Upload File â–¾
           </button>
           <div style="font-size:11.5px;color:#64748b;margin-top:6px;">You can upload a maximum of 5 files, 10MB each</div>
           <div id="adj-attach-badges" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;"></div>
@@ -8529,12 +8531,12 @@ async function adjustForm(preItem, targetEl, onDone) {
   });
 
   // Add row
-  $('#btn-adj-add-row', target).addEventListener('click', () => {
+  on('#btn-adj-add-row', 'click', () => {
     tbody.insertAdjacentHTML('beforeend', rowHtml());
-  });
+  }, target);
 
   // Bulk add
-  $('#btn-adj-bulk-add', target).addEventListener('click', () => {
+  on('#btn-adj-bulk-add', 'click', () => {
     if (typeof bulkItemPickerModal === 'function') {
       bulkItemPickerModal(items, selectedItems => {
         selectedItems.forEach(it => {
@@ -8549,7 +8551,7 @@ async function adjustForm(preItem, targetEl, onDone) {
   });
 
   // Bulk actions
-  $('#btn-adj-bulk-actions', target).addEventListener('click', () => {
+  on('#btn-adj-bulk-actions', 'click', () => {
     const chks = $$('.adj-row-chk:checked', tbody);
     if (!chks.length) {
       toast('Please select at least one row checkbox to perform bulk actions.', 'err');
@@ -8572,9 +8574,9 @@ async function adjustForm(preItem, targetEl, onDone) {
     });
   });
 
-  $('#chk-all-adj-lines', target).addEventListener('change', e => {
+  on('#chk-all-adj-lines', 'change', e => {
     $$('.adj-row-chk', tbody).forEach(chk => { chk.checked = e.target.checked; });
-  });
+  }, target);
 
   // File Upload
   const fileInput = $('#adj-file-input', target);
@@ -8615,7 +8617,7 @@ async function adjustForm(preItem, targetEl, onDone) {
         <i class="fa-solid fa-paperclip" style="color:#64748b;"></i>
         <span>${esc(f.filename)}</span>
         <span style="color:#64748b;font-size:10px;">(${(f.file_size / 1024).toFixed(1)} KB)</span>
-        <button type="button" data-rm-att="${idx}" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 2px;">×</button>
+        <button type="button" data-rm-att="${idx}" style="border:none;background:none;color:#ef4444;font-size:14px;cursor:pointer;padding:0 2px;">Ã—</button>
       </span>
     `).join('');
   }
@@ -8746,7 +8748,7 @@ function orgForm() {
         ${fld({ name: 'phone', label: 'Phone', value: o.phone || '', ph: 'Enter business phone' })}
         ${fld({ name: 'email', label: 'Email', type: 'email', value: o.email || '', ph: 'Enter business email' })}
         ${fld({ name: 'website', label: 'Website', value: o.website || '', ph: 'e.g. www.mycompany.com' })}
-        ${fld({ name: 'opening_cash', label: 'Opening Cash & Bank Balance (₹)', type: 'number', value: o.opening_cash || 0, attrs: 'step="0.01"' })}
+        ${fld({ name: 'opening_cash', label: 'Opening Cash & Bank Balance (â‚¹)', type: 'number', value: o.opening_cash || 0, attrs: 'step="0.01"' })}
       </div>
       <div style="margin-top:14px;padding:14px;border:1px solid var(--bd-glass);border-radius:8px;display:flex;align-items:center;gap:18px;">
         <div style="width:72px;height:72px;border-radius:8px;border:1px solid var(--bd-glass);background:#fff;display:grid;place-items:center;overflow:hidden;padding:4px;">
@@ -8778,7 +8780,7 @@ function orgForm() {
           <div style="flex:1;">
             <label style="font-weight:600;font-size:13px;display:block;margin-bottom:4px;">Company Default Digital Signature</label>
             <input type="hidden" name="signature_data" id="org-sig-input" value="${esc(o.signature_data || '')}">
-            <button type="button" class="btn" id="org-edit-sig-btn">✍️ Draw / Type / Upload Signature</button>
+            <button type="button" class="btn" id="org-edit-sig-btn">âœï¸ Draw / Type / Upload Signature</button>
             <button type="button" class="btn" id="org-reset-sig-btn" style="margin-left:6px;display:${o.signature_data ? 'inline-block' : 'none'};">Remove</button>
             <div class="hp" style="margin-top:4px;">Used automatically on invoices, bills, and quotes when no individual signature is specified.</div>
           </div>
@@ -8911,10 +8913,10 @@ async function accountForm(id, onDone, onCancel) {
   };
 
   const ACCOUNT_TYPE_INFO = {
-    asset: { label: 'Asset', desc: 'Track all types of assets your business owns — from cash and inventory to fixed assets and receivables.' },
+    asset: { label: 'Asset', desc: 'Track all types of assets your business owns â€” from cash and inventory to fixed assets and receivables.' },
     liability: { label: 'Liability', desc: 'Record amounts your business owes to others, including short-term debts and long-term loans.' },
     equity: { label: 'Equity', desc: 'Represents the owner\'s stake in the business, including retained earnings and capital.' },
-    income: { label: 'Income', desc: 'Track all revenue streams — sales income, interest income, and other earnings.' },
+    income: { label: 'Income', desc: 'Track all revenue streams â€” sales income, interest income, and other earnings.' },
     expense: { label: 'Expense', desc: 'Record all costs and expenses your business incurs while generating revenue.' },
   };
 
@@ -8988,7 +8990,7 @@ async function accountForm(id, onDone, onCancel) {
     return subType ? subType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : '';
   }
 
-  const parentOpts = [['', '— No parent —'], ...accountOptions.map(a => [a.id, `${a.code ? a.code + ' - ' : ''}${a.name}`])];
+  const parentOpts = [['', 'â€” No parent â€”'], ...accountOptions.map(a => [a.id, `${a.code ? a.code + ' - ' : ''}${a.name}`])];
 
   const modalEl = Modal.open({
     title: id ? 'Edit Account' : 'Create Account',
@@ -9002,7 +9004,7 @@ async function accountForm(id, onDone, onCancel) {
             <div style="position:relative;">
               <div id="acct-type-display" class="in" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:38px;padding:6px 12px;" tabindex="0">
                 <span id="acct-type-label">${esc(buildSubtypeDisplayName(initSubType) || 'Select account type')}</span>
-                <span>▾</span>
+                <span>â–¾</span>
               </div>
               <input type="hidden" name="account_type" id="acct-type-hidden" value="${esc(initType)}">
               <input type="hidden" name="sub_type" id="acct-subtype-hidden" value="${esc(initSubType)}">
@@ -9118,7 +9120,8 @@ async function accountForm(id, onDone, onCancel) {
     });
   }
 
-  modalEl.el.querySelector('#acct-save-btn').addEventListener('click', async () => {
+  const acctSaveBtn = modalEl.el.querySelector('#acct-save-btn');
+  if (acctSaveBtn) acctSaveBtn.addEventListener('click', async () => {
     const name = modalEl.el.querySelector('#acct-name')?.value?.trim();
     const accountType = hiddenType.value;
     if (!name) { toast('Account Name is required.'); return; }
@@ -9181,12 +9184,12 @@ async function journalForm(id) {
   function renderLines() {
     return lines.map((l, i) => `
       <div class="journal-line-row" data-idx="${i}" style="display:grid;grid-template-columns:2.2fr 2fr 1.8fr 1.3fr 1.3fr 36px;gap:8px;margin-bottom:8px;align-items:center;">
-        <select class="in line-acc" name="line_acc_${i}">${opts([...accounts.map(a => [a.id, `${a.code} - ${a.name}`]), ['__new_account__', '+ Add New Account…']], l.account)}</select>
-        <input class="in line-deb r" type="number" step="0.01" min="0" placeholder="Debit ₹" value="${esc(l.debit)}" data-idx="${i}">
-        <input class="in line-cred r" type="number" step="0.01" min="0" placeholder="Credit ₹" value="${esc(l.credit)}" data-idx="${i}">
+        <select class="in line-acc" name="line_acc_${i}">${opts([...accounts.map(a => [a.id, `${a.code} - ${a.name}`]), ['__new_account__', '+ Add New Accountâ€¦']], l.account)}</select>
+        <input class="in line-deb r" type="number" step="0.01" min="0" placeholder="Debit â‚¹" value="${esc(l.debit)}" data-idx="${i}">
+        <input class="in line-cred r" type="number" step="0.01" min="0" placeholder="Credit â‚¹" value="${esc(l.credit)}" data-idx="${i}">
         <input class="in line-desc" type="text" placeholder="Description" value="${esc(l.description)}">
         <select class="in line-contact" name="line_contact_${i}"><option value="">Contact</option></select>
-        <button type="button" class="btn d icon-btn remove-line-btn" data-idx="${i}" style="padding:4px 8px;font-size:16px;">×</button>
+        <button type="button" class="btn d icon-btn remove-line-btn" data-idx="${i}" style="padding:4px 8px;font-size:16px;">Ã—</button>
       </div>
     `).join('');
   }
@@ -9219,9 +9222,9 @@ async function journalForm(id) {
           <div class="sub" style="margin-top:4px;">Maximum 5 files, 10 MB per file.</div>
         </div>
         <div style="display:flex;justify-content:flex-end;gap:24px;margin-top:14px;padding:10px 14px;background:var(--surface-glass-subtle);border-radius:8px;border:1px solid var(--bd);">
-          <div>Total Debits: <b id="jrn-tot-deb">₹0.00</b></div>
-          <div>Total Credits: <b id="jrn-tot-cred">₹0.00</b></div>
-          <div id="jrn-bal-status" style="font-weight:600;color:var(--dn);">Difference: ₹0.00</div>
+          <div>Total Debits: <b id="jrn-tot-deb">â‚¹0.00</b></div>
+          <div>Total Credits: <b id="jrn-tot-cred">â‚¹0.00</b></div>
+          <div id="jrn-bal-status" style="font-weight:600;color:var(--dn);">Difference: â‚¹0.00</div>
         </div>
         <div class="fe" data-err="_" role="alert" style="margin-top:8px;"></div>
       </form>
@@ -9243,9 +9246,9 @@ async function journalForm(id) {
     const diff = Math.abs(r2(totD - totC));
     const st = $('#jrn-bal-status', form);
     if (diff === 0 && totD > 0) {
-      st.innerHTML = `<span style="color:var(--ok);">Balanced ✓</span>`;
+      st.innerHTML = `<span style="color:var(--ok);">Balanced âœ“</span>`;
     } else {
-      st.innerHTML = `<span style="color:var(--dn);">Difference: ₹${diff.toFixed(2)}</span>`;
+      st.innerHTML = `<span style="color:var(--dn);">Difference: â‚¹${diff.toFixed(2)}</span>`;
     }
   }
 
@@ -9270,7 +9273,7 @@ async function journalForm(id) {
       });
     }
   });
-  $('#add-jrn-line', form).addEventListener('click', () => {
+  on('#add-jrn-line', 'click', () => {
     lines.push({ account: accounts[0]?.id || '', debit: '', credit: '', description: '' });
     $('#jrn-lines', form).innerHTML = renderLines();
     updateTotals();
@@ -9352,8 +9355,8 @@ async function journalForm(id) {
       showErrors(form, err.errors, err.message);
     }
   }
-  $('#jrn-submit-btn', m.el).addEventListener('click', () => saveJournal('published'));
-  $('#jrn-draft-btn', m.el).addEventListener('click', () => saveJournal('draft'));
+  on('#jrn-submit-btn', 'click', () => saveJournal('published'), m.el);
+  on('#jrn-draft-btn', 'click', () => saveJournal('draft'), m.el);
   updateTotals();
 }
 
@@ -9513,7 +9516,7 @@ async function expenseForm(id) {
         <div style="display:flex;align-items:center;gap:10px;">
           <select class="in" id="exp-vendor" name="vendor" style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
             <option value="">Direct Expense (No Vendor)</option>
-            <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendor…</option>
+            <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendorâ€¦</option>
             ${vendors.map(v => `<option value="${v.id}" ${String(o.vendor || o.vendor_id) === String(v.id) ? 'selected' : ''}>${esc(v.name)}</option>`).join('')}
           </select>
           <button type="button" class="btn p" id="btn-exp-vendor-lookup" title="Search / Add Vendor" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -9536,9 +9539,9 @@ async function expenseForm(id) {
           <div class="exp-card-field">
             <label class="exp-card-label" for="exp-project">Associate Project</label>
             <select class="in" id="exp-project" name="project_id" style="width:100%;box-sizing:border-box;padding:0 10px;">
-              <option value="">Select Project…</option>
+              <option value="">Select Projectâ€¦</option>
               ${projects.map(p => `<option value="${p.id}" ${String(o.project_id || o.project) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
-              <option value="__new_project__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Project…</option>
+              <option value="__new_project__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Projectâ€¦</option>
             </select>
           </div>
 
@@ -9558,7 +9561,7 @@ async function expenseForm(id) {
             <label class="exp-card-label required" for="exp-account">Expense Account</label>
             <select class="in" id="exp-account" name="expense_account" required style="width:100%;box-sizing:border-box;padding:0 10px;">
               ${expAccounts.map(a => `<option value="${a.id}" ${String(o.expense_account || o.expense_account_id) === String(a.id) ? 'selected' : ''}>${esc(a.code)} - ${esc(a.name)}</option>`).join('')}
-              <option value="__new_account__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Account…</option>
+              <option value="__new_account__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Accountâ€¦</option>
             </select>
           </div>
 
@@ -9597,7 +9600,7 @@ async function expenseForm(id) {
           </div>
 
           <div class="exp-card-field">
-            <label class="exp-card-label required" for="exp-amount">Taxable Amount (₹)</label>
+            <label class="exp-card-label required" for="exp-amount">Taxable Amount (â‚¹)</label>
             <input class="in" type="number" id="exp-amount" name="amount" value="${o.amount || ''}" step="0.01" min="0.01" required placeholder="0.00" style="width:100%;box-sizing:border-box;padding:0 12px;">
           </div>
 
@@ -9612,22 +9615,22 @@ async function expenseForm(id) {
 
       <div style="margin-bottom:20px;">
         <label class="exp-card-label" for="exp-notes" style="margin-bottom:6px;display:block;">Notes / Purpose</label>
-        <textarea class="in" id="exp-notes" name="notes" rows="3" placeholder="Notes or business purpose for this expense…" style="width:100%;min-height:70px;box-sizing:border-box;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">${esc(o.notes || '')}</textarea>
+        <textarea class="in" id="exp-notes" name="notes" rows="3" placeholder="Notes or business purpose for this expenseâ€¦" style="width:100%;min-height:70px;box-sizing:border-box;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:13px;">${esc(o.notes || '')}</textarea>
       </div>
 
       <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;display:flex;justify-content:flex-end;margin-bottom:10px;">
         <div style="width:280px;display:flex;flex-direction:column;gap:8px;font-size:13px;">
           <div style="display:flex;justify-content:space-between;color:#64748b;">
             <span>Taxable Amount:</span>
-            <b id="exp-sum-taxable" style="color:#0f172a;">₹0.00</b>
+            <b id="exp-sum-taxable" style="color:#0f172a;">â‚¹0.00</b>
           </div>
           <div style="display:flex;justify-content:space-between;color:#64748b;">
             <span>GST Tax Amount:</span>
-            <b id="exp-sum-tax" style="color:#0f172a;">₹0.00</b>
+            <b id="exp-sum-tax" style="color:#0f172a;">â‚¹0.00</b>
           </div>
           <div style="display:flex;justify-content:space-between;font-weight:700;font-size:15px;color:#0284c7;border-top:1px solid #e2e8f0;padding-top:8px;">
             <span>Total Expense:</span>
-            <span id="exp-sum-total">₹0.00</span>
+            <span id="exp-sum-total">â‚¹0.00</span>
           </div>
         </div>
       </div>
@@ -9814,9 +9817,9 @@ async function bankAccountForm(id, onDone, onCancel) {
       ${fld({ name: 'account_type', label: 'Account Type', type: 'select', req: true, opts: accTypeOpts, value: o.account_type || '' })}
       ${fld({ name: 'currency', label: 'Account Currency', type: 'select', opts: [['INR', 'INR - Indian Rupee'], ['USD', 'USD - US Dollar'], ['EUR', 'EUR - Euro'], ['GBP', 'GBP - British Pound']], value: o.currency || 'INR' })}
       ${fld({ name: 'branch_name', label: 'Branch / Location', value: o.branch_name || 'HO Kottayam', ph: 'e.g. HO Kottayam' })}
-      ${fld({ name: 'opening_balance', label: 'Opening Balance (₹)', type: 'number', value: o.opening_balance || '0.00' })}
+      ${fld({ name: 'opening_balance', label: 'Opening Balance (â‚¹)', type: 'number', value: o.opening_balance || '0.00' })}
       ${fld({ name: 'opening_balance_date', label: 'Opening Balance Date', type: 'date', value: o.opening_balance_date || APP.today })}
-      ${fld({ name: 'bank_balance', label: 'Bank Statement Balance (₹)', type: 'number', value: o.bank_balance || o.current_balance || '0.00' })}
+      ${fld({ name: 'bank_balance', label: 'Bank Statement Balance (â‚¹)', type: 'number', value: o.bank_balance || o.current_balance || '0.00' })}
       ${fld({ name: 'gl_account', label: 'Linked GL Account', type: 'select', opts: glOpts, value: o.gl_account_id || '' })}
       ${fld({ name: 'description', label: 'Description & Notes', type: 'textarea', value: o.description || '' })}
       <div class="fe" style="display:flex;align-items:center;gap:16px;padding:8px 14px;">
@@ -9956,7 +9959,7 @@ async function recordDepositModal(defaultAccId) {
     body: `<div class="zb-form-wrap">
       ${fld({ name: 'bank_account', label: 'Deposit-To Bank Account', type: 'select', opts: bankAccs.map(b => [b.id, `${b.name} (${b.bank_name || 'Bank'})`]), value: defaultAccId || bankAccs[0].id, req: true })}
       ${fld({ name: 'date', label: 'Deposit Date', type: 'date', req: true, value: APP.today })}
-      ${fld({ name: 'amount', label: 'Deposit Amount (₹)', type: 'number', req: true, ph: '0.00' })}
+      ${fld({ name: 'amount', label: 'Deposit Amount (â‚¹)', type: 'number', req: true, ph: '0.00' })}
       ${fld({ name: 'party_name', label: 'Received From / Source Party', ph: 'e.g. ABC Technologies / Cash Sales' })}
       ${fld({ name: 'deposit_type', label: 'Deposit Type', type: 'select', opts: depositTypes, value: 'customer_receipt' })}
       ${fld({ name: 'offset_account', label: 'Offset / Clearing Account', type: 'select', opts: offsetOpts })}
@@ -10002,7 +10005,7 @@ async function addBankTransactionModal(type, defaultAccId) {
     body: `<div class="zb-form-wrap">
       ${fld({ name: 'bank_account', label: 'Bank Account', type: 'select', opts: bankAccs.map(b => [b.id, `${b.name} (${b.bank_name || 'Bank'})`]), value: defaultAccId || bankAccs[0].id, req: true })}
       ${fld({ name: 'date', label: 'Transaction Date', type: 'date', req: true, value: APP.today })}
-      ${fld({ name: 'amount', label: 'Amount (₹)', type: 'number', req: true, ph: '0.00' })}
+      ${fld({ name: 'amount', label: 'Amount (â‚¹)', type: 'number', req: true, ph: '0.00' })}
       ${fld({ name: 'reference', label: 'Reference / Voucher #', ph: 'e.g. TXN-89210' })}
       ${fld({ name: 'account', label: 'Category / GL Account', type: 'select', opts: accounts.map(a => [a.id, `${a.name} (${a.account_type})`]) })}
       ${fld({ name: 'description', label: 'Description & Narration', req: true, ph: 'e.g. Monthly maintenance charge / Interest credited' })}
@@ -10041,7 +10044,7 @@ async function matchBankTransactionModal(txnId, onDone) {
   let selectedCandidate = suggestions[0] || null;
 
   const isDeposit = num(txn.deposit) > 0;
-  const amtDisplay = isDeposit ? `+₹${txn.deposit}` : `-₹${txn.withdrawal}`;
+  const amtDisplay = isDeposit ? `+â‚¹${txn.deposit}` : `-â‚¹${txn.withdrawal}`;
 
   const m = Modal.open({
     title: 'Match Bank Statement Transaction',
@@ -10057,7 +10060,7 @@ async function matchBankTransactionModal(txnId, onDone) {
           </div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--tx-muted);">
             <div>Date: <b style="color:var(--tx);">${fd(txn.date)}</b></div>
-            <div>Reference: <b style="color:var(--tx);">${esc(txn.reference || '—')}</b></div>
+            <div>Reference: <b style="color:var(--tx);">${esc(txn.reference || 'â€”')}</b></div>
             <div>Bank Account: <b style="color:var(--tx);">${esc(txn.bank_account_name || 'Bank')}</b></div>
             <div>Location: <b style="color:var(--tx);">${esc(txn.location || 'HO Kottayam')}</b></div>
           </div>
@@ -10080,10 +10083,10 @@ async function matchBankTransactionModal(txnId, onDone) {
                     <div style="display:flex;align-items:center;gap:8px;">
                       <span class="pastel-chip ${badgeClass}">${conf}% Match</span>
                       <b style="font-size:13.5px;color:var(--tx);">${esc(c.number || c.id)}</b>
-                      <span style="font-size:12px;color:var(--tx-muted);">· ${esc(c.party_name || c.type || 'Transaction')}</span>
+                      <span style="font-size:12px;color:var(--tx-muted);">Â· ${esc(c.party_name || c.type || 'Transaction')}</span>
                     </div>
                     <div style="font-size:11.5px;color:var(--tx-muted);margin-top:4px;">
-                      Date: ${fd(c.date)} · ${(c.reasons || []).join(' · ') || 'Compatible accounting entry'}
+                      Date: ${fd(c.date)} Â· ${(c.reasons || []).join(' Â· ') || 'Compatible accounting entry'}
                     </div>
                   </div>
                 </div>
@@ -10095,10 +10098,10 @@ async function matchBankTransactionModal(txnId, onDone) {
             `;
           }).join('') : `
             <div style="text-align:center;padding:30px;background:var(--surface-glass-subtle);border-radius:8px;border:1px dashed var(--bd-glass);">
-              <div style="font-size:24px;margin-bottom:6px;">🔍</div>
+              <div style="font-size:24px;margin-bottom:6px;">ðŸ”</div>
               <div style="font-weight:600;font-size:13.5px;color:var(--tx);">No exact book transaction matches found</div>
               <div style="font-size:12px;color:var(--tx-muted);margin-top:4px;">You can Quick Categorize this transaction directly or record a new book payment.</div>
-              <button type="button" class="btn p" id="btn-fallback-quick-cat" style="margin-top:12px;">⚡ Quick Categorize Instead</button>
+              <button type="button" class="btn p" id="btn-fallback-quick-cat" style="margin-top:12px;">âš¡ Quick Categorize Instead</button>
             </div>
           `}
         </div>
@@ -10106,7 +10109,7 @@ async function matchBankTransactionModal(txnId, onDone) {
         ${suggestions.length ? `
           <div style="margin-top:16px;border-top:1px solid var(--bd-glass);padding-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
             <div style="display:flex;align-items:center;gap:8px;">
-              <label style="font-size:12px;color:var(--tx-muted);">Bank Fee / Adjustment (₹):</label>
+              <label style="font-size:12px;color:var(--tx-muted);">Bank Fee / Adjustment (â‚¹):</label>
               <input type="number" id="match-fee-input" class="in" value="0.00" style="width:100px;font-size:12px;padding:4px 8px;">
             </div>
             <div style="display:flex;gap:10px;">
@@ -10182,11 +10185,11 @@ async function unmatchBankTransactionModal(txnId, onDone) {
         </div>
         <div style="background:var(--surface-glass-subtle);border:1px solid var(--bd-glass);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12.5px;">
           <div><b>Description:</b> ${esc(txn.description)}</div>
-          <div><b>Date:</b> ${fd(txn.date)} · <b>Amount:</b> ₹${txn.withdrawal > 0 ? txn.withdrawal : txn.deposit}</div>
+          <div><b>Date:</b> ${fd(txn.date)} Â· <b>Amount:</b> â‚¹${txn.withdrawal > 0 ? txn.withdrawal : txn.deposit}</div>
           <div><b>Current Status:</b> <span class="status-matched">${esc(txn.status)}</span></div>
         </div>
         <div style="font-size:12px;color:var(--warn);line-height:1.4;">
-          ⚠️ <b>Accounting Notice:</b> Unmatching will decouple this bank statement line from its general ledger entry and set its status to Unmatched. Posted ledger transactions are preserved.
+          âš ï¸ <b>Accounting Notice:</b> Unmatching will decouple this bank statement line from its general ledger entry and set its status to Unmatched. Posted ledger transactions are preserved.
         </div>
       </div>
     `,
@@ -10196,7 +10199,7 @@ async function unmatchBankTransactionModal(txnId, onDone) {
     `
   });
 
-  $('#btn-confirm-unmatch', m.el).addEventListener('click', async () => {
+  on('#btn-confirm-unmatch', 'click', async () => {
     try {
       await api(`banking/unmatch/${txnId}/`, { method: 'POST' });
       toast('Transaction unmatched successfully');
@@ -10232,7 +10235,7 @@ async function quickCategorizeModal(txnId, onDone) {
     body: `<div class="zb-form-wrap">
       <div style="background:var(--surface-glass-subtle);border:1px solid var(--bd-glass);border-radius:8px;padding:12px;margin:0 14px 14px;font-size:12.5px;">
         <div style="font-weight:700;font-size:14px;color:var(--tx);">${esc(txn.description)}</div>
-        <div style="color:var(--tx-muted);margin-top:2px;">Date: <b>${fd(txn.date)}</b> · Ref: <b>${esc(txn.reference || '—')}</b> · Amount: <b style="color:${isDeposit ? '#059669' : '#dc2626'};">₹${amt}</b></div>
+        <div style="color:var(--tx-muted);margin-top:2px;">Date: <b>${fd(txn.date)}</b> Â· Ref: <b>${esc(txn.reference || 'â€”')}</b> Â· Amount: <b style="color:${isDeposit ? '#059669' : '#dc2626'};">â‚¹${amt}</b></div>
       </div>
       ${fld({ name: 'transaction_type', label: 'Transaction Type', type: 'select', opts: defaultTypes, value: defaultTypes[0][0], req: true })}
       ${fld({ name: 'category_account', label: 'Category / GL Account', type: 'select', opts: [['', 'Select Account...'], ...accounts.map(a => [a.id, `${a.code ? a.code + ' - ' : ''}${a.name} (${a.account_type})`])], req: true })}
@@ -10317,7 +10320,7 @@ async function statementImportWizardModal(defaultAccId) {
         </div>
 
         <div style="border:2px dashed var(--bd-glass);border-radius:10px;padding:24px;text-align:center;background:var(--surface-glass-subtle);margin-bottom:16px;">
-          <div style="font-size:28px;margin-bottom:8px;">📄</div>
+          <div style="font-size:28px;margin-bottom:8px;">ðŸ“„</div>
           <div style="font-weight:700;font-size:14px;color:var(--tx);margin-bottom:4px;">Upload Statement File (CSV, XLS, XLSX)</div>
           <div class="sub" style="font-size:12px;margin-bottom:14px;">Supports standard Indian bank statements (HDFC, ICICI, SBI, Kotak, Axis, etc.)</div>
           <input type="file" id="wiz-file-inp" accept=".csv,.xlsx,.xls,.txt" style="display:none;">
@@ -10343,8 +10346,8 @@ async function statementImportWizardModal(defaultAccId) {
             </table>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--tx-muted);">
-            <div id="wiz-stats-txt">5 rows ready to import · 0 duplicates detected</div>
-            <div style="color:#059669;font-weight:600;">✓ Validation Passed</div>
+            <div id="wiz-stats-txt">5 rows ready to import Â· 0 duplicates detected</div>
+            <div style="color:#059669;font-weight:600;">âœ“ Validation Passed</div>
           </div>
         </div>
       </div>
@@ -10388,15 +10391,15 @@ async function statementImportWizardModal(defaultAccId) {
         if (previewRows.length > 0) {
           $('#wiz-preview-tbody', m.el).innerHTML = previewRows.map(r => `
             <tr>
-              <td>${esc(dateIdx >= 0 ? r[dateIdx] : (r[0] || '—'))}</td>
-              <td><code>${esc(refIdx >= 0 ? r[refIdx] : (r[1] || '—'))}</code></td>
+              <td>${esc(dateIdx >= 0 ? r[dateIdx] : (r[0] || 'â€”'))}</td>
+              <td><code>${esc(refIdx >= 0 ? r[refIdx] : (r[1] || 'â€”'))}</code></td>
               <td><b>${esc(descIdx >= 0 ? r[descIdx] : (r[2] || 'Bank Transaction'))}</b></td>
-              <td class="r" style="color:#dc2626;">${esc(drIdx >= 0 ? r[drIdx] : '—')}</td>
-              <td class="r" style="color:#059669;">${esc(crIdx >= 0 ? r[crIdx] : '—')}</td>
-              <td class="r"><b>${esc(balIdx >= 0 ? r[balIdx] : '—')}</b></td>
+              <td class="r" style="color:#dc2626;">${esc(drIdx >= 0 ? r[drIdx] : 'â€”')}</td>
+              <td class="r" style="color:#059669;">${esc(crIdx >= 0 ? r[crIdx] : 'â€”')}</td>
+              <td class="r"><b>${esc(balIdx >= 0 ? r[balIdx] : 'â€”')}</b></td>
             </tr>
           `).join('');
-          $('#wiz-stats-txt', m.el).textContent = `${parsed.rows.length} rows detected · Ready to import`;
+          $('#wiz-stats-txt', m.el).textContent = `${parsed.rows.length} rows detected Â· Ready to import`;
         }
         submitBtn.disabled = false;
       } catch (err) {
@@ -10441,14 +10444,14 @@ async function transferForm() {
     toast('You need at least 2 bank accounts to record a transfer.', 'err');
     return bankAccountForm(null, () => transferForm());
   }
-  const bankOpts = [['', 'Select Account'], ...bankAccs.map(a => [a.id, `${a.name} (₹${a.balance})`]), ['__new_bank_account__', '+ Add New Bank Account…']];
+  const bankOpts = [['', 'Select Account'], ...bankAccs.map(a => [a.id, `${a.name} (â‚¹${a.balance})`]), ['__new_bank_account__', '+ Add New Bank Accountâ€¦']];
   formModal({
     title: 'Record Bank Transfer',
     body: `<div class="zb-form-wrap">
       ${fld({ name: 'date', label: 'Transfer Date', type: 'date', req: true, value: APP.today })}
       ${fld({ name: 'from_account', label: 'From Account', type: 'select', opts: bankOpts, req: true, value: '' })}
       ${fld({ name: 'to_account', label: 'To Account', type: 'select', opts: bankOpts, req: true, value: '' })}
-      ${fld({ name: 'amount', label: 'Amount (₹)', type: 'number', req: true, ph: 'Enter Amount' })}
+      ${fld({ name: 'amount', label: 'Amount (â‚¹)', type: 'number', req: true, ph: 'Enter Amount' })}
       ${fld({ name: 'reference', label: 'Reference / Cheque #', ph: 'e.g. IMPS-89210' })}
     </div>`,
     onReady: form => {
@@ -10459,7 +10462,7 @@ async function transferForm() {
             if (sel.value === '__new_bank_account__') {
               bankAccountForm(null, async newAcc => {
                 const fresh = await api('lookup/bank-accounts/').catch(() => []);
-                const updatedOpts = [['', 'Select Account'], ...fresh.map(a => [a.id, `${a.name} (₹${a.balance})`]), ['__new_bank_account__', '+ Add New Bank Account…']];
+                const updatedOpts = [['', 'Select Account'], ...fresh.map(a => [a.id, `${a.name} (â‚¹${a.balance})`]), ['__new_bank_account__', '+ Add New Bank Accountâ€¦']];
                 ['from_account', 'to_account'].forEach(fn => {
                   const s = form.elements[fn];
                   if (s) {
@@ -10514,7 +10517,7 @@ async function importStatementModal(baId) {
       <div class="g" style="margin-bottom:14px;">
         <div class="s6">
           <div style="border:1px solid var(--bd);border-radius:10px;padding:20px;text-align:center;background:var(--surface-glass-subtle);height:100%;">
-            <div style="font-size:24px;margin-bottom:6px;">⚡</div>
+            <div style="font-size:24px;margin-bottom:6px;">âš¡</div>
             <div style="font-weight:700;margin-bottom:4px;">Live Bank Feed (Open Banking API)</div>
             <div class="sub" style="font-size:12px;margin-bottom:12px;">Real-time sync via Corporate Banking &amp; RBI Account Aggregator</div>
             <div class="fg" style="text-align:left;margin-bottom:12px;">
@@ -10525,13 +10528,13 @@ async function importStatementModal(baId) {
                 <option value="open_banking">Open Banking Direct Corporate API</option>
               </select>
             </div>
-            <button type="button" class="btn p" id="btn-live-sync-now" style="width:100%;">⚡ Sync Live Bank Feed</button>
+            <button type="button" class="btn p" id="btn-live-sync-now" style="width:100%;">âš¡ Sync Live Bank Feed</button>
           </div>
         </div>
 
         <div class="s6">
           <div style="border:2px dashed var(--bd);border-radius:10px;padding:20px;text-align:center;background:var(--surface-glass-subtle);height:100%;">
-            <div style="font-size:24px;margin-bottom:6px;">📄</div>
+            <div style="font-size:24px;margin-bottom:6px;">ðŸ“„</div>
             <div style="font-weight:700;margin-bottom:4px;">Upload Statement File</div>
             <div class="sub" style="font-size:12px;margin-bottom:12px;">Supports CSV, OFX, QIF, and standard bank formats</div>
             <input type="file" id="imp-file-input" accept=".csv,.ofx,.qif" style="display:none;">
@@ -10541,8 +10544,8 @@ async function importStatementModal(baId) {
       </div>
 
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:10px;border-top:1px solid var(--bd);padding-top:12px;">
-        <button type="button" class="btn" id="btn-open-bank-rules">⚙️ Manage Bank Rules</button>
-        <button type="button" class="btn" id="btn-open-rollback">↺ Rollback Statement Batch</button>
+        <button type="button" class="btn" id="btn-open-bank-rules">âš™ï¸ Manage Bank Rules</button>
+        <button type="button" class="btn" id="btn-open-rollback">â†º Rollback Statement Batch</button>
       </div>
     `,
     footer: `<button type="button" class="btn" data-close>Close</button>`
@@ -10554,7 +10557,7 @@ async function importStatementModal(baId) {
     browseStmtBtn.addEventListener('click', () => impFileInp.click());
   }
 
-  $('#btn-live-sync-now', m.el).addEventListener('click', async () => {
+  on('#btn-live-sync-now', 'click', async () => {
     const accId = $('#imp-ba', m.el).value;
     const provider = $('#feed-provider-sel', m.el).value;
     const btn = $('#btn-live-sync-now', m.el);
@@ -10569,11 +10572,11 @@ async function importStatementModal(baId) {
     } catch (e) {
       toast(e.message, 'err');
       btn.disabled = false;
-      btn.textContent = '⚡ Sync Live Bank Feed';
+      btn.textContent = 'âš¡ Sync Live Bank Feed';
     }
   });
 
-  $('#imp-file-input', m.el).addEventListener('change', async e => {
+  on('#imp-file-input', 'change', async e => {
     const file = e.target.files[0];
     if (!file) return;
     const accId = $('#imp-ba', m.el).value;
@@ -10592,12 +10595,12 @@ async function importStatementModal(baId) {
     }
   });
 
-  $('#btn-open-bank-rules', m.el).addEventListener('click', () => {
+  on('#btn-open-bank-rules', 'click', () => {
     m.close();
     bankRulesModal();
   });
 
-  $('#btn-open-rollback', m.el).addEventListener('click', () => {
+  on('#btn-open-rollback', 'click', () => {
     m.close();
     rollbackBatchModal($('#imp-ba', m.el).value);
   });
@@ -10626,13 +10629,13 @@ async function documentUploadModal(folderId) {
         <div class="fg s6">
           <label>Auto-Scan OCR Engine</label>
           <div style="font-size:12px;color:var(--tx-muted);padding:8px;background:var(--surface-glass-subtle);border-radius:6px;border:1px solid var(--bd);">
-            <b style="color:var(--accent);">✓ Active</b> · Auto-extracts merchant, line items, taxes & totals
+            <b style="color:var(--accent);">âœ“ Active</b> Â· Auto-extracts merchant, line items, taxes & totals
           </div>
         </div>
         <div class="fg s12">
           <label>File Upload</label>
           <div style="border:2px dashed var(--bd);border-radius:8px;padding:20px;text-align:center;background:var(--surface-glass-subtle);">
-            <div style="margin-bottom:8px;font-size:24px;">📁</div>
+            <div style="margin-bottom:8px;font-size:24px;">ðŸ“</div>
             <input type="file" id="doc-file-inp" accept=".pdf,.png,.jpg,.jpeg" style="margin-bottom:8px;">
             <div class="sub" style="font-size:12px;">Choose receipt, vendor bill, or bank statement to auto-scan</div>
           </div>
@@ -10645,7 +10648,7 @@ async function documentUploadModal(folderId) {
     `
   });
 
-  $('#doc-upload-btn', m.el).addEventListener('click', async () => {
+  on('#doc-upload-btn', 'click', async () => {
     const title = $('input[name="title"]', m.el).value.trim();
     if (!title) return toast('Document title is required', 'err');
     const category = $('select[name="category"]', m.el).value;
@@ -10659,7 +10662,7 @@ async function documentUploadModal(folderId) {
         method: 'POST',
         body: { title, category, folder: folder ? Number(folder) : null, filename: fname, file_data: 'data:application/pdf;base64,mock' }
       });
-      toast(`Document uploaded · OCR extracted ₹${res.ocr_data?.total_amount || 0}`);
+      toast(`Document uploaded Â· OCR extracted â‚¹${res.ocr_data?.total_amount || 0}`);
       m.close();
       refresh();
     } catch (e) {
@@ -10696,7 +10699,7 @@ async function lockDateModal(selectedModule = '') {
 
 async function convobotAiAssistantModal() {
   const m = Modal.open({
-    title: 'Convosis ConvoBot · Financial AI Copilot (LLM Powered)',
+    title: 'Convosis ConvoBot Â· Financial AI Copilot (LLM Powered)',
     wide: true,
     body: `
       <div style="display:flex;flex-direction:column;height:480px;">
@@ -10780,7 +10783,7 @@ async function convobotAiAssistantModal() {
     chat.scrollTop = chat.scrollHeight;
   }
 
-  $('#convobot-send-btn', m.el).addEventListener('click', () => send());
+  on('#convobot-send-btn', 'click', () => send(), m.el);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
   m.el.addEventListener('click', e => {
     const chip = e.target.closest('.convobot-prompt-chip');
@@ -10808,15 +10811,15 @@ async function projectModal(id, onDone, defaultCustomerId = '', onClose) {
       ${fld({ name: 'code', label: 'Project Code', value: o.code, col: 's6', ph: 'PRJ-001' })}
       ${fld({ name: 'customer', label: 'Customer', type: 'select', opts: [['', 'Internal / No Customer'], ...custs.map(c => [c.id, c.name])], value: o.customer_id || o.customer || '', col: 's6' })}
       ${fld({ name: 'billing_method', label: 'Billing Method', type: 'select', opts: [['project_hourly_rate', 'Project Hourly Rate'], ['task_hourly_rate', 'Task Hourly Rate'], ['staff_hourly_rate', 'Staff Hourly Rate'], ['fixed_project_cost', 'Fixed Project Cost / Milestones']], value: o.billing_method, col: 's6' })}
-      ${fld({ name: 'rate_per_hour', label: 'Project / Staff Rate Per Hour (₹)', type: 'number', value: o.rate_per_hour, col: 's6', attrs: 'min="0" step="0.01"' })}
-      ${fld({ name: 'fixed_amount', label: 'Fixed Project Amount (₹)', type: 'number', value: o.fixed_amount, col: 's6', attrs: 'min="0" step="0.01"' })}
+      ${fld({ name: 'rate_per_hour', label: 'Project / Staff Rate Per Hour (â‚¹)', type: 'number', value: o.rate_per_hour, col: 's6', attrs: 'min="0" step="0.01"' })}
+      ${fld({ name: 'fixed_amount', label: 'Fixed Project Amount (â‚¹)', type: 'number', value: o.fixed_amount, col: 's6', attrs: 'min="0" step="0.01"' })}
       ${fld({ name: 'invoice_tax_rate', label: 'Invoice Tax Rate (%)', type: 'number', value: o.invoice_tax_rate, col: 's6', attrs: 'min="0" max="100" step="0.01"' })}
       ${fld({ name: 'budget_hours', label: 'Budget Hours', type: 'number', value: o.budget_hours, col: 's6' })}
       ${fld({ name: 'start_date', label: 'Start Date', type: 'date', value: o.start_date, col: 's6' })}
       ${fld({ name: 'end_date', label: 'End Date', type: 'date', value: o.end_date, col: 's6' })}
       ${fld({ name: 'staff_ids', label: 'Assigned Staff', type: 'select', opts: staff.map(s => [s.id, s.name]), value: (o.staff || []).map(s => s.user_id), attrs: 'multiple size="5"', help: 'Select one or more active users in this organization.', col: 's12' })}
       ${fld({ name: 'description', label: 'Description', type: 'textarea', value: o.description, col: 's12' })}
-      ${id ? `<div class="s12 sub">Tasks: ${o.task_count || 0} · Milestones: ${(o.milestones || []).length} · Invoices: ${(o.invoices || []).length}</div>` : ''}
+      ${id ? `<div class="s12 sub">Tasks: ${o.task_count || 0} Â· Milestones: ${(o.milestones || []).length} Â· Invoices: ${(o.invoices || []).length}</div>` : ''}
     </div>`,
     onSubmit: async d => {
       d.customer = d.customer ? Number(d.customer) : null;
@@ -10905,7 +10908,7 @@ async function projectTaskModal(id, projectId = '') {
     body: `<div class="g">
       ${fld({ name: 'project_id', label: 'Project', type: 'select', opts: projects.map(p => [p.id, p.name]), value: o.project_id, req: true, col: 's6' })}
       ${fld({ name: 'name', label: 'Task Name', value: o.name, req: true, col: 's6' })}
-      ${fld({ name: 'hourly_rate', label: 'Hourly Rate (₹)', type: 'number', value: o.hourly_rate, attrs: 'min="0.01" step="0.01"', col: 's6' })}
+      ${fld({ name: 'hourly_rate', label: 'Hourly Rate (â‚¹)', type: 'number', value: o.hourly_rate, attrs: 'min="0.01" step="0.01"', col: 's6' })}
       ${fld({ name: 'estimated_hours', label: 'Estimated Hours', type: 'number', value: o.estimated_hours, attrs: 'min="0" step="0.01"', col: 's6' })}
       ${fld({ name: 'progress_percent', label: 'Progress (%)', type: 'number', value: o.progress_percent, attrs: 'min="0" max="100" step="0.01"', col: 's6' })}
       ${fld({ name: 'status', label: 'Status', type: 'select', opts: [['open', 'Open'], ['in_progress', 'In Progress'], ['completed', 'Completed'], ...(id ? [['archived', 'Archived']] : [])], value: o.status, col: 's6' })}
@@ -10937,7 +10940,7 @@ async function projectMilestoneModal(id, projectId = '') {
     body: `<div class="g">
       ${fld({ name: 'project_id', label: 'Project', type: 'select', opts: projectRows.map(p => [p.id, p.name]), value: o.project_id, req: true, col: 's6' })}
       ${fld({ name: 'name', label: 'Milestone Name', value: o.name, req: true, col: 's6' })}
-      ${fld({ name: 'amount', label: 'Amount (₹)', type: 'number', value: o.amount, req: true, attrs: 'min="0.01" step="0.01"', col: 's6' })}
+      ${fld({ name: 'amount', label: 'Amount (â‚¹)', type: 'number', value: o.amount, req: true, attrs: 'min="0.01" step="0.01"', col: 's6' })}
       ${fld({ name: 'invoice_tax_rate', label: 'Invoice Tax Rate (%)', type: 'number', value: o.invoice_tax_rate, attrs: 'min="0" max="100" step="0.01"', col: 's6' })}
       ${fld({ name: 'due_date', label: 'Due Date', type: 'date', value: o.due_date, col: 's6' })}
       ${fld({ name: 'description', label: 'Description', value: o.description, col: 's12' })}
@@ -10965,11 +10968,11 @@ async function generateProjectInvoiceModal(projectId) {
   const fixed = project.billing_method === 'fixed_project_cost';
   const milestones = fixed ? (project.milestones || []).filter(item => item.status === 'planned' && !item.invoice_id) : [];
   formModal({
-    title: `Generate Project Invoice — ${project.name}`,
+    title: `Generate Project Invoice â€” ${project.name}`,
     body: `<div class="g">
       <div class="s12 sub">An invoice is created as a draft. No payment or accounting entry is generated until it is sent.</div>
-      ${fixed ? fld({ name: 'milestone_ids', label: 'Planned Milestones', type: 'select', opts: milestones.map(item => [item.id, `${item.name} — ${inr(item.amount)}`]), value: [], attrs: 'multiple size="5"', col: 's12' }) : fld({ name: 'time_entry_ids', label: 'Approved Billable Time Entries', type: 'select', opts: billableEntries.map(entry => [entry.id, `${fd(entry.date)} · ${entry.task} · ${qty(entry.hours)} hrs`]), value: [], attrs: 'multiple size="5"', col: 's12' })}
-      ${fld({ name: 'expense_ids', label: 'Billable Expenses', type: 'select', opts: billableExpenses.map(expense => [expense.id, `${expense.number} · ${expense.notes || 'Expense'} · ${inr(expense.amount)}`]), value: [], attrs: 'multiple size="5"', col: 's12' })}
+      ${fixed ? fld({ name: 'milestone_ids', label: 'Planned Milestones', type: 'select', opts: milestones.map(item => [item.id, `${item.name} â€” ${inr(item.amount)}`]), value: [], attrs: 'multiple size="5"', col: 's12' }) : fld({ name: 'time_entry_ids', label: 'Approved Billable Time Entries', type: 'select', opts: billableEntries.map(entry => [entry.id, `${fd(entry.date)} Â· ${entry.task} Â· ${qty(entry.hours)} hrs`]), value: [], attrs: 'multiple size="5"', col: 's12' })}
+      ${fld({ name: 'expense_ids', label: 'Billable Expenses', type: 'select', opts: billableExpenses.map(expense => [expense.id, `${expense.number} Â· ${expense.notes || 'Expense'} Â· ${inr(expense.amount)}`]), value: [], attrs: 'multiple size="5"', col: 's12' })}
       ${fld({ name: 'date', label: 'Invoice Date', type: 'date', value: APP.today, req: true, col: 's6' })}
       ${fld({ name: 'due_date', label: 'Due Date', type: 'date', value: '', col: 's6' })}
     </div>`,
@@ -11164,14 +11167,14 @@ async function stockMoveModal() {
   formModal({
     title: 'Move Stock Between Warehouses',
     body: `<div class="g">
-      ${fld({ name: 'item', label: 'Item to Move', type: 'select', req: true, opts: [['', 'Select Item…'], ...items.map(i => [i.id, `${i.name} (${i.sku || 'No SKU'}) - On Hand: ${qty(i.stock)} ${i.unit}`])], col: 's12' })}
-      ${fld({ name: 'from_warehouse', label: 'Source Warehouse', type: 'select', req: true, opts: [['', 'Select Source Warehouse…'], ...warehouses.map(w => [w.id, `${w.code} - ${w.name}${w.is_sub_warehouse ? ' (Sub)' : ''}`])], col: 's6' })}
-      ${fld({ name: 'to_warehouse', label: 'Destination Warehouse', type: 'select', req: true, opts: [['', 'Select Destination Warehouse…'], ...warehouses.map(w => [w.id, `${w.code} - ${w.name}${w.is_sub_warehouse ? ' (Sub)' : ''}`])], col: 's6' })}
+      ${fld({ name: 'item', label: 'Item to Move', type: 'select', req: true, opts: [['', 'Select Itemâ€¦'], ...items.map(i => [i.id, `${i.name} (${i.sku || 'No SKU'}) - On Hand: ${qty(i.stock)} ${i.unit}`])], col: 's12' })}
+      ${fld({ name: 'from_warehouse', label: 'Source Warehouse', type: 'select', req: true, opts: [['', 'Select Source Warehouseâ€¦'], ...warehouses.map(w => [w.id, `${w.code} - ${w.name}${w.is_sub_warehouse ? ' (Sub)' : ''}`])], col: 's6' })}
+      ${fld({ name: 'to_warehouse', label: 'Destination Warehouse', type: 'select', req: true, opts: [['', 'Select Destination Warehouseâ€¦'], ...warehouses.map(w => [w.id, `${w.code} - ${w.name}${w.is_sub_warehouse ? ' (Sub)' : ''}`])], col: 's6' })}
       ${fld({ name: 'quantity', label: 'Quantity to Move', type: 'number', req: true, attrs: 'min="0.001" step="0.001"', col: 's4' })}
       ${fld({ name: 'date', label: 'Transfer Date', type: 'date', req: true, value: APP.today, col: 's4' })}
       ${fld({ name: 'time', label: 'Transfer Time', type: 'time', req: true, value: curTime, col: 's4' })}
       ${fld({ name: 'reason', label: 'Reason for Transfer', type: 'select', opts: [['Warehouse Transfer', 'Warehouse Transfer'], ['Stock Rebalancing', 'Stock Rebalancing'], ['Fulfillment Relocation', 'Fulfillment Relocation'], ['Branch Transfer', 'Branch Transfer'], ['Other', 'Other']], col: 's12' })}
-      ${fld({ name: 'notes', label: 'Transfer Notes', type: 'textarea', col: 's12', max: 500, ph: 'Add any delivery challan or transit tracking details…' })}
+      ${fld({ name: 'notes', label: 'Transfer Notes', type: 'textarea', col: 's12', max: 500, ph: 'Add any delivery challan or transit tracking detailsâ€¦' })}
     </div>
     <div class="note" id="movePrev" style="margin-top:12px">Select an item, source warehouse, destination warehouse, and quantity.</div>`,
     submit: 'Confirm & Move Stock',
@@ -11183,7 +11186,7 @@ async function stockMoveModal() {
         const q = form.elements.quantity.value;
         const prev = $('#movePrev', form);
         if (fw && tw && fw.id === tw.id) {
-          prev.textContent = '⚠️ Source and destination warehouses must be different!';
+          prev.textContent = 'âš ï¸ Source and destination warehouses must be different!';
           prev.style.color = 'var(--dn, #e11d48)';
           return;
         }
@@ -11235,8 +11238,8 @@ async function challanModal(id) {
   const money = value => Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   let pendingFiles = [];
   let modal;
-  const warehouseOptions = [['', 'Select warehouse…'], ...warehouses.map(warehouse => [warehouse.id, `${warehouse.name} (${warehouse.code})`])];
-  const itemOptions = [['', 'Select an item…'], ...items.map(item => [item.id, `${item.name}${item.sku ? ` · ${item.sku}` : ''}`])];
+  const warehouseOptions = [['', 'Select warehouseâ€¦'], ...warehouses.map(warehouse => [warehouse.id, `${warehouse.name} (${warehouse.code})`])];
+  const itemOptions = [['', 'Select an itemâ€¦'], ...items.map(item => [item.id, `${item.name}${item.sku ? ` Â· ${item.sku}` : ''}`])];
   const rowHtml = line => `
     <tr class="dc-line" data-id="${line.id || ''}">
       <td><select class="in dc-item" aria-label="Item details">${opts(itemOptions, line.item_id || line.item || '')}</select></td>
@@ -11245,7 +11248,7 @@ async function challanModal(id) {
       ${renderDiscountCell(line, 'dc')}
       <td><select class="in dc-tax" aria-label="Tax rate">${opts([['0', '0%'], ['0.25', '0.25%'], ['3', '3%'], ['5', '5%'], ['12', '12%'], ['18', '18%'], ['28', '28%'], ['40', '40%']], line.gst_rate || 0)}</select></td>
       <td class="dc-amount" style="text-align:right;font-weight:600">0.00</td>
-      <td><button type="button" class="btn dc-remove-row" aria-label="Remove row" title="Remove row">×</button></td>
+      <td><button type="button" class="btn dc-remove-row" aria-label="Remove row" title="Remove row">Ã—</button></td>
     </tr>`;
 
   const body = `
@@ -11354,8 +11357,8 @@ async function challanModal(id) {
       <label class="customer-select-outer-label" for="dc-customer">Customer Name*</label>
       <div style="display:flex;align-items:center;gap:10px;">
         <select class="in" id="dc-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
-          <option value="">Search or select a customer…</option>
-          <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+          <option value="">Search or select a customerâ€¦</option>
+          <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
           ${custs.map(customer => `<option value="${customer.id}" data-phone="${esc(customer.phone || '')}" data-email="${esc(customer.email || '')}" ${String(o.customer_id || '') === String(customer.id) ? 'selected' : ''}>${esc(customer.name)}</option>`).join('')}
         </select>
         <button type="button" class="btn p" id="btn-dc-cust-lookup" title="Search customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -11405,7 +11408,7 @@ async function challanModal(id) {
         <div class="dc-card-field">
           <label class="dc-card-label" for="dc-business-location">Branch</label>
           <select class="in" id="dc-business-location" name="branch_id" style="width:100%;box-sizing:border-box;padding:0 8px;">
-            <option value="">Select Branch…</option>
+            <option value="">Select Branchâ€¦</option>
             ${locations.map(location => `<option value="${location.id}" ${String(o.business_location_id || '') === String(location.id) ? 'selected' : ''}>${esc(location.name)}${location.is_default ? ' (Default)' : ''}</option>`).join('')}
           </select>
         </div>
@@ -11434,7 +11437,7 @@ async function challanModal(id) {
             <select class="in" id="dc-series" name="transaction_series" style="flex:1;min-width:0;padding:0 8px;" title="Transaction Number Series">
               ${activeSeries.map(s => `<option value="${esc(s.name)}" data-id="${s.id}" data-branch="${esc(s.branch || '')}" data-location="${esc(s.location || '')}" ${(dcSeries === s.name) ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}
             </select>
-            <input class="in" id="dc-number-preview" name="number" value="${esc(o.number || '')}" placeholder="Generating…" required readonly aria-readonly="true" style="flex:1.2;min-width:0;padding:0 12px;background:#f8fafc;">
+            <input class="in" id="dc-number-preview" name="number" value="${esc(o.number || '')}" placeholder="Generatingâ€¦" required readonly aria-readonly="true" style="flex:1.2;min-width:0;padding:0 12px;background:#f8fafc;">
             <button type="button" class="btn ic" id="btn-dc-num-pref" title="Configure Delivery Challan Preferences" style="width:38px;height:38px;border:1px solid #e2e8f0;border-radius:8px;padding:0;display:flex;align-items:center;justify-content:center;color:#0284c7;background:#fff;cursor:pointer;flex-shrink:0;box-sizing:border-box;">
               <i class="fa-solid fa-gear" style="font-size:13px;"></i>
             </button>
@@ -11488,7 +11491,7 @@ async function challanModal(id) {
       </div>
       <div class="er" data-err="lines" role="alert"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-        <button type="button" class="btn" id="dc-add-row">＋ Add New Row</button>
+        <button type="button" class="btn" id="dc-add-row">ï¼‹ Add New Row</button>
       </div>
     </div>
 
@@ -11575,7 +11578,7 @@ async function challanModal(id) {
         }
       };
       setupSearchableSelect(customerSelect, {
-        placeholder: 'Search or select a customer…',
+        placeholder: 'Search or select a customerâ€¦',
         onNew: () => partyForm('customers', null, newCustomer => {
           if (!newCustomer || !newCustomer.id) return;
           custs.push(newCustomer);
@@ -11618,7 +11621,7 @@ async function challanModal(id) {
           const rate = Number($('.dc-rate', row).value) || 0;
           const discount = Number($('.dc-discount, .l-disc', row)?.value) || 0;
           const rawDiscountType = $('.dc-discount-type, .l-disc-type', row)?.value || 'percentage';
-          const discountType = (rawDiscountType === 'amount' || rawDiscountType === '₹') ? 'amount' : 'percentage';
+          const discountType = (rawDiscountType === 'amount' || rawDiscountType === 'â‚¹') ? 'amount' : 'percentage';
           const taxRate = Number($('.dc-tax', row).value) || 0;
           const gross = quantity * rate;
           const discountAmount = discountType === 'amount'
@@ -11650,7 +11653,7 @@ async function challanModal(id) {
         const row = tbody.lastElementChild;
         const select = $('.dc-item', row);
         setupSearchableSelect(select, {
-          placeholder: 'Search item…',
+          placeholder: 'Search itemâ€¦',
           onNew: () => {
             const prevVal = select.dataset.prevVal || '';
             select.value = prevVal;
@@ -11658,7 +11661,7 @@ async function challanModal(id) {
             itemForm(null, newItem => {
               if (!newItem || !newItem.id) return;
               items.push(newItem);
-              itemOptions.push([newItem.id, `${newItem.name}${newItem.sku ? ` · ${newItem.sku}` : ''}`]);
+              itemOptions.push([newItem.id, `${newItem.name}${newItem.sku ? ` Â· ${newItem.sku}` : ''}`]);
               select.add(new Option(newItem.name, newItem.id));
               select.value = String(newItem.id);
               select.dataset.prevVal = String(newItem.id);
@@ -11681,8 +11684,8 @@ async function challanModal(id) {
         row.addEventListener('change', recalc);
       };
       (o.lines && o.lines.length ? o.lines : [{}]).forEach(addRow);
-      $('#dc-add-row', form).addEventListener('click', () => addRow());
-      $('#dc-add-bulk', form).addEventListener('click', () => {
+      on('#dc-add-row', 'click', () => addRow(), form);
+      on('#dc-add-bulk', 'click', () => {
         bulkItemPickerModal(items, selected => selected.forEach(item => addRow({
           item_id: item.id, description: item.name, rate: item.selling_price || 0, gst_rate: item.gst_rate || 0, quantity: 1
         })));
@@ -11706,11 +11709,11 @@ async function challanModal(id) {
       typeSelect.addEventListener('change', updateType);
       const attachmentBox = $('#dc-attachments', form);
       const renderAttachments = () => {
-        const saved = (o.attachments || []).map(file => `<div class="attach-file-badge" data-saved-att="${file.id}">📎 ${esc(file.filename)} <button type="button" data-delete-att="${file.id}" aria-label="Remove attachment">×</button></div>`).join('');
-        const added = pendingFiles.map(file => `<div class="attach-file-badge">📎 ${esc(file.name)} <button type="button" data-remove-file="${esc(file.name)}" aria-label="Remove attachment">×</button></div>`).join('');
+        const saved = (o.attachments || []).map(file => `<div class="attach-file-badge" data-saved-att="${file.id}">ðŸ“Ž ${esc(file.filename)} <button type="button" data-delete-att="${file.id}" aria-label="Remove attachment">Ã—</button></div>`).join('');
+        const added = pendingFiles.map(file => `<div class="attach-file-badge">ðŸ“Ž ${esc(file.name)} <button type="button" data-remove-file="${esc(file.name)}" aria-label="Remove attachment">Ã—</button></div>`).join('');
         attachmentBox.innerHTML = saved + added;
       };
-      $('#dc-attach', form).addEventListener('change', event => {
+      on('#dc-attach', 'change', event => {
         const selectedFiles = Array.from(event.target.files || []);
         if (selectedFiles.length + pendingFiles.length + (o.attachments || []).length > 5) {
           toast('A delivery challan can have at most 5 attachments.', 'err');
@@ -11769,7 +11772,7 @@ async function challanModal(id) {
         const rate = Number($('.dc-rate', row).value);
         const discount = Number($('.dc-discount, .l-disc', row)?.value) || 0;
         const rawDiscountType = $('.dc-discount-type, .l-disc-type', row)?.value || 'percentage';
-        const discountType = (rawDiscountType === 'amount' || rawDiscountType === '₹') ? 'amount' : 'percentage';
+        const discountType = (rawDiscountType === 'amount' || rawDiscountType === 'â‚¹') ? 'amount' : 'percentage';
         const line = {
           item: Number($('.dc-item', row).value),
           quantity, rate,
@@ -12029,7 +12032,7 @@ function renderStockQuantityCell(l = {}, items = [], whList = []) {
           <div class="l-wh-pill" style="position:relative;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#2563eb;background:#eff6ff;padding:2px 7px;border-radius:4px;border:1px solid #bfdbfe;cursor:pointer;max-width:100%;" title="Click to select warehouse">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21v-4h6v4M7 3h10l2 4H5l2-4z"/></svg>
             <span class="l-wh-label" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:85px;">${esc(curWh.name || curWh.code || 'HO Kottayam')}</span>
-            <span style="font-size:8px;color:#2563eb;">▼</span>
+            <span style="font-size:8px;color:#2563eb;">â–¼</span>
             <select class="in l-wh-select" aria-label="Select Warehouse" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;">
               ${whList.map(w => `<option value="${w.id}" data-code="${esc(w.code)}" ${String(curWh.id) === String(w.id) ? 'selected' : ''}>${esc(w.name)} (${esc(w.code)})</option>`).join('')}
             </select>
@@ -12265,7 +12268,7 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
       <td style="min-width:280px;padding:10px 8px;vertical-align:top;">
         <select class="in l-item" aria-label="Item" style="width:100%;margin-bottom:6px;">
           <option value="">Type or click to select an item.</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${items.map(it => `<option value="${it.id}" ${String(l.item || l.item_id) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
         <input class="in l-desc" aria-label="Description" placeholder="Description / details" maxlength="500" value="${esc(l.description || '')}" style="font-size:12px;padding:4px 8px;width:100%;">
@@ -12291,7 +12294,7 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
         ${(l.line_total || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </td>
       <td style="width:36px;text-align:center;vertical-align:top;padding-top:14px;">
-        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">×</button>
+        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -12324,7 +12327,7 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="rec-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Search or type customer name...</option>
-                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(rCustomer) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-rec-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -12473,7 +12476,7 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
 
           <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
             <button type="button" class="btn" id="btn-rec-add-row" style="color:#0284c7;border-color:#bae6fd;background:#f0f9ff;font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer;border-radius:6px;padding:6px 14px;">
-              <i class="fa-solid fa-circle-plus"></i> Add New Row ▾
+              <i class="fa-solid fa-circle-plus"></i> Add New Row â–¾
             </button>
             <button type="button" class="btn" id="btn-rec-bulk-items" style="color:#0284c7;border-color:#bae6fd;background:#f0f9ff;font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer;border-radius:6px;padding:6px 14px;">
               <i class="fa-solid fa-circle-plus"></i> Add Items in Bulk
@@ -12550,9 +12553,9 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
               </div>
             </div>
 
-            <!-- Total Amount ( ₹ ) -->
+            <!-- Total Amount ( â‚¹ ) -->
             <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:2px solid var(--bd);margin-top:14px;">
-              <span style="font-size:16px;font-weight:700;color:#0f172a;">Total ( ₹ )</span>
+              <span style="font-size:16px;font-weight:700;color:#0f172a;">Total ( â‚¹ )</span>
               <span id="rec-grandtotal-val" style="font-size:22px;font-weight:800;color:#0f172a;">0.00</span>
             </div>
           </div>
@@ -12568,7 +12571,7 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
             </div>
             <input type="file" id="rec-file-input" multiple style="display:none;">
             <button type="button" class="btn" id="btn-rec-upload" style="font-size:12px;background:#f8fafc;border:1px solid #cbd5e1;display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 14px;border-radius:6px;">
-              <i class="fa-solid fa-upload"></i> Upload File ▾
+              <i class="fa-solid fa-upload"></i> Upload File â–¾
             </button>
           </div>
           <div id="rec-attach-badges" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;"></div>
@@ -12595,7 +12598,7 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
           <div style="display:flex;align-items:center;gap:20px;font-size:13px;font-weight:600;color:#0f172a;">
             <span style="color:#64748b;font-weight:400;">PDF Template: <b style="color:#0f172a;">'Spreadsheet Template'</b> <a href="#/settings/pdf-templates" style="color:#0284c7;text-decoration:none;font-size:12px;">Change</a></span>
             <span>Total Quantity: <span id="rec-bar-total-qty">0.00</span></span>
-            <span>Total Amount: <span id="rec-bar-total-amount">₹ 0.00</span></span>
+            <span>Total Amount: <span id="rec-bar-total-amount">â‚¹ 0.00</span></span>
           </div>
         </div>
       </form>
@@ -12882,15 +12885,15 @@ async function recurringInvoiceForm(id, targetEl, onDone) {
     if (rec && rec.attachments && rec.attachments.length) {
       h += rec.attachments.map(a => `
         <div class="attach-file-badge">
-          <span>📎 ${esc(a.filename)} (${fmtBytes(a.file_size)})</span>
-          <button type="button" data-del-att="${a.id}">×</button>
+          <span>ðŸ“Ž ${esc(a.filename)} (${fmtBytes(a.file_size)})</span>
+          <button type="button" data-del-att="${a.id}">Ã—</button>
         </div>
       `).join('');
     }
     h += pendingFiles.map((f, i) => `
       <div class="attach-file-badge" style="border-style:dashed;">
-        <span>📎 ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span>
-        <button type="button" data-rem-pen="${i}">×</button>
+        <span>ðŸ“Ž ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span>
+        <button type="button" data-rem-pen="${i}">Ã—</button>
       </div>
     `).join('');
     if (!h) h = '<span class="sub" style="font-size:12px;">No files attached yet.</span>';
@@ -13138,7 +13141,7 @@ async function viewDocumentOcrModal(doc) {
         <div>
           <span class="sub">Auto-Scan OCR Engine Status: </span>
           <b style="color:var(--accent);text-transform:capitalize;">${esc(doc.ocr_status || 'Processed')}</b>
-          ${ocr.confidence ? ` · <span class="pastel-chip chip-sky">${Math.round(ocr.confidence * 100)}% Confidence Match</span>` : ''}
+          ${ocr.confidence ? ` Â· <span class="pastel-chip chip-sky">${Math.round(ocr.confidence * 100)}% Confidence Match</span>` : ''}
         </div>
         <div style="display:flex;gap:8px;">
           ${doc.converted_to_id ? `<span class="badge up">Converted to ${esc(doc.converted_to_type)} #${doc.converted_to_id}</span>` : `
@@ -13149,18 +13152,18 @@ async function viewDocumentOcrModal(doc) {
       </div>
 
       <div class="g" style="margin-bottom:14px;">
-        <div class="fg s4"><label>Extracted Merchant</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.merchant_name || '—')}</div></div>
+        <div class="fg s4"><label>Extracted Merchant</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.merchant_name || 'â€”')}</div></div>
         <div class="fg s4"><label>Extracted Date</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.invoice_date || fd(doc.created_at))}</div></div>
         <div class="fg s4"><label>Total Amount</label><div class="in" style="background:var(--surface-glass);font-weight:700;color:var(--accent);">${inr(ocr.total_amount || 0)}</div></div>
         <div class="fg s4"><label>Tax Amount</label><div class="in" style="background:var(--surface-glass);">${inr(ocr.tax_amount || 0)}</div></div>
-        <div class="fg s4"><label>Document Number</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.invoice_number || '—')}</div></div>
-        <div class="fg s4"><label>Merchant GSTIN</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.merchant_gstin || '—')}</div></div>
+        <div class="fg s4"><label>Document Number</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.invoice_number || 'â€”')}</div></div>
+        <div class="fg s4"><label>Merchant GSTIN</label><div class="in" style="background:var(--surface-glass);">${esc(ocr.merchant_gstin || 'â€”')}</div></div>
       </div>
 
       <h4 style="margin:12px 0 6px;font-size:13px;">Extracted Line Items</h4>
       ${items.length ? `
         <div class="tw"><table><thead><tr><th>Item Description</th><th>HSN</th><th class="r">Qty</th><th class="r">Rate</th><th class="r">Total</th></tr></thead><tbody>
-          ${items.map(it => `<tr><td>${esc(it.description || '')}</td><td>${esc(it.hsn_sac || '—')}</td><td class="r">${qty(it.quantity || 1)}</td><td class="r">${inr(it.rate || 0)}</td><td class="r" style="font-weight:600;">${inr(it.amount || 0)}</td></tr>`).join('')}
+          ${items.map(it => `<tr><td>${esc(it.description || '')}</td><td>${esc(it.hsn_sac || 'â€”')}</td><td class="r">${qty(it.quantity || 1)}</td><td class="r">${inr(it.rate || 0)}</td><td class="r" style="font-weight:600;">${inr(it.amount || 0)}</td></tr>`).join('')}
         </tbody></table></div>
       ` : '<div class="sub">No line items parsed</div>'}
     `,
@@ -13198,7 +13201,7 @@ async function rollbackBatchModal(baId) {
         <input class="in" id="rollback-batch-id" type="number" placeholder="e.g. 1" value="1">
       </div>
       <div class="card" style="padding:12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);margin-bottom:14px;">
-        <div style="font-weight:600;color:var(--dn);font-size:12px;">⚠️ Non-destructive Safety Guarantee</div>
+        <div style="font-weight:600;color:var(--dn);font-size:12px;">âš ï¸ Non-destructive Safety Guarantee</div>
         <div class="sub" style="font-size:11.5px;margin-top:2px;">Transactions that have already been matched and reconciled with general ledger journals will NOT be deleted. Only pending/unreconciled items in the batch are removed.</div>
       </div>
     `,
@@ -13208,7 +13211,7 @@ async function rollbackBatchModal(baId) {
     `
   });
 
-  $('#btn-do-rollback', m.el).addEventListener('click', async () => {
+  on('#btn-do-rollback', 'click', async () => {
     const bid = $('#rollback-batch-id', m.el).value;
     if (!bid) return;
     try {
@@ -13260,7 +13263,7 @@ async function bankRulesModal() {
                 <td><b>${esc(r.name)}</b></td>
                 <td><code>${esc(r.field)}</code> ${esc(r.operator)} "<b>${esc(r.value)}</b>"</td>
                 <td><span class="pastel-chip ${r.auto_reconcile ? 'chip-mint' : 'chip-sky'}">${r.auto_reconcile ? 'Auto Reconciled' : 'Suggested Match'}</span></td>
-                <td class="r"><button type="button" class="btn dn" data-del-rule="${r.id}" style="padding:2px 8px;font-size:11px;">✕</button></td>
+                <td class="r"><button type="button" class="btn dn" data-del-rule="${r.id}" style="padding:2px 8px;font-size:11px;">âœ•</button></td>
               </tr>
 
             `).join('') : '<tr><td colspan="5" class="sub" style="text-align:center;padding:16px;">No automated rules defined yet. Create your first rule above.</td></tr>'}
@@ -13271,7 +13274,7 @@ async function bankRulesModal() {
     footer: `<button type="button" class="btn" data-close>Close</button>`
   });
 
-  $('#btn-save-rule', m.el).addEventListener('click', async () => {
+  on('#btn-save-rule', 'click', async () => {
     const name = $('#rule-name', m.el).value;
     const field = $('#rule-field', m.el).value;
     const operator = $('#rule-op', m.el).value;
@@ -13324,7 +13327,7 @@ async function fileGstrReturnModal(returnType = 'GSTR1') {
           </div>
           <div>
             <div class="sub" style="font-size:11px;text-transform:uppercase;">Taxpayer GSTIN</div>
-            <div style="font-size:16px;font-weight:700;color:var(--accent);">${esc(preview.gstin || (APP.org && APP.org.gstin) || (typeof Organization !== 'undefined' && Organization.get && Organization.get() ? Organization.get().gstin : '') || '—')}</div>
+            <div style="font-size:16px;font-weight:700;color:var(--accent);">${esc(preview.gstin || (APP.org && APP.org.gstin) || (typeof Organization !== 'undefined' && Organization.get && Organization.get() ? Organization.get().gstin : '') || 'â€”')}</div>
           </div>
           <div>
             <div class="sub" style="font-size:11px;text-transform:uppercase;">Validation Status</div>
@@ -13353,7 +13356,7 @@ async function fileGstrReturnModal(returnType = 'GSTR1') {
     `
   });
 
-  $('#btn-file-return-now', m.el).addEventListener('click', async () => {
+  on('#btn-file-return-now', 'click', async () => {
     const btn = $('#btn-file-return-now', m.el);
     btn.disabled = true;
     btn.textContent = 'Transmitting to GSTN...';
@@ -13369,7 +13372,7 @@ async function fileGstrReturnModal(returnType = 'GSTR1') {
         title: 'GSTN Return Filed Successfully!',
         body: `
           <div style="text-align:center;padding:16px;">
-            <div style="width:60px;height:60px;border-radius:50%;background:rgba(16,185,129,0.15);color:var(--up);display:grid;place-items:center;font-size:28px;margin:0 auto 12px;">✓</div>
+            <div style="width:60px;height:60px;border-radius:50%;background:rgba(16,185,129,0.15);color:var(--up);display:grid;place-items:center;font-size:28px;margin:0 auto 12px;">âœ“</div>
             <h3 style="margin:0 0 6px;">Statutory Filing Confirmed</h3>
             <div class="sub" style="margin-bottom:16px;">${esc(res.portal_message || 'Return submitted successfully')}</div>
             <div style="padding:12px;background:var(--surface-glass-subtle);border-radius:8px;border:1px solid var(--bd);text-align:left;">
@@ -13437,7 +13440,7 @@ async function totpMfaModal() {
     `
   });
 
-  $('#btn-confirm-mfa', m.el).addEventListener('click', async () => {
+  on('#btn-confirm-mfa', 'click', async () => {
     const token = $('#mfa-verify-token', m.el).value;
     if (!token) { toast('Please enter a 6-digit verification code', 'err'); return; }
     try {
@@ -13461,7 +13464,7 @@ async function disasterRecoveryDrillModal() {
       <p class="sub">Executes an automated, non-destructive enterprise disaster recovery drill to validate full cryptographic snapshot checksum integrity, double-entry ledger balance parity, and recovery time metrics.</p>
 
       <div id="dr-drill-status-box" style="padding:24px;text-align:center;background:var(--surface-glass-subtle);border-radius:10px;border:1px solid var(--bd);">
-        <div style="font-size:28px;margin-bottom:8px;">🛡️</div>
+        <div style="font-size:28px;margin-bottom:8px;">ðŸ›¡ï¸</div>
 
         <div style="font-weight:700;font-size:15px;margin-bottom:4px;">Ready to Execute DR Simulation</div>
 
@@ -13476,7 +13479,7 @@ async function disasterRecoveryDrillModal() {
 
   });
 
-  $('#btn-trigger-dr-drill', m.el).addEventListener('click', async () => {
+  on('#btn-trigger-dr-drill', 'click', async () => {
     const box = $('#dr-drill-status-box', m.el);
     box.innerHTML = `<div class="spin" style="margin:20px auto;">Running simulation drill: verifying SHA-256 Merkle hashes and trial balance parity...</div>`;
 
@@ -13486,7 +13489,7 @@ async function disasterRecoveryDrillModal() {
         <div style="text-align:left;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;border-bottom:1px solid var(--bd);padding-bottom:10px;">
             <div>
-              <span class="pastel-chip chip-mint" style="font-size:12px;font-weight:700;">PASSED · 100% INTEGRITY</span>
+              <span class="pastel-chip chip-mint" style="font-size:12px;font-weight:700;">PASSED Â· 100% INTEGRITY</span>
               <span style="font-size:13px;font-weight:700;margin-left:8px;">${esc(res.simulation_id)}</span>
             </div>
             <span class="sub" style="font-size:12px;">Achieved RTO: <b>${esc(res.rto_achieved || '0.12s')}</b></span>
@@ -13495,15 +13498,15 @@ async function disasterRecoveryDrillModal() {
           <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:12px;margin-bottom:12px;">
             <div style="padding:8px;background:var(--card);border-radius:6px;border:1px solid var(--bd);">
               <div class="sub">Cryptographic Checksum Verification:</div>
-              <div style="font-weight:700;color:var(--up);">✓ SHA-256 Bit-level Match</div>
+              <div style="font-weight:700;color:var(--up);">âœ“ SHA-256 Bit-level Match</div>
             </div>
             <div style="padding:8px;background:var(--card);border-radius:6px;border:1px solid var(--bd);">
               <div class="sub">General Ledger Debits vs Credits:</div>
-              <div style="font-weight:700;color:var(--up);">✓ 100% Balanced (Zero Drift)</div>
+              <div style="font-weight:700;color:var(--up);">âœ“ 100% Balanced (Zero Drift)</div>
             </div>
             <div style="padding:8px;background:var(--card);border-radius:6px;border:1px solid var(--bd);">
               <div class="sub">Multi-tenant Referential Integrity:</div>
-              <div style="font-weight:700;color:var(--up);">✓ 0 Orphaned Records Detected</div>
+              <div style="font-weight:700;color:var(--up);">âœ“ 0 Orphaned Records Detected</div>
             </div>
             <div style="padding:8px;background:var(--card);border-radius:6px;border:1px solid var(--bd);">
               <div class="sub">Recovery Point Objective (RPO):</div>
@@ -13525,7 +13528,7 @@ async function customerPortalModal(customerId) {
   const fullPortalUrl = location.origin + '/' + data.portal_url;
 
   const m = Modal.open({
-    title: `Customer Self-Service Portal · ${data.customer_name}`,
+    title: `Customer Self-Service Portal Â· ${data.customer_name}`,
     wide: true,
     body: `
       <p class="sub">Give your clients instant self-service access to view open invoices, download statement histories, and pay balances directly.</p>
@@ -13541,15 +13544,15 @@ async function customerPortalModal(customerId) {
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
         <div class="card" style="padding:12px;text-align:center;">
           <div class="sub" style="font-size:11px;">Total Invoiced</div>
-          <div style="font-size:16px;font-weight:700;">₹${esc(data.summary.total_invoiced)}</div>
+          <div style="font-size:16px;font-weight:700;">â‚¹${esc(data.summary.total_invoiced)}</div>
         </div>
         <div class="card" style="padding:12px;text-align:center;">
           <div class="sub" style="font-size:11px;">Total Paid</div>
-          <div style="font-size:16px;font-weight:700;color:var(--up);">₹${esc(data.summary.total_paid)}</div>
+          <div style="font-size:16px;font-weight:700;color:var(--up);">â‚¹${esc(data.summary.total_paid)}</div>
         </div>
         <div class="card" style="padding:12px;text-align:center;">
           <div class="sub" style="font-size:11px;">Outstanding Due</div>
-          <div style="font-size:16px;font-weight:700;color:var(--dn);">₹${esc(data.summary.outstanding_balance)}</div>
+          <div style="font-size:16px;font-weight:700;color:var(--dn);">â‚¹${esc(data.summary.outstanding_balance)}</div>
         </div>
       </div>
 
@@ -13577,7 +13580,7 @@ async function customerPortalModal(customerId) {
     footer: `<button type="button" class="btn" data-close>Close</button>`
   });
 
-  $('#btn-copy-portal-link', m.el).addEventListener('click', () => {
+  on('#btn-copy-portal-link', 'click', () => {
     navigator.clipboard.writeText(fullPortalUrl);
     toast('Portal link copied to clipboard!');
   });
@@ -13594,7 +13597,7 @@ function convoMigrationModal() {
 
         <div class="s6">
           <div class="card" style="padding:18px;height:100%;background:var(--surface-glass-subtle);">
-            <div style="font-size:20px;margin-bottom:6px;">📤</div>
+            <div style="font-size:20px;margin-bottom:6px;">ðŸ“¤</div>
             <div style="font-weight:700;font-size:14px;margin-bottom:4px;">Export to ConvoBooks Format</div>
             <div class="sub" style="font-size:12px;margin-bottom:14px;">Download standard ConvoBooks CSV schemas ready for instant import into ConvoBooks.</div>
             <div style="display:flex;flex-direction:column;gap:8px;">
@@ -13607,7 +13610,7 @@ function convoMigrationModal() {
 
         <div class="s6">
           <div class="card" style="padding:18px;height:100%;background:var(--surface-glass-subtle);">
-            <div style="font-size:20px;margin-bottom:6px;">📥</div>
+            <div style="font-size:20px;margin-bottom:6px;">ðŸ“¥</div>
             <div style="font-weight:700;font-size:14px;margin-bottom:4px;">Import from ConvoBooks</div>
             <div class="sub" style="font-size:12px;margin-bottom:14px;">Migrate customer master, vendor list, or item catalog from your existing ConvoBooks account.</div>
             <div class="fg" style="margin-bottom:10px;">
@@ -13625,7 +13628,7 @@ function convoMigrationModal() {
     footer: `<button type="button" class="btn" data-close>Close</button>`
   });
 
-  $('#btn-exp-convo-inv', m.el).addEventListener('click', async () => {
+  on('#btn-exp-convo-inv', 'click', async () => {
     try {
       const data = await api('interop/zoho/export/invoices/');
       const blob = new Blob([JSON.stringify(data.records, null, 2)], { type: 'application/json' });
@@ -13636,7 +13639,7 @@ function convoMigrationModal() {
     } catch (e) { toast(e.message, 'err'); }
   });
 
-  $('#btn-exp-convo-cust', m.el).addEventListener('click', async () => {
+  on('#btn-exp-convo-cust', 'click', async () => {
     try {
       const data = await api('interop/zoho/export/customers/');
       const blob = new Blob([JSON.stringify(data.records, null, 2)], { type: 'application/json' });
@@ -13647,7 +13650,7 @@ function convoMigrationModal() {
     } catch (e) { toast(e.message, 'err'); }
   });
 
-  $('#btn-exp-convo-items', m.el).addEventListener('click', async () => {
+  on('#btn-exp-convo-items', 'click', async () => {
     try {
       const data = await api('interop/zoho/export/items/');
       const blob = new Blob([JSON.stringify(data.records, null, 2)], { type: 'application/json' });
@@ -13658,7 +13661,7 @@ function convoMigrationModal() {
     } catch (e) { toast(e.message, 'err'); }
   });
 
-  $('#btn-demo-convo-imp', m.el).addEventListener('click', async () => {
+  on('#btn-demo-convo-imp', 'click', async () => {
     const entity = $('#convo-imp-entity', m.el).value;
     const sample = entity === 'customers' ? [
       { 'Customer Name': 'Apex Industrial Supplies', 'Company Name': 'Apex Corp', 'Email': 'finance@apexcorp.in', 'Phone': '+91-9840012345', 'GSTIN': '33AABCA1234A1Z5' },
@@ -13688,7 +13691,7 @@ function bulkItemPickerModal(items, onSelect) {
     body: `
       <div style="padding:10px 0;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;">
-          <input class="in" type="search" id="bulk-item-search" placeholder="Search items by name, SKU, or category…" style="flex:1;">
+          <input class="in" type="search" id="bulk-item-search" placeholder="Search items by name, SKU, or categoryâ€¦" style="flex:1;">
           <div style="display:flex;gap:6px;flex-shrink:0;">
             <button type="button" class="btn" id="btn-bulk-select-all" style="padding:5px 10px;font-size:12px;">Select All</button>
             <button type="button" class="btn" id="btn-bulk-deselect-all" style="padding:5px 10px;font-size:12px;">Deselect All</button>
@@ -13701,7 +13704,7 @@ function bulkItemPickerModal(items, onSelect) {
                 <th style="width:40px;"><input type="checkbox" id="bulk-item-select-all" title="Select / Deselect all visible"></th>
                 <th>Item Details</th>
                 <th>SKU</th>
-                <th class="r">Rate (₹)</th>
+                <th class="r">Rate (â‚¹)</th>
                 <th class="r">Stock On Hand</th>
                 <th style="width:100px;" class="r">Qty to Add</th>
               </tr>
@@ -13737,9 +13740,9 @@ function bulkItemPickerModal(items, onSelect) {
         <tr>
           <td><input type="checkbox" class="chk-bulk-item" data-id="${it.id}" ${isSel ? 'checked' : ''}></td>
           <td><b>${esc(it.name)}</b>${it.category ? `<br><small class="sub">${esc(it.category)}</small>` : ''}</td>
-          <td>${esc(it.sku || '—')}</td>
+          <td>${esc(it.sku || 'â€”')}</td>
           <td class="r">${inr(it.selling_price || 0)}</td>
-          <td class="r">${it.track_inventory ? esc(it.stock || 0) : '—'}</td>
+          <td class="r">${it.track_inventory ? esc(it.stock || 0) : 'â€”'}</td>
           <td class="r">
             <input type="number" min="0.001" step="0.001" class="in bulk-qty-input" data-id="${it.id}" value="${qtyVal}" style="width:80px;text-align:right;" ${isSel ? '' : 'disabled'}>
           </td>
@@ -13760,12 +13763,12 @@ function bulkItemPickerModal(items, onSelect) {
     }
   }
 
-  $('#bulk-item-search', m.el).addEventListener('input', e => {
+  on('#bulk-item-search', 'input', e => {
     searchQ = e.target.value;
     renderList();
   });
 
-  $('#btn-bulk-select-all', m.el).addEventListener('click', () => {
+  on('#btn-bulk-select-all', 'click', () => {
     const q = searchQ.toLowerCase().trim();
     const targetItems = items.filter(it => !q || it.name.toLowerCase().includes(q) || (it.sku && it.sku.toLowerCase().includes(q)));
     targetItems.forEach(it => {
@@ -13775,7 +13778,7 @@ function bulkItemPickerModal(items, onSelect) {
     renderList();
   });
 
-  $('#btn-bulk-deselect-all', m.el).addEventListener('click', () => {
+  on('#btn-bulk-deselect-all', 'click', () => {
     selectedMap.clear();
     renderList();
   });
@@ -13815,7 +13818,7 @@ function bulkItemPickerModal(items, onSelect) {
     }
   });
 
-  $('#btn-bulk-add-confirm', m.el).addEventListener('click', () => {
+  on('#btn-bulk-add-confirm', 'click', () => {
     if (!selectedMap.size) {
       toast('Please select at least one item.', 'err');
       return;
@@ -13855,7 +13858,7 @@ function openBarcodeScannerModal(items, onScan) {
       <div style="padding:16px 0;">
         <p style="font-size:13px;color:#64748b;margin-bottom:14px;">Scan an item barcode with your hardware scanner or enter the SKU / Item Name below.</p>
         <div style="display:flex;gap:8px;">
-          <input type="text" id="barcode-scan-input" class="in" placeholder="Scan or enter barcode / SKU…" style="flex:1;font-size:14px;padding:8px 12px;">
+          <input type="text" id="barcode-scan-input" class="in" placeholder="Scan or enter barcode / SKUâ€¦" style="flex:1;font-size:14px;padding:8px 12px;">
           <button type="button" class="btn p" id="btn-barcode-scan-submit"><i class="fa-solid fa-barcode"></i> Add</button>
         </div>
         <div id="barcode-scan-msg" style="margin-top:12px;font-size:12.5px;min-height:20px;"></div>
@@ -14063,7 +14066,7 @@ async function quoteForm(id, targetEl, onDone) {
       return `<div class="quote-card-field">
         <label class="quote-card-label ${field.required ? 'required' : ''}" for="q-cf-${esc(field.name)}">${esc(field.label)}${field.required ? '*' : ''}</label>
         <select class="in q-custom-field" id="q-cf-${esc(field.name)}" data-custom-field="${esc(field.name)}" ${required}>
-          <option value="">Select…</option>
+          <option value="">Selectâ€¦</option>
           ${options.map(option => `<option value="${esc(option)}" ${String(value) === option ? 'selected' : ''}>${esc(option)}</option>`).join('')}
         </select>
       </div>`;
@@ -14092,7 +14095,7 @@ async function quoteForm(id, targetEl, onDone) {
       <td style="min-width:280px;padding:10px 8px;vertical-align:top;">
         <select class="in l-item" aria-label="Item" style="width:100%;margin-bottom:6px;">
           <option value="">Type or click to select an item.</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${items.map(it => `<option value="${it.id}" ${String(l.item) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
         <input class="in l-desc" aria-label="Description" placeholder="Description / details" maxlength="500" value="${esc(l.description || '')}" style="font-size:12px;padding:4px 8px;width:100%;">
@@ -14118,7 +14121,7 @@ ${renderStockQuantityCell(l, items, whList)}
         ${(l.line_total || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </td>
       <td style="width:36px;text-align:center;vertical-align:top;padding-top:14px;">
-        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">×</button>
+        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -14418,7 +14421,7 @@ ${renderStockQuantityCell(l, items, whList)}
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="q-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Search or type customer name...</option>
-                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(qCustomer) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-quote-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -14553,7 +14556,7 @@ ${renderStockQuantityCell(l, items, whList)}
                   <th style="width:50px;"></th>
                   <th style="min-width:280px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">ITEM DETAILS</th>
                   <th style="width:140px;min-width:130px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">QUANTITY</th>
-                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (₹)</th>
+                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (â‚¹)</th>
                   <th style="width:120px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">DISCOUNT</th>
                   <th class="th-tax-explainer" data-doc-kind="quotes" style="width:140px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;" title="Click for GST Rates, Tax Exclusive & B2B/B2C Rules">TAX <i class="fa-solid fa-circle-info" style="font-size:11px;color:#2563eb;"></i></th>
                   <th class="th-tds" style="width:130px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;display:${qTdsMode === 'line' ? '' : 'none'};">TDS</th>
@@ -14569,7 +14572,7 @@ ${renderStockQuantityCell(l, items, whList)}
 
           <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
             <button type="button" class="btn" id="btn-quote-add-row" style="color:#2563eb;border-color:#bfdbfe;background:#eff6ff;font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer;">
-              <i class="fa-solid fa-circle-plus"></i> Add New Row ▾
+              <i class="fa-solid fa-circle-plus"></i> Add New Row â–¾
             </button>
             <button type="button" class="btn" id="btn-quote-bulk-items" style="color:#2563eb;border-color:#bfdbfe;background:#eff6ff;font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer;">
               <i class="fa-solid fa-circle-plus"></i> Add Items in Bulk
@@ -14630,7 +14633,7 @@ ${renderStockQuantityCell(l, items, whList)}
             </div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:2px solid var(--bd);margin-top:16px;">
-              <span style="font-size:17px;font-weight:700;color:#0f172a;">Total ( ₹ )</span>
+              <span style="font-size:17px;font-weight:700;color:#0f172a;">Total ( â‚¹ )</span>
               <span id="q-grandtotal-val" style="font-size:22px;font-weight:800;color:#0f172a;">0.00</span>
             </div>
           </div>
@@ -14644,7 +14647,7 @@ ${renderStockQuantityCell(l, items, whList)}
             </div>
             <input type="file" id="q-file-input" multiple style="display:none;">
             <button type="button" class="btn" id="btn-quote-upload" style="font-size:12px;background:#fff;display:flex;align-items:center;gap:6px;cursor:pointer;">
-              <i class="fa-solid fa-upload"></i> Upload File ▾
+              <i class="fa-solid fa-upload"></i> Upload File â–¾
             </button>
           </div>
           <div id="q-attach-badges" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
@@ -14684,7 +14687,7 @@ ${renderStockQuantityCell(l, items, whList)}
             <button type="button" class="btn" id="btn-q-cancel" style="background:#fff;font-weight:500;cursor:pointer;">Cancel</button>
           </div>
           <div style="display:flex;align-items:center;gap:20px;font-size:13px;font-weight:600;color:#0f172a;">
-            <span>Total Amount: <span id="quote-bar-total-amount">₹ 0.00</span></span>
+            <span>Total Amount: <span id="quote-bar-total-amount">â‚¹ 0.00</span></span>
             <span>Total Quantity: <span id="quote-bar-total-qty">1.00</span></span>
           </div>
         </div>
@@ -14933,7 +14936,7 @@ ${renderStockQuantityCell(l, items, whList)}
     const tdsRate = num($('#q-tds-tax', form).value) || 0;
     const tdsAmt = r2(subtotal * (tdsRate / 100));
     const tdsDisplay = $('#q-tds-amt', form);
-    if (tdsDisplay) tdsDisplay.textContent = (taxType === 'tds' ? '- ' : '+ ') + inr(tdsAmt).replace('₹', '').trim();
+    if (tdsDisplay) tdsDisplay.textContent = (taxType === 'tds' ? '- ' : '+ ') + inr(tdsAmt).replace('â‚¹', '').trim();
 
     const adjVal = num($('#q-adj-val', form).value) || 0;
     const adjDisplay = $('#q-adj-display', form);
@@ -14950,8 +14953,8 @@ ${renderStockQuantityCell(l, items, whList)}
     const barTot = $('#quote-bar-total-amount', form);
     const barQty = $('#quote-bar-total-qty', form);
 
-    if (subEl) subEl.textContent = inr(subtotal).replace('₹', '').trim();
-    if (grandEl) grandEl.textContent = inr(grand).replace('₹', '').trim();
+    if (subEl) subEl.textContent = inr(subtotal).replace('â‚¹', '').trim();
+    if (grandEl) grandEl.textContent = inr(grand).replace('â‚¹', '').trim();
     if (barTot) barTot.textContent = inr(grand);
     if (barQty) barQty.textContent = totalQty.toFixed(2);
 
@@ -15117,7 +15120,7 @@ ${renderStockQuantityCell(l, items, whList)}
       <div style="background:#fff;border:1px solid var(--bd);border-radius:4px;padding:4px 8px;font-size:12px;display:inline-flex;align-items:center;gap:6px;">
         <i class="fa-regular fa-file" style="color:#64748b;"></i>
         <span>${esc(a.filename)}</span>
-        <button type="button" data-del-att="${a.id}" style="border:none;background:none;color:#ef4444;cursor:pointer;">×</button>
+        <button type="button" data-del-att="${a.id}" style="border:none;background:none;color:#ef4444;cursor:pointer;">Ã—</button>
       </div>
     `).join('') : '';
 
@@ -15125,7 +15128,7 @@ ${renderStockQuantityCell(l, items, whList)}
       <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:4px 8px;font-size:12px;display:inline-flex;align-items:center;gap:6px;">
         <i class="fa-solid fa-paperclip" style="color:#2563eb;"></i>
         <span>${esc(pf.name)}</span>
-        <button type="button" data-rem-pen="${idx}" style="border:none;background:none;color:#ef4444;cursor:pointer;">×</button>
+        <button type="button" data-rem-pen="${idx}" style="border:none;background:none;color:#ef4444;cursor:pointer;">Ã—</button>
       </div>
     `).join('');
 
@@ -15501,7 +15504,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
       <td style="min-width:280px;padding:10px 8px;vertical-align:top;">
         <select class="in l-item" aria-label="Item" style="width:100%;margin-bottom:6px;">
           <option value="">Type or click to select an item.</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${items.map(it => `<option value="${it.id}" ${String(l.item || l.item_id) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
         <input class="in l-desc" aria-label="Description" placeholder="Description / details" maxlength="500" value="${esc(l.description || '')}" style="font-size:12px;padding:4px 8px;width:100%;">
@@ -15527,7 +15530,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
         ${(l.line_total || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </td>
       <td style="width:36px;text-align:center;vertical-align:top;padding-top:14px;">
-        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">×</button>
+        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -15555,7 +15558,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="so-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Search or type customer name...</option>
-                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(soCustomer) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-so-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -15680,7 +15683,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
                   <th style="width:50px;"></th>
                   <th style="min-width:280px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">ITEM DETAILS</th>
                   <th style="width:140px;min-width:130px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">QUANTITY</th>
-                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (₹)</th>
+                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (â‚¹)</th>
                   <th style="width:120px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">DISCOUNT</th>
                   <th style="width:140px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">TAX</th>
                   <th class="th-tds" style="width:130px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;display:${soTdsMode === 'line' ? '' : 'none'};">TDS</th>
@@ -15708,12 +15711,12 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
           <div style="display:flex;flex-direction:column;gap:20px;">
             <div>
               <label for="so-notes" style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Customer Notes</label>
-              <textarea class="in" id="so-notes" name="notes" rows="4" placeholder="Notes for the customer…" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(soNotes)}</textarea>
+              <textarea class="in" id="so-notes" name="notes" rows="4" placeholder="Notes for the customerâ€¦" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(soNotes)}</textarea>
               <span style="font-size:11.5px;color:#64748b;display:block;margin-top:4px;">Will be displayed on the sales order</span>
             </div>
             <div>
               <label for="so-terms" style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Terms &amp; Conditions</label>
-              <textarea class="in" id="so-terms" name="terms" rows="4" placeholder="Payment &amp; delivery terms…" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(soTerms)}</textarea>
+              <textarea class="in" id="so-terms" name="terms" rows="4" placeholder="Payment &amp; delivery termsâ€¦" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(soTerms)}</textarea>
             </div>
             <div style="border-top:1px dashed var(--bd);padding-top:16px;">
               <label style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Digital Signature</label>
@@ -15738,7 +15741,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
               <div id="so-tax-rows" style="display:flex;flex-direction:column;gap:8px;"></div>
               ${TdsEngine.renderTotalsSection('so', soTdsMode, soTdsRate)}
               <div style="border-top:2px solid #0f172a;padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:16px;font-weight:700;color:#0f172a;">Total (₹)</span>
+                <span style="font-size:16px;font-weight:700;color:#0f172a;">Total (â‚¹)</span>
                 <span id="so-grandtotal-val" style="font-size:22px;font-weight:800;color:#0f172a;">0.00</span>
               </div>
             </div>
@@ -15841,7 +15844,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
     });
 
     const subEl = $('#so-subtotal-val', form);
-    if (subEl) subEl.textContent = inr(subtotal).replace('₹', '').trim();
+    if (subEl) subEl.textContent = inr(subtotal).replace('â‚¹', '').trim();
 
     const posVal = $('#so-pos', form).value || APP.org.state;
     const isIntra = (posVal || '').trim().toLowerCase() === (APP.org.state || '').trim().toLowerCase();
@@ -15872,7 +15875,7 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
 
     const grand = subtotal + totalTax;
     const grandEl = $('#so-grandtotal-val', form);
-    if (grandEl) grandEl.textContent = inr(grand).replace('₹', '').trim();
+    if (grandEl) grandEl.textContent = inr(grand).replace('â‚¹', '').trim();
     return { subtotal, totalTax, grand, totalQty };
   }
 
@@ -16170,8 +16173,8 @@ async function salesOrderForm(id, targetEl, onDone, extraOpts = {}) {
     }
   };
 
-  $('#btn-so-save-draft', target).addEventListener('click', () => saveSo(true));
-  $('#btn-so-save-confirm', target).addEventListener('click', () => saveSo(false));
+  on('#btn-so-save-draft', 'click', () => saveSo(true), target);
+  on('#btn-so-save-confirm', 'click', () => saveSo(false), target);
 
   if (!id) {
     const docPreview = bindDocumentNumberPreview(form, {
@@ -16269,7 +16272,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
       <td style="min-width:280px;padding:10px 8px;vertical-align:top;">
         <select class="in l-item" aria-label="Item" style="width:100%;margin-bottom:6px;">
           <option value="">Type or click to select an item.</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${items.map(it => `<option value="${it.id}" ${String(l.item || l.item_id) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
         <input class="in l-desc" aria-label="Description" placeholder="Description / details" maxlength="500" value="${esc(l.description || '')}" style="font-size:12px;padding:4px 8px;width:100%;">
@@ -16295,7 +16298,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
         ${(l.line_total || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </td>
       <td style="width:36px;text-align:center;vertical-align:top;padding-top:14px;">
-        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">×</button>
+        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -16323,7 +16326,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="bill-vendor" name="vendor" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Select or add a vendor</option>
-                <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendor…</option>
+                <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendorâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(billVendor) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-bill-vendor-lookup" title="Search / Add Vendor" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -16458,7 +16461,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
                   <th style="width:50px;"></th>
                   <th style="min-width:280px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">ITEM DETAILS</th>
                   <th style="width:140px;min-width:130px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">QUANTITY</th>
-                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (₹)</th>
+                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (â‚¹)</th>
                   <th style="width:120px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">DISCOUNT</th>
                   <th style="width:140px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">TAX</th>
                   <th class="th-tds" style="width:130px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;display:${billTdsMode === 'line' ? '' : 'none'};">TDS</th>
@@ -16486,12 +16489,12 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
           <div style="display:flex;flex-direction:column;gap:20px;">
             <div>
               <label for="bill-notes" style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Vendor Notes</label>
-              <textarea class="in" id="bill-notes" name="notes" rows="4" placeholder="Notes for reference…" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(billNotes)}</textarea>
+              <textarea class="in" id="bill-notes" name="notes" rows="4" placeholder="Notes for referenceâ€¦" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(billNotes)}</textarea>
               <span style="font-size:11.5px;color:#64748b;display:block;margin-top:4px;">Will be displayed on the bill</span>
             </div>
             <div>
               <label for="bill-terms-input" style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Terms &amp; Conditions</label>
-              <textarea class="in" id="bill-terms-input" name="terms" rows="4" placeholder="Payment terms…" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(billTerms)}</textarea>
+              <textarea class="in" id="bill-terms-input" name="terms" rows="4" placeholder="Payment termsâ€¦" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(billTerms)}</textarea>
             </div>
             <div style="border-top:1px dashed var(--bd);padding-top:16px;">
               <label style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Digital Signature</label>
@@ -16516,7 +16519,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
               <div id="bill-tax-rows" style="display:flex;flex-direction:column;gap:8px;"></div>
               ${TdsEngine.renderTotalsSection('bill', billTdsMode, billTdsRate)}
               <div style="border-top:2px solid #0f172a;padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:16px;font-weight:700;color:#0f172a;">Total (₹)</span>
+                <span style="font-size:16px;font-weight:700;color:#0f172a;">Total (â‚¹)</span>
                 <span id="bill-grandtotal-val" style="font-size:22px;font-weight:800;color:#0f172a;">0.00</span>
               </div>
             </div>
@@ -16645,7 +16648,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
     });
 
     const subEl = $('#bill-subtotal-val', form);
-    if (subEl) subEl.textContent = inr(subtotal).replace('₹', '').trim();
+    if (subEl) subEl.textContent = inr(subtotal).replace('â‚¹', '').trim();
 
     const posVal = $('#bill-pos', form).value || APP.org.state;
     const isIntra = (posVal || '').trim().toLowerCase() === (APP.org.state || '').trim().toLowerCase();
@@ -16676,7 +16679,7 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
 
     const grand = subtotal + totalTax;
     const grandEl = $('#bill-grandtotal-val', form);
-    if (grandEl) grandEl.textContent = inr(grand).replace('₹', '').trim();
+    if (grandEl) grandEl.textContent = inr(grand).replace('â‚¹', '').trim();
     return { subtotal, totalTax, grand, totalQty };
   }
 
@@ -16938,8 +16941,8 @@ async function billForm(id, targetEl, onDone, extraOpts = {}) {
     }
   };
 
-  $('#btn-bill-save-draft', target).addEventListener('click', () => saveBill(true));
-  $('#btn-bill-save-approve', target).addEventListener('click', () => saveBill(false));
+  on('#btn-bill-save-draft', 'click', () => saveBill(true), target);
+  on('#btn-bill-save-approve', 'click', () => saveBill(false), target);
 
   if (!id) {
     const docPreview = bindDocumentNumberPreview(form, {
@@ -17019,7 +17022,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
       <td style="min-width:280px;padding:10px 8px;vertical-align:top;">
         <select class="in l-item" aria-label="Item" style="width:100%;margin-bottom:6px;">
           <option value="">Type or click to select an item.</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${items.map(it => `<option value="${it.id}" ${String(l.item || l.item_id) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
         <input class="in l-desc" aria-label="Description" placeholder="Description / details" maxlength="500" value="${esc(l.description || '')}" style="font-size:12px;padding:4px 8px;width:100%;">
@@ -17045,7 +17048,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
         ${(l.line_total || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </td>
       <td style="width:36px;text-align:center;vertical-align:top;padding-top:14px;">
-        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">×</button>
+        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -17073,7 +17076,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="po-vendor" name="vendor" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Select or add a vendor</option>
-                <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendor…</option>
+                <option value="__new_vendor__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Vendorâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(poVendor) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-po-vendor-lookup" title="Search / Add Vendor" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -17189,7 +17192,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
                   <th style="width:50px;"></th>
                   <th style="min-width:280px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">ITEM DETAILS</th>
                   <th style="width:140px;min-width:130px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">QUANTITY</th>
-                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (₹)</th>
+                  <th style="width:110px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">RATE (â‚¹)</th>
                   <th style="width:120px;text-align:right;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">DISCOUNT</th>
                   <th style="width:140px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;">TAX</th>
                   <th class="th-tds" style="width:130px;text-align:left;padding:12px 8px;font-size:12px;font-weight:600;color:#64748b;display:${poTdsMode === 'line' ? '' : 'none'};">TDS</th>
@@ -17217,12 +17220,12 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
           <div style="display:flex;flex-direction:column;gap:20px;">
             <div>
               <label for="po-notes" style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Vendor Notes</label>
-              <textarea class="in" id="po-notes" name="notes" rows="4" placeholder="Notes for the vendor…" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(poNotes)}</textarea>
+              <textarea class="in" id="po-notes" name="notes" rows="4" placeholder="Notes for the vendorâ€¦" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(poNotes)}</textarea>
               <span style="font-size:11.5px;color:#64748b;display:block;margin-top:4px;">Will be displayed on the purchase order</span>
             </div>
             <div>
               <label for="po-terms" style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Terms &amp; Conditions</label>
-              <textarea class="in" id="po-terms" name="terms" rows="4" placeholder="Terms of purchase…" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(poTerms)}</textarea>
+              <textarea class="in" id="po-terms" name="terms" rows="4" placeholder="Terms of purchaseâ€¦" style="width:100%;min-height:92px;box-sizing:border-box;resize:vertical;padding:8px 10px;font-size:13px;line-height:1.5;">${esc(poTerms)}</textarea>
             </div>
             <div style="border-top:1px dashed var(--bd);padding-top:16px;">
               <label style="font-weight:600;font-size:13px;color:var(--tx);display:block;margin-bottom:6px;">Digital Signature</label>
@@ -17247,7 +17250,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
               <div id="po-tax-rows" style="display:flex;flex-direction:column;gap:8px;"></div>
               ${TdsEngine.renderTotalsSection('po', poTdsMode, poTdsRate)}
               <div style="border-top:2px solid #0f172a;padding-top:12px;margin-top:4px;display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:16px;font-weight:700;color:#0f172a;">Total (₹)</span>
+                <span style="font-size:16px;font-weight:700;color:#0f172a;">Total (â‚¹)</span>
                 <span id="po-grandtotal-val" style="font-size:22px;font-weight:800;color:#0f172a;">0.00</span>
               </div>
             </div>
@@ -17347,7 +17350,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
     });
 
     const subEl = $('#po-subtotal-val', form);
-    if (subEl) subEl.textContent = inr(subtotal).replace('₹', '').trim();
+    if (subEl) subEl.textContent = inr(subtotal).replace('â‚¹', '').trim();
 
     const posVal = $('#po-pos', form).value || APP.org.state;
     const isIntra = (posVal || '').trim().toLowerCase() === (APP.org.state || '').trim().toLowerCase();
@@ -17378,7 +17381,7 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
 
     const grand = subtotal + totalTax;
     const grandEl = $('#po-grandtotal-val', form);
-    if (grandEl) grandEl.textContent = inr(grand).replace('₹', '').trim();
+    if (grandEl) grandEl.textContent = inr(grand).replace('â‚¹', '').trim();
     return { subtotal, totalTax, grand, totalQty };
   }
 
@@ -17658,8 +17661,8 @@ async function purchaseOrderForm(id, targetEl, onDone, extraOpts = {}) {
     }
   };
 
-  $('#btn-po-save-draft', target).addEventListener('click', () => savePo(true));
-  $('#btn-po-save-send', target).addEventListener('click', () => savePo(false));
+  on('#btn-po-save-draft', 'click', () => savePo(true), target);
+  on('#btn-po-save-send', 'click', () => savePo(false), target);
 
   if (!id) {
     const docPreview = bindDocumentNumberPreview(form, {
@@ -17758,7 +17761,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
       <td style="min-width:280px;padding:10px 8px;vertical-align:top;">
         <select class="in l-item" aria-label="Item" style="width:100%;margin-bottom:6px;">
           <option value="">Type or click to select an item.</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${items.map(it => `<option value="${it.id}" ${String(l.item || l.item_id) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
         <input class="in l-desc" aria-label="Description" placeholder="Description / details" maxlength="500" value="${esc(l.description || '')}" style="font-size:12px;padding:4px 8px;width:100%;">
@@ -17783,7 +17786,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
         ${(l.line_total || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </td>
       <td style="width:36px;text-align:center;vertical-align:top;padding-top:14px;">
-        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">×</button>
+        <button type="button" class="btn ic" data-rm-line style="color:var(--tx-muted);font-size:16px;border:none;background:none;cursor:pointer;" title="Remove row">Ã—</button>
       </td>
     </tr>
   `;
@@ -17812,7 +17815,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="inv-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Search or type customer name...</option>
-                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(invCustomer) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-inv-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -17949,7 +17952,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
 
           <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
             <button type="button" class="btn" id="btn-inv-add-row" style="color:#2563eb;border-color:#bfdbfe;background:#eff6ff;font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer;border-radius:6px;padding:6px 14px;">
-              <i class="fa-solid fa-circle-plus"></i> Add New Row ▾
+              <i class="fa-solid fa-circle-plus"></i> Add New Row â–¾
             </button>
             <button type="button" class="btn" id="btn-inv-bulk-items" style="color:#2563eb;border-color:#bfdbfe;background:#eff6ff;font-weight:600;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer;border-radius:6px;padding:6px 14px;">
               <i class="fa-solid fa-circle-plus"></i> Add Items in Bulk
@@ -18023,9 +18026,9 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
               </div>
             </div>
 
-            <!-- Total Amount ( ₹ ) -->
+            <!-- Total Amount ( â‚¹ ) -->
             <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:2px solid var(--bd);margin-top:14px;">
-              <span style="font-size:16px;font-weight:700;color:#0f172a;">Total ( ₹ )</span>
+              <span style="font-size:16px;font-weight:700;color:#0f172a;">Total ( â‚¹ )</span>
               <span id="inv-grandtotal-val" style="font-size:22px;font-weight:800;color:#0f172a;">0.00</span>
             </div>
           </div>
@@ -18041,7 +18044,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
             </div>
             <input type="file" id="inv-file-input" multiple style="display:none;">
             <button type="button" class="btn" id="btn-inv-upload" style="font-size:12px;background:#f8fafc;border:1px solid #cbd5e1;display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 14px;border-radius:4px;">
-              <i class="fa-solid fa-upload"></i> Upload File ▾
+              <i class="fa-solid fa-upload"></i> Upload File â–¾
             </button>
           </div>
           <div id="inv-attach-badges" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;"></div>
@@ -18074,7 +18077,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
             </a>
             <span style="color:#64748b;font-weight:400;">PDF Template: <b style="color:#0f172a;">'Spreadsheet Template'</b> <a href="#/settings/pdf-templates" style="color:#2563eb;text-decoration:none;font-size:12px;">Change</a></span>
             <span>Total Quantity: <span id="inv-bar-total-qty">0.00</span></span>
-            <span>Total Amount: <span id="inv-bar-total-amount">₹ 0.00</span></span>
+            <span>Total Amount: <span id="inv-bar-total-amount">â‚¹ 0.00</span></span>
           </div>
         </div>
       </form>
@@ -18215,7 +18218,7 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
         const lAmtEl = $('.l-tds-amt', tr);
         if (lAmtEl) {
           lAmtEl.style.display = lineTds > 0 ? 'block' : 'none';
-          lAmtEl.textContent = lineTds > 0 ? `- ₹${inr(lineTds).replace('₹', '').trim()}` : '';
+          lAmtEl.textContent = lineTds > 0 ? `- â‚¹${inr(lineTds).replace('â‚¹', '').trim()}` : '';
         }
       } else {
         const lAmtEl = $('.l-tds-amt', tr);
@@ -18227,12 +18230,12 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
     if (tdsMode === 'line') {
       finalTdsDeduction = totalLineTds;
       const lineAmtEl = form.querySelector('.inv-tds-line-amt');
-      if (lineAmtEl) lineAmtEl.textContent = `- ${inr(totalLineTds).replace('₹', '').trim()}`;
+      if (lineAmtEl) lineAmtEl.textContent = `- ${inr(totalLineTds).replace('â‚¹', '').trim()}`;
     } else if (tdsMode === 'transaction') {
       const txnRate = num(form.querySelector('.inv-tds-rate-select')?.value) || 0;
       finalTdsDeduction = r2(subtotal * (txnRate / 100));
       const txnAmtEl = form.querySelector('.inv-tds-amt');
-      if (txnAmtEl) txnAmtEl.textContent = `- ${inr(finalTdsDeduction).replace('₹', '').trim()}`;
+      if (txnAmtEl) txnAmtEl.textContent = `- ${inr(finalTdsDeduction).replace('â‚¹', '').trim()}`;
     }
 
     const discAmt = totalRowDiscount + (discPct > 0 ? r2((grossTotal - totalRowDiscount) * discPct / 100) : 0);
@@ -18261,15 +18264,15 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
     if (rec && rec.attachments && rec.attachments.length) {
       h += rec.attachments.map(a => `
         <div class="attach-file-badge">
-          <span>📎 ${esc(a.filename)} (${fmtBytes(a.file_size)})</span>
-          <button type="button" data-del-att="${a.id}">×</button>
+          <span>ðŸ“Ž ${esc(a.filename)} (${fmtBytes(a.file_size)})</span>
+          <button type="button" data-del-att="${a.id}">Ã—</button>
         </div>
       `).join('');
     }
     h += pendingFiles.map((f, i) => `
       <div class="attach-file-badge" style="border-style:dashed;">
-        <span>📎 ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span>
-        <button type="button" data-rem-pen="${i}">×</button>
+        <span>ðŸ“Ž ${esc(f.name)} (${fmtBytes(f.size)}) <small style="color:var(--accent);">new</small></span>
+        <button type="button" data-rem-pen="${i}">Ã—</button>
       </div>
     `).join('');
     if (!h) h = '<span class="sub" style="font-size:12px;">No files attached yet.</span>';
@@ -18658,8 +18661,8 @@ async function invoiceForm(id, targetEl, onDone, extraOpts = {}) {
     }
   };
 
-  $('#btn-inv-save-draft', target).addEventListener('click', () => saveInvoice(true));
-  $('#btn-inv-save-send', target).addEventListener('click', () => saveInvoice(false));
+  on('#btn-inv-save-draft', 'click', () => saveInvoice(true), target);
+  on('#btn-inv-save-send', 'click', () => saveInvoice(false), target);
 
   if (!id) {
     const docPreview = bindDocumentNumberPreview(form, {
@@ -18736,7 +18739,7 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
         </td>
         <td style="width:220px;padding:10px 14px;vertical-align:top;">
           <div style="position:relative;display:flex;align-items:center;">
-            <span style="position:absolute;left:12px;color:#94a3b8;font-size:13px;font-weight:600;pointer-events:none;">₹</span>
+            <span style="position:absolute;left:12px;color:#94a3b8;font-size:13px;font-weight:600;pointer-events:none;">â‚¹</span>
             <input class="in l-amount" aria-label="Amount" type="number" step="0.01" min="0" placeholder="0.00" value="${amtStr}" style="text-align:right;width:100%;padding:8px 12px 8px 28px;font-size:13px;font-weight:600;box-sizing:border-box;border-radius:6px;">
           </div>
         </td>
@@ -18905,7 +18908,7 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
             <div style="display:flex;align-items:center;gap:10px;">
               <select class="in" id="ret-customer" name="customer" required style="flex:1;min-width:0;padding:0 12px;height:38px !important;">
                 <option value="">Select or add a customer</option>
-                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customer…</option>
+                <option value="__new_customer__" style="color:var(--accent,#0284c7);font-weight:600;">+ Add New Customerâ€¦</option>
                 ${parties.map(p => `<option value="${p.id}" ${String(retCustomer) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
               </select>
               <button type="button" class="btn p" id="btn-ret-cust-lookup" title="Search / Add Customer" style="width:38px;height:38px;padding:0;display:flex;align-items:center;justify-content:center;background:#0284c7;color:#ffffff;border:none;border-radius:8px;cursor:pointer;flex-shrink:0;">
@@ -18974,7 +18977,7 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
           </div>
         </div>
 
-        <!-- Section 3 – Retainer Invoice Details (Dynamic Line Items & Total) -->
+        <!-- Section 3 â€“ Retainer Invoice Details (Dynamic Line Items & Total) -->
         <div class="invoice-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(15,23,42,0.03);">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;">
             <div style="font-size:15px;font-weight:700;color:#0f172a;display:flex;align-items:center;gap:8px;">
@@ -18989,7 +18992,7 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
               <thead style="background:#f8fafc;border-bottom:1px solid var(--bd,#e2e8f0);">
                 <tr>
                   <th style="text-align:left;padding:12px 16px;font-size:11.5px;font-weight:700;color:#475569;letter-spacing:0.5px;">DESCRIPTION <span style="color:#ef4444;">*</span></th>
-                  <th style="width:220px;text-align:right;padding:12px 16px;font-size:11.5px;font-weight:700;color:#475569;letter-spacing:0.5px;">AMOUNT ( ₹ ) <span style="color:#ef4444;">*</span></th>
+                  <th style="width:220px;text-align:right;padding:12px 16px;font-size:11.5px;font-weight:700;color:#475569;letter-spacing:0.5px;">AMOUNT ( â‚¹ ) <span style="color:#ef4444;">*</span></th>
                   <th style="width:44px;text-align:center;"></th>
                 </tr>
               </thead>
@@ -19005,14 +19008,14 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
             </button>
 
             <div style="background:#f8fafc;border:1px solid var(--bd,#e2e8f0);border-radius:12px;padding:16px 24px;min-width:260px;text-align:right;">
-              <div style="font-size:12px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Total ( ₹ )</div>
-              <div id="ret-grandtotal-val" style="font-size:24px;font-weight:800;color:#0f172a;">₹ 0.00</div>
+              <div style="font-size:12px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Total ( â‚¹ )</div>
+              <div id="ret-grandtotal-val" style="font-size:24px;font-weight:800;color:#0f172a;">â‚¹ 0.00</div>
               <div style="font-size:11.5px;color:#64748b;margin-top:4px;">Sum of all valid line-item amounts</div>
             </div>
           </div>
         </div>
 
-        <!-- Section 4 – Additional Information (Customer Notes & Terms) -->
+        <!-- Section 4 â€“ Additional Information (Customer Notes & Terms) -->
         <div class="invoice-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(15,23,42,0.03);">
           <div style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:18px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid #f1f5f9;">
             <i class="fa-solid fa-note-sticky" style="color:#0284c7;"></i>
@@ -19048,7 +19051,7 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
               <button type="button" class="btn" id="btn-ret-template-change" style="border:0;background:transparent;color:#2563eb;font-weight:600;padding:2px 4px;cursor:pointer;text-decoration:underline;">Change</button>
             </div>
             <div style="font-weight:700;color:#0f172a;font-size:14px;padding-left:16px;border-left:1px solid var(--bd,#e2e8f0);">
-              <span>Total: <span id="ret-bar-total-amount">₹ 0.00</span></span>
+              <span>Total: <span id="ret-bar-total-amount">â‚¹ 0.00</span></span>
             </div>
           </div>
         </div>
@@ -19168,10 +19171,10 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
     const localized = roundedTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     const totalDisplay = $('#ret-grandtotal-val', form);
-    if (totalDisplay) totalDisplay.textContent = `₹ ${localized}`;
+    if (totalDisplay) totalDisplay.textContent = `â‚¹ ${localized}`;
 
     const barTotal = $('#ret-bar-total-amount', form);
-    if (barTotal) barTotal.textContent = `₹ ${localized}`;
+    if (barTotal) barTotal.textContent = `â‚¹ ${localized}`;
 
     const lineCountEl = $('#ret-line-count', form);
     if (lineCountEl) {
@@ -19191,7 +19194,7 @@ async function retainerInvoiceForm(id, targetEl, onDone) {
     }
   });
 
-  $('#btn-ret-add-row', form).addEventListener('click', () => {
+  on('#btn-ret-add-row', 'click', () => {
     tbody.insertAdjacentHTML('beforeend', rowHtml({ description: '', amount: '' }));
     calcRetainer();
     const newRow = tbody.lastElementChild;
@@ -19448,7 +19451,7 @@ async function reverseStockTransferAction(id, number) {
         return;
       }
       doBtn.disabled = true;
-      doBtn.textContent = 'Reversing…';
+      doBtn.textContent = 'Reversingâ€¦';
       try {
         const res = await api(`stock-transfers/${id}/reverse/`, { method: 'POST', body: { reason } });
         m.close();
@@ -19486,7 +19489,7 @@ async function viewStockTransferDetail(id) {
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:14px 18px; background:var(--surface-glass-subtle); border:1px solid var(--bd); border-radius:10px;">
             <div>
               <div style="font-size:18px; font-weight:800; color:var(--tx);">${esc(t.number)}${t.is_reversal ? ' <span class="pastel-chip chip-rose" style="font-size:11px;">Reversal Entry</span>' : ''}</div>
-              <div style="font-size:12px; color:var(--tx-muted); margin-top:2px;">Date: <b>${fd(t.date)}</b> · Created by: <b>${esc(t.created_by || 'System')}</b></div>
+              <div style="font-size:12px; color:var(--tx-muted); margin-top:2px;">Date: <b>${fd(t.date)}</b> Â· Created by: <b>${esc(t.created_by || 'System')}</b></div>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
               <span class="pastel-chip ${statusCls}" style="font-size:12px; font-weight:700; padding:4px 12px;">${statusLabel}</span>
@@ -19501,7 +19504,7 @@ async function viewStockTransferDetail(id) {
               <span class="pastel-chip chip-lavender" style="font-size:11px; font-weight:600;">${esc(t.source_warehouse_code)}</span>
             </div>
             <div style="display:flex; align-items:center; color:var(--accent); font-size:24px; font-weight:900;">
-              ➔
+              âž”
             </div>
             <div style="text-align:center; min-width:140px;">
               <span style="font-size:11px; text-transform:uppercase; font-weight:700; color:var(--tx-muted);">Destination Warehouse</span>
@@ -19530,12 +19533,12 @@ async function viewStockTransferDetail(id) {
                   ${(t.lines || []).map(l => `
                     <tr>
                       <td style="font-weight:600;">${esc(l.item_name)}</td>
-                      <td style="color:var(--tx-muted);">${esc(l.item_sku || '—')}</td>
+                      <td style="color:var(--tx-muted);">${esc(l.item_sku || 'â€”')}</td>
                       <td class="r" style="font-weight:700;">${qty(l.quantity)}</td>
                       <td>${esc(l.unit || 'nos')}</td>
-                      <td>${esc(l.batch_number || '—')}</td>
-                      <td>${esc(l.serial_number || '—')}</td>
-                      <td style="color:var(--tx-muted);">${esc(l.description || '—')}</td>
+                      <td>${esc(l.batch_number || 'â€”')}</td>
+                      <td>${esc(l.serial_number || 'â€”')}</td>
+                      <td style="color:var(--tx-muted);">${esc(l.description || 'â€”')}</td>
                     </tr>
                   `).join('')}
                 </tbody>
@@ -19553,13 +19556,13 @@ async function viewStockTransferDetail(id) {
           <!-- Reversal or Confirmation Info -->
           ${t.status === 'confirmed' ? `
             <div style="padding:10px 14px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:8px; font-size:12.5px; color:#059669;">
-              ✓ <b>Confirmed:</b> ${fd(t.confirmed_at)} by <b>${esc(t.confirmed_by || 'System')}</b>. Stock successfully updated across warehouses.
+              âœ“ <b>Confirmed:</b> ${fd(t.confirmed_at)} by <b>${esc(t.confirmed_by || 'System')}</b>. Stock successfully updated across warehouses.
             </div>
           ` : ''}
 
           ${t.status === 'reversed' ? `
             <div style="padding:10px 14px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); border-radius:8px; font-size:12.5px; color:#dc2626;">
-              ⚠️ <b>Reversed:</b> ${fd(t.reversed_at)} by <b>${esc(t.reversed_by || 'System')}</b>.
+              âš ï¸ <b>Reversed:</b> ${fd(t.reversed_at)} by <b>${esc(t.reversed_by || 'System')}</b>.
               <div style="margin-top:4px;"><b>Reason:</b> ${esc(t.reversal_reason || 'Reversed')}</div>
             </div>
           ` : ''}
@@ -19575,7 +19578,7 @@ async function viewStockTransferDetail(id) {
                       <span class="pastel-chip chip-lavender" style="font-size:9.5px; font-weight:700;">${esc(a.action.toUpperCase())}</span>
                       <span style="font-weight:600; margin-left:6px;">${esc(a.summary)}</span>
                     </div>
-                    <span style="color:var(--tx-muted);">${fd(a.timestamp)} · ${esc(a.username)}</span>
+                    <span style="color:var(--tx-muted);">${fd(a.timestamp)} Â· ${esc(a.username)}</span>
                   </div>
                 `).join('')}
               </div>
@@ -19643,13 +19646,13 @@ async function stockTransferModal(id = null, onDone = null) {
     <tr class="st-line-row" data-idx="${idx}">
       <td style="min-width:210px; padding:6px 8px;">
         <select class="in st-item" aria-label="Item" style="width:100%;">
-          <option value="">— Select Item —</option>
-          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Item…</option>
+          <option value="">â€” Select Item â€”</option>
+          <option value="__new_item__" style="color:var(--accent);font-weight:600;">+ Add New Itemâ€¦</option>
           ${goodsItems.map(it => `<option value="${it.id}" ${String(l.item_id) === String(it.id) ? 'selected' : ''}>${esc(it.name)}${it.sku ? ' (' + esc(it.sku) + ')' : ''}</option>`).join('')}
         </select>
       </td>
       <td style="width:130px; text-align:center; padding:6px 8px;">
-        <span class="st-avail-badge pastel-chip chip-lavender" style="font-size:11px; font-weight:600; padding:2px 8px;">Stock: —</span>
+        <span class="st-avail-badge pastel-chip chip-lavender" style="font-size:11px; font-weight:600; padding:2px 8px;">Stock: â€”</span>
       </td>
       <td style="width:110px; padding:6px 8px;">
         <input class="in st-qty" type="number" step="0.001" min="0.001" value="${esc(l.quantity || 1)}" style="width:100%; text-align:right;">
@@ -19667,7 +19670,7 @@ async function stockTransferModal(id = null, onDone = null) {
         <input class="in st-desc" placeholder="Notes / line memo" value="${esc(l.description || '')}" style="width:100%;">
       </td>
       <td style="width:36px; text-align:center; padding:6px 8px;">
-        <button type="button" class="btn ic st-rm" title="Remove line" style="color:#ef4444; font-size:16px;">×</button>
+        <button type="button" class="btn ic st-rm" title="Remove line" style="color:#ef4444; font-size:16px;">Ã—</button>
       </td>
     </tr>
   `;
@@ -19694,14 +19697,14 @@ async function stockTransferModal(id = null, onDone = null) {
               <label style="font-weight:600; font-size:12.5px; display:block; margin-bottom:4px; color:var(--tx);">Source Warehouse (From) <span style="color:#ef4444;">*</span></label>
               <select class="in" id="st-src-wh" required style="width:100%;">
                 ${whList.map(w => `<option value="${w.id}" ${String(w.id) === String(o.source_warehouse_id) ? 'selected' : ''}>${esc(w.code)} - ${esc(w.name)}</option>`).join('')}
-                <option value="__new_warehouse__">+ Add New Warehouse…</option>
+                <option value="__new_warehouse__">+ Add New Warehouseâ€¦</option>
               </select>
             </div>
             <div>
               <label style="font-weight:600; font-size:12.5px; display:block; margin-bottom:4px; color:var(--tx);">Destination Warehouse (To) <span style="color:#ef4444;">*</span></label>
               <select class="in" id="st-dst-wh" required style="width:100%;">
                 ${whList.map(w => `<option value="${w.id}" ${String(w.id) === String(o.destination_warehouse_id) ? 'selected' : ''}>${esc(w.code)} - ${esc(w.name)}</option>`).join('')}
-                <option value="__new_warehouse__">+ Add New Warehouse…</option>
+                <option value="__new_warehouse__">+ Add New Warehouseâ€¦</option>
               </select>
             </div>
             <div>
@@ -19789,7 +19792,7 @@ async function stockTransferModal(id = null, onDone = null) {
     const srcWhId = srcWhEl.value;
 
     if (!itemId) {
-      badge.textContent = 'Stock: —';
+      badge.textContent = 'Stock: â€”';
       badge.className = 'st-avail-badge pastel-chip chip-lavender';
       badge.dataset.avail = '0';
       return;
@@ -19798,7 +19801,7 @@ async function stockTransferModal(id = null, onDone = null) {
     const itemObj = itemsById[itemId];
     if (itemObj && unitIn) unitIn.value = itemObj.unit || 'nos';
 
-    badge.textContent = 'Checking…';
+    badge.textContent = 'Checkingâ€¦';
     const cacheKey = `${itemId}_${srcWhId}`;
 
     try {
@@ -19826,7 +19829,7 @@ async function stockTransferModal(id = null, onDone = null) {
         qtyIn.style.borderColor = '#ef4444';
       }
     } catch {
-      badge.textContent = 'Stock: —';
+      badge.textContent = 'Stock: â€”';
       badge.className = 'st-avail-badge pastel-chip chip-lavender';
     }
   }
@@ -20035,7 +20038,7 @@ async function stockTransferModal(id = null, onDone = null) {
     try {
       const payload = await collectFormData();
       saveDraftBtn.disabled = true;
-      saveDraftBtn.textContent = 'Saving…';
+      saveDraftBtn.textContent = 'Savingâ€¦';
       const res = await api(id ? `stock-transfers/${id}/` : 'stock-transfers/', {
         method: id ? 'PUT' : 'POST',
         body: payload
@@ -20080,7 +20083,7 @@ async function stockTransferModal(id = null, onDone = null) {
       if (!ok) return;
 
       saveConfirmBtn.disabled = true;
-      saveConfirmBtn.textContent = 'Confirming…';
+      saveConfirmBtn.textContent = 'Confirmingâ€¦';
 
       // 1. Save or update draft
       const draftRes = await api(id ? `stock-transfers/${id}/` : 'stock-transfers/', {
@@ -20140,4 +20143,5 @@ window.partyForm = partyForm;
   window.retainerInvoiceForm = retainerInvoiceForm;
   window.recurringInvoiceForm = recurringInvoiceForm;
 }
+
 

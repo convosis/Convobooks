@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ConvosisBooks Settings Module
  * Enterprise-level settings, segmented access control, user management, and organization configuration.
  */
@@ -140,7 +140,7 @@ function updateSettingsMenuSearch(input) {
     ? matches.map(({ item, group, section }) => `
       <a class="settings-menu-search-result" href="${esc(item.hash)}" role="option">
         <span>${esc(item.label)}</span>
-        <small>${esc(group.label)} · ${esc(section.category)}</small>
+        <small>${esc(group.label)} Â· ${esc(section.category)}</small>
       </a>
     `).join('')
     : '<div class="settings-menu-search-empty" role="status">No matching settings found.</div>';
@@ -222,7 +222,7 @@ async function fetchSettingsData(force = false) {
 // =========================================================================
 
 async function renderSettingsDashboard(root) {
-  root.innerHTML = `<div class="spin" style="margin:60px auto;">Loading ConvosisBooks Settings…</div>`;
+  root.innerHTML = `<div class="spin" style="margin:60px auto;">Loading ConvosisBooks Settingsâ€¦</div>`;
   const data = await fetchSettingsData(true);
   const org = (data && data.organization) || (APP.org || {});
   const orgName = org.name || 'Convosis Technologies Pvt Ltd';
@@ -252,7 +252,7 @@ async function renderSettingsDashboard(root) {
 
         <div class="settings-topbar-right">
           <button type="button" class="btn-close-settings" onclick="closeSettingsDashboard()">
-            Close Settings <span style="font-size:14px; margin-left:4px;">✕</span>
+            Close Settings <span style="font-size:14px; margin-left:4px;">âœ•</span>
           </button>
         </div>
       </div>
@@ -487,7 +487,7 @@ function renderSettingsShell(root, activeSubKey, title, renderPageContentFn) {
 
         <div class="settings-topbar-right">
           <button type="button" class="btn-close-settings" onclick="closeSettingsDashboard()">
-            Close Settings <span style="font-size:14px; margin-left:4px;">✕</span>
+            Close Settings <span style="font-size:14px; margin-left:4px;">âœ•</span>
           </button>
         </div>
       </div>
@@ -499,7 +499,7 @@ function renderSettingsShell(root, activeSubKey, title, renderPageContentFn) {
         </aside>
 
         <section class="settings-main-pane" id="settingsMainPane">
-          <div class="spin" style="margin:40px auto;">Loading ${esc(title)}…</div>
+          <div class="spin" style="margin:40px auto;">Loading ${esc(title)}â€¦</div>
         </section>
       </div>
     </div>
@@ -652,7 +652,7 @@ async function renderCustomFieldsSettingsPage(container, initialModule = '', pag
   };
 
   const loadFields = async () => {
-    container.innerHTML = '<div class="spin" style="margin:40px auto;">Loading custom fields…</div>';
+    container.innerHTML = '<div class="spin" style="margin:40px auto;">Loading custom fieldsâ€¦</div>';
     const firstPage = await api('custom-fields/?include_hidden=true&page_size=100');
     customFields = firstPage.results || [];
     for (let page = 2; page <= (firstPage.pages || 1); page++) {
@@ -939,12 +939,12 @@ async function openInviteUserModal(isAccountant = false) {
     <div class="modal-box" style="max-width:500px;">
       <div class="modal-header">
         <h3>${isAccountant ? 'Invite Accountant' : 'Invite User'}</h3>
-        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">âœ•</button>
       </div>
       <div class="modal-body">
         <div id="inviteUserError" role="alert" aria-live="assertive" style="display:none;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;padding:10px 12px;border:1px solid #fca5a5;border-radius:8px;background:#fef2f2;color:#991b1b;font-size:13px;">
           <span data-invite-error-message></span>
-          <button type="button" class="modal-close-btn" data-dismiss-invite-error aria-label="Dismiss message">✕</button>
+          <button type="button" class="modal-close-btn" data-dismiss-invite-error aria-label="Dismiss message">âœ•</button>
         </div>
         <div class="form-group">
           <label>Full Name</label>
@@ -980,10 +980,12 @@ async function openInviteUserModal(isAccountant = false) {
     errorBox.querySelector('[data-invite-error-message]').textContent = message;
     errorBox.style.display = 'flex';
   };
-  errorBox.querySelector('[data-dismiss-invite-error]').addEventListener('click', () => {
+  const dismissBtn = errorBox ? errorBox.querySelector('[data-dismiss-invite-error]') : null;
+  if (dismissBtn) dismissBtn.addEventListener('click', () => {
     errorBox.style.display = 'none';
   });
-  modal.querySelector('#inviteUserEmail').addEventListener('input', () => {
+  const inviteEmailEl = modal.querySelector('#inviteUserEmail');
+  if (inviteEmailEl) inviteEmailEl.addEventListener('input', () => {
     errorBox.style.display = 'none';
   });
 
@@ -1000,7 +1002,7 @@ async function openInviteUserModal(isAccountant = false) {
     }
 
     submitButton.disabled = true;
-    submitButton.textContent = 'Sending…';
+    submitButton.textContent = 'Sendingâ€¦';
     try {
       await api('/settings/users/invite/', {
         method: 'POST',
@@ -1031,7 +1033,7 @@ function openEditUserModal(userId, name, email, currentRoleId, currentStatus) {
     <div class="modal-box" style="max-width:500px;">
       <div class="modal-header">
         <h3>Edit User</h3>
-        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">âœ•</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -1064,7 +1066,8 @@ function openEditUserModal(userId, name, email, currentRoleId, currentStatus) {
   `;
   document.body.appendChild(modal);
 
-  modal.querySelector('#btnSaveEditUser').addEventListener('click', async () => {
+  const saveEditUserBtn = modal.querySelector('#btnSaveEditUser');
+  if (saveEditUserBtn) saveEditUserBtn.addEventListener('click', async () => {
     const updatedName = modal.querySelector('#editUserName').value.trim();
     const updatedRoleId = modal.querySelector('#editUserRole').value;
     const updatedStatus = modal.querySelector('#editUserStatus').value;
@@ -1133,7 +1136,7 @@ async function renderSettingsRolesPage(container) {
                 ${r.is_system ? '<span class="pastel-chip chip-gray" style="font-size:10px; margin-left:6px;">Default</span>' : ''}
               </td>
               <td style="color:var(--tx-dim); font-size:13px; line-height:1.5;">
-                ${esc(r.description || '—')}
+                ${esc(r.description || 'â€”')}
               </td>
               <td style="text-align:right;">
                 <a href="#/settings/roles/${r.id}" class="btn-table-action">View / Edit</a>
@@ -1172,7 +1175,7 @@ async function deleteRole(roleId, name) {
 }
 
 // =========================================================================
-// 5. SEGMENTED ACCESS CONTROL – DETAILED ROLE PERMISSION EDITOR
+// 5. SEGMENTED ACCESS CONTROL â€“ DETAILED ROLE PERMISSION EDITOR
 // =========================================================================
 
 async function renderRoleEditorPage(container, roleId) {
@@ -1188,7 +1191,7 @@ async function renderRoleEditorPage(container, roleId) {
   };
 
   if (!isNew) {
-    container.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Role Permissions…</div>`;
+    container.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Role Permissionsâ€¦</div>`;
     roleData = await api(`/settings/roles/${roleId}/`);
   }
 
@@ -1222,7 +1225,7 @@ async function renderRoleEditorPage(container, roleId) {
 
         <div class="settings-topbar-right">
           <button type="button" class="btn-close-settings" onclick="closeSettingsDashboard()">
-            Close Settings <span style="font-size:14px; margin-left:4px;">✕</span>
+            Close Settings <span style="font-size:14px; margin-left:4px;">âœ•</span>
           </button>
         </div>
       </div>
@@ -1232,7 +1235,7 @@ async function renderRoleEditorPage(container, roleId) {
           <div class="role-editor-top">
             <h1 class="role-editor-title">Role</h1>
             <div class="role-editor-breadcrumbs">
-              <span class="crumb-active">✓ General</span>
+              <span class="crumb-active">âœ“ General</span>
               <span class="crumb-separator">&gt;</span>
               <span class="crumb-active">Segmented Access Control</span>
             </div>
@@ -1365,7 +1368,7 @@ async function renderRoleEditorPage(container, roleId) {
           { key: 'time_entries', label: 'Time Entries' }
         ], p.timesheets || {}, { hasApprove: false, hasAssignOwner: false })}
 
-        <!-- GST Filing – flat checkbox section -->
+        <!-- GST Filing â€“ flat checkbox section -->
         <div class="permission-group-card" data-module="gst_filing">
           <div class="permission-group-title-flat">
             <label class="custom-checkbox-label" style="font-weight:700; font-size:14px;">
@@ -1388,7 +1391,7 @@ async function renderRoleEditorPage(container, roleId) {
           </div>
         </div>
 
-        <!-- Documents – flat checkbox section -->
+        <!-- Documents â€“ flat checkbox section -->
         <div class="permission-group-card" data-module="documents">
           <div class="permission-group-title-flat">
             <label class="custom-checkbox-label" style="font-weight:700; font-size:14px;">
@@ -1411,7 +1414,7 @@ async function renderRoleEditorPage(container, roleId) {
           </div>
         </div>
 
-        <!-- e-Way Bill – flat checkbox section -->
+        <!-- e-Way Bill â€“ flat checkbox section -->
         <div class="permission-group-card" data-module="eway_bill">
           <div class="permission-group-title-flat">
             <label class="custom-checkbox-label" style="font-weight:700; font-size:14px;">
@@ -1432,7 +1435,7 @@ async function renderRoleEditorPage(container, roleId) {
           </div>
         </div>
 
-        <!-- Settings Access – flat checkbox section -->
+        <!-- Settings Access â€“ flat checkbox section -->
         <div class="permission-group-card" data-module="settings_access">
           <div class="permission-group-title-flat">
             <label class="custom-checkbox-label" style="font-weight:700; font-size:14px;">
@@ -1494,7 +1497,7 @@ async function renderRoleEditorPage(container, roleId) {
           </div>
         </div>
 
-        <!-- Reporting Tags – flat checkbox section -->
+        <!-- Reporting Tags â€“ flat checkbox section -->
         <div class="permission-group-card" data-module="reporting_tags">
           <div class="permission-group-title-flat">
             <label class="custom-checkbox-label" style="font-weight:700; font-size:14px;">
@@ -1516,7 +1519,7 @@ async function renderRoleEditorPage(container, roleId) {
           </div>
         </div>
 
-        <!-- Bharat Connect – flat checkbox section -->
+        <!-- Bharat Connect â€“ flat checkbox section -->
         <div class="permission-group-card" data-module="bharat_connect">
           <div class="permission-group-title-flat">
             <label class="custom-checkbox-label" style="font-weight:700; font-size:14px;">
@@ -1615,7 +1618,7 @@ async function renderRoleEditorPage(container, roleId) {
   attachPermissionTableLogic(container);
 
   // Save handler
-  container.querySelector('#btnSaveRolePermissions').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveRolePermissions'); if (_btn) _btn.addEventListener('click', async () => {
     const name = container.querySelector('#roleEditName').value.trim();
     if (!name) {
       toast('Role Name is required.', 'error');
@@ -2031,7 +2034,7 @@ async function renderOrgProfilePage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSaveOrgProfile').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveOrgProfile'); if (_btn) _btn.addEventListener('click', async () => {
     const payload = {
       name: container.querySelector('#profOrgName').value.trim(),
       legal_name: container.querySelector('#profLegalName').value.trim(),
@@ -2180,7 +2183,7 @@ async function renderBrandingPage(container) {
     });
   }
 
-  container.querySelector('#btnSaveBranding').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveBranding'); if (_btn) _btn.addEventListener('click', async () => {
     const payload = {
       logo_data: logoBase64,
       favicon_data: faviconBase64,
@@ -2320,7 +2323,7 @@ async function renderCustomDomainPage(container) {
 
   btnVerify?.addEventListener('click', async () => {
     btnVerify.disabled = true;
-    btnVerify.textContent = 'Verifying DNS…';
+    btnVerify.textContent = 'Verifying DNSâ€¦';
     try {
       await new Promise(r => setTimeout(r, 600));
       customDomainData.status = 'active';
@@ -2507,7 +2510,7 @@ async function renderAiControlCenterPage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSaveAiSettings').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveAiSettings'); if (_btn) _btn.addEventListener('click', async () => {
     const ai_settings = {
       ai_enabled: container.querySelector('#aiMasterToggle').checked,
       business_insights: container.querySelector('#aiInsights').checked,
@@ -2634,7 +2637,7 @@ async function renderTaxesPage(container) {
               ${exemptions.map(ex => `
                 <tr>
                   <td><b>${esc(ex.reason)}</b></td>
-                  <td style="color:#4b5563;">${esc(ex.description || '—')}</td>
+                  <td style="color:#4b5563;">${esc(ex.description || 'â€”')}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -2735,9 +2738,9 @@ async function renderTaxesPage(container) {
               <span><b>This organization is required to deduct GST TDS</b> (Specified Government entities, PSUs, Local authorities)</span>
             </label>
             <div class="form-group">
-              <label style="font-weight:600; font-size:13px;">Threshold Limit for Contract Value (₹)</label>
+              <label style="font-weight:600; font-size:13px;">Threshold Limit for Contract Value (â‚¹)</label>
               <input type="number" id="gstTdsThreshold" value="${ts.gst_tds_threshold || 250000}" class="form-control" style="max-width:320px;">
-              <small style="color:#6b7280;">Statutory mandate: ₹2,50,000 per supply contract</small>
+              <small style="color:#6b7280;">Statutory mandate: â‚¹2,50,000 per supply contract</small>
             </div>
             <div class="form-group">
               <label style="font-weight:600; font-size:13px;">GST TDS Rate (%)</label>
@@ -2912,7 +2915,7 @@ function openAddTaxModal(onSuccess) {
     <div class="modal-box" style="max-width:480px;">
       <div class="modal-header">
         <h3>New Tax</h3>
-        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">âœ•</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -2946,7 +2949,7 @@ function openAddTaxModal(onSuccess) {
   `;
   document.body.appendChild(modal);
 
-  modal.querySelector('#btnSubmitNewTax').addEventListener('click', async () => {
+  { const _btn = modal.querySelector('#btnSubmitNewTax'); if (_btn) _btn.addEventListener('click', async () => {
     const name = modal.querySelector('#newTaxName').value.trim();
     const rate = parseFloat(modal.querySelector('#newTaxRate').value);
     const type = modal.querySelector('#newTaxType').value;
@@ -2982,7 +2985,7 @@ function openAddExemptionModal(onSuccess) {
     <div class="modal-box" style="max-width:480px;">
       <div class="modal-header">
         <h3>Add Tax Exemption</h3>
-        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">âœ•</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -3002,7 +3005,7 @@ function openAddExemptionModal(onSuccess) {
   `;
   document.body.appendChild(modal);
 
-  modal.querySelector('#btnSubmitNewEx').addEventListener('click', async () => {
+  { const _btn = modal.querySelector('#btnSubmitNewEx'); if (_btn) _btn.addEventListener('click', async () => {
     const reason = modal.querySelector('#newExReason').value.trim();
     const description = modal.querySelector('#newExDesc').value.trim();
 
@@ -3069,7 +3072,7 @@ async function renderDirectTaxesPage(container) {
         </div>
         <div style="font-size:12px; line-height:1.5; color:#9a3412;">
           The Income Tax Act, 2025 is now in effect from April 1, 2026, with changes to TDS and TCS sections and rates. Update them to stay compliant.
-          <br><a href="javascript:void(0)" style="color:#2563eb; font-weight:600;">View Details →</a>
+          <br><a href="javascript:void(0)" style="color:#2563eb; font-weight:600;">View Details â†’</a>
         </div>
       </div>
     `;
@@ -3482,7 +3485,7 @@ function openEditSeriesItemModal(container, currentSeries, item, options = {}) {
     <div class="modal-box" style="max-width:580px;max-height:90vh;overflow-y:auto;">
       <div class="modal-header">
         <h3 style="margin:0;font-size:16px;font-weight:700;">Configure Numbering: ${esc(item.label)}</h3>
-        <button type="button" class="modal-close-btn" data-close-item>✕</button>
+        <button type="button" class="modal-close-btn" data-close-item>âœ•</button>
       </div>
       <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
         <div style="font-size:12.5px;color:#64748b;">Series: <b>${esc(currentSeries?.name || options.seriesName || 'New Series')}</b></div>
@@ -3980,7 +3983,7 @@ function openAddTransactionSeriesModal(container, supportedTypes, onSaved = null
     <div class="modal-box" style="max-width:760px;max-height:90vh;overflow-y:auto;">
       <div class="modal-header">
         <h3>+ Add Transaction Number Series</h3>
-        <button type="button" class="modal-close-btn" data-close-series>✕</button>
+        <button type="button" class="modal-close-btn" data-close-series>âœ•</button>
       </div>
       <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
@@ -4191,7 +4194,7 @@ function openEditSeriesMetaModal(container, currentSeries) {
     <div class="modal-box" style="max-width:480px;">
       <div class="modal-header">
         <h3>Edit Series: ${esc(currentSeries.name)}</h3>
-        <button type="button" class="modal-close-btn" data-close-meta>✕</button>
+        <button type="button" class="modal-close-btn" data-close-meta>âœ•</button>
       </div>
       <div class="modal-body" style="display:flex;flex-direction:column;gap:12px;">
         <label class="form-group">Series Name*<input class="form-control" id="editMetaName" value="${esc(currentSeries.name)}" required></label>
@@ -4330,7 +4333,7 @@ function openAddCurrencyModal() {
     <div class="modal-box" style="max-width:440px;">
       <div class="modal-header">
         <h3>Add Currency</h3>
-        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">âœ•</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -4358,7 +4361,7 @@ function openAddCurrencyModal() {
   `;
   document.body.appendChild(modal);
 
-  modal.querySelector('#btnSubmitAddCurrency').addEventListener('click', async () => {
+  { const _btn = modal.querySelector('#btnSubmitAddCurrency'); if (_btn) _btn.addEventListener('click', async () => {
     const code = modal.querySelector('#newCurrCode').value.trim().toUpperCase();
     const name = modal.querySelector('#newCurrName').value.trim();
     const symbol = modal.querySelector('#newCurrSym').value.trim();
@@ -4414,7 +4417,7 @@ async function renderPaymentTermsPage(container) {
             <tr>
               <td><b>${esc(t.name)}</b></td>
               <td>${t.days} Days</td>
-              <td>${t.is_default ? '<span class="pastel-chip chip-emerald">Default</span>' : '—'}</td>
+              <td>${t.is_default ? '<span class="pastel-chip chip-emerald">Default</span>' : 'â€”'}</td>
               <td style="text-align:right;">
                 <button type="button" class="btn-table-action action-danger" onclick="deletePaymentTerm(${t.id}, '${esc(t.name)}')">Delete</button>
               </td>
@@ -4433,7 +4436,7 @@ function openAddPaymentTermModal() {
     <div class="modal-box" style="max-width:440px;">
       <div class="modal-header">
         <h3>Add Payment Term</h3>
-        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+        <button type="button" class="modal-close-btn" onclick="this.closest('.modal-backdrop').remove()">âœ•</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -4459,7 +4462,7 @@ function openAddPaymentTermModal() {
   `;
   document.body.appendChild(modal);
 
-  modal.querySelector('#btnSubmitAddTerm').addEventListener('click', async () => {
+  { const _btn = modal.querySelector('#btnSubmitAddTerm'); if (_btn) _btn.addEventListener('click', async () => {
     const name = modal.querySelector('#newTermName').value.trim();
     const days = parseInt(modal.querySelector('#newTermDays').value, 10);
     const is_default = modal.querySelector('#newTermIsDefault').checked;
@@ -4553,7 +4556,7 @@ async function renderGeneralSettingsPage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSaveGeneralPrefs').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveGeneralPrefs'); if (_btn) _btn.addEventListener('click', async () => {
     const general_settings = {
       default_language: container.querySelector('#genLang').value,
       date_format: container.querySelector('#genDateFormat').value,
@@ -4618,7 +4621,7 @@ async function renderRemindersPage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSaveReminders').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveReminders'); if (_btn) _btn.addEventListener('click', async () => {
     const reminder_settings = {
       invoice_reminders: container.querySelector('#remInvoice').checked,
       overdue_reminders: container.querySelector('#remOverdue').checked,
@@ -4679,7 +4682,7 @@ async function renderCustomerPortalPage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSavePortal').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSavePortal'); if (_btn) _btn.addEventListener('click', async () => {
     const portal_settings = {
       enabled: container.querySelector('#cpEnabled').checked,
       invoice_access: container.querySelector('#cpInvoices').checked,
@@ -4759,7 +4762,7 @@ async function renderDigitalSignaturePage(container) {
     });
   }
 
-  container.querySelector('#btnSaveSignature').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveSignature'); if (_btn) _btn.addEventListener('click', async () => {
     const signature_title = container.querySelector('#sigTitleInput').value.trim();
     const enabled = container.querySelector('#cbSigEnabled').checked;
 
@@ -5046,7 +5049,7 @@ async function renderNotificationsPage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSaveNotifications').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveNotifications'); if (_btn) _btn.addEventListener('click', async () => {
     const email_settings = {
       invoice_email_subject: container.querySelector('#notifInvSubj').value.trim(),
       payment_email_subject: container.querySelector('#notifPaySubj').value.trim()
@@ -5107,14 +5110,14 @@ async function renderEwayBillsPage(container) {
       <h3 style="font-size:15px; font-weight:600; margin-bottom:14px;">Consignment Threshold Limits</h3>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         <div class="form-group">
-          <label style="font-weight:600; font-size:13px;">Inter-State Threshold Limit (₹)*</label>
+          <label style="font-weight:600; font-size:13px;">Inter-State Threshold Limit (â‚¹)*</label>
           <input type="number" id="ewbInterThreshold" value="${ewb.inter_state_threshold || 50000}" class="form-control" style="max-width:320px;">
-          <small style="color:#6b7280;">Statutory mandate: ₹50,000 for inter-state movements</small>
+          <small style="color:#6b7280;">Statutory mandate: â‚¹50,000 for inter-state movements</small>
         </div>
         <div class="form-group">
-          <label style="font-weight:600; font-size:13px;">Intra-State Threshold Limit (₹)*</label>
+          <label style="font-weight:600; font-size:13px;">Intra-State Threshold Limit (â‚¹)*</label>
           <input type="number" id="ewbIntraThreshold" value="${ewb.intra_state_threshold || 100000}" class="form-control" style="max-width:320px;">
-          <small style="color:#6b7280;">Default is ₹1,00,000 (varies by state jurisdiction)</small>
+          <small style="color:#6b7280;">Default is â‚¹1,00,000 (varies by state jurisdiction)</small>
         </div>
       </div>
     </div>
@@ -5129,7 +5132,7 @@ async function renderEwayBillsPage(container) {
         </div>
         <div class="form-group">
           <label style="font-weight:600; font-size:13px;">Portal Password</label>
-          <input type="password" id="ewbPassword" value="${esc(ewb.password || '')}" placeholder="••••••••••••" class="form-control">
+          <input type="password" id="ewbPassword" value="${esc(ewb.password || '')}" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" class="form-control">
         </div>
         <div class="form-group">
           <label style="font-weight:600; font-size:13px;">Client ID</label>
@@ -5137,13 +5140,13 @@ async function renderEwayBillsPage(container) {
         </div>
         <div class="form-group">
           <label style="font-weight:600; font-size:13px;">Client Secret</label>
-          <input type="password" id="ewbClientSecret" value="${esc(ewb.client_secret || '')}" placeholder="••••••••••••" class="form-control">
+          <input type="password" id="ewbClientSecret" value="${esc(ewb.client_secret || '')}" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" class="form-control">
         </div>
       </div>
     </div>
   `;
 
-  container.querySelector('#btnSaveEwayBill').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveEwayBill'); if (_btn) _btn.addEventListener('click', async () => {
     const eway_bill = {
       enabled: container.querySelector('#ewbEnabled').checked,
       auto_generate: container.querySelector('#ewbAutoGenerate').checked,
@@ -5204,11 +5207,11 @@ async function renderEinvoicingPage(container) {
       <h3 style="font-size:15px; font-weight:600; margin-bottom:14px;">Statutory Threshold & Details</h3>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
         <div class="form-group">
-          <label style="font-weight:600; font-size:13px;">Aggregate Annual Turnover Threshold (₹)</label>
+          <label style="font-weight:600; font-size:13px;">Aggregate Annual Turnover Threshold (â‚¹)</label>
           <select id="einvThreshold" class="form-control" style="max-width:320px;">
-            <option value="5cr" ${einv.threshold === '5cr' ? 'selected' : ''}>Exceeding ₹5 Crore (Mandatory Phase IV)</option>
-            <option value="10cr" ${einv.threshold === '10cr' ? 'selected' : ''}>Exceeding ₹10 Crore</option>
-            <option value="20cr" ${einv.threshold === '20cr' ? 'selected' : ''}>Exceeding ₹20 Crore</option>
+            <option value="5cr" ${einv.threshold === '5cr' ? 'selected' : ''}>Exceeding â‚¹5 Crore (Mandatory Phase IV)</option>
+            <option value="10cr" ${einv.threshold === '10cr' ? 'selected' : ''}>Exceeding â‚¹10 Crore</option>
+            <option value="20cr" ${einv.threshold === '20cr' ? 'selected' : ''}>Exceeding â‚¹20 Crore</option>
             <option value="voluntary" ${einv.threshold === 'voluntary' ? 'selected' : ''}>Voluntary Adoption</option>
           </select>
         </div>
@@ -5234,7 +5237,7 @@ async function renderEinvoicingPage(container) {
         </div>
         <div class="form-group">
           <label style="font-weight:600; font-size:13px;">API Password</label>
-          <input type="password" id="einvPassword" value="${esc(einv.password || '')}" placeholder="••••••••••••" class="form-control">
+          <input type="password" id="einvPassword" value="${esc(einv.password || '')}" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" class="form-control">
         </div>
         <div class="form-group">
           <label style="font-weight:600; font-size:13px;">Client ID</label>
@@ -5242,13 +5245,13 @@ async function renderEinvoicingPage(container) {
         </div>
         <div class="form-group">
           <label style="font-weight:600; font-size:13px;">Client Secret</label>
-          <input type="password" id="einvClientSecret" value="${esc(einv.client_secret || '')}" placeholder="••••••••••••" class="form-control">
+          <input type="password" id="einvClientSecret" value="${esc(einv.client_secret || '')}" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" class="form-control">
         </div>
       </div>
     </div>
   `;
 
-  container.querySelector('#btnSaveEinvoice').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveEinvoice'); if (_btn) _btn.addEventListener('click', async () => {
     const einvoicing = {
       enabled: container.querySelector('#einvEnabled').checked,
       auto_irn: container.querySelector('#einvAutoIrn').checked,
@@ -5314,9 +5317,9 @@ async function renderMsmePage(container) {
           <div class="form-group">
             <label style="font-weight:600; font-size:13px;">Enterprise Type</label>
             <select id="msmeEnterpriseType" class="form-control">
-              <option value="micro" ${msme.enterprise_type === 'micro' ? 'selected' : ''}>Micro Enterprise (Investment &le; ₹1 Cr, Turnover &le; ₹5 Cr)</option>
-              <option value="small" ${msme.enterprise_type === 'small' ? 'selected' : ''}>Small Enterprise (Investment &le; ₹10 Cr, Turnover &le; ₹50 Cr)</option>
-              <option value="medium" ${msme.enterprise_type === 'medium' ? 'selected' : ''}>Medium Enterprise (Investment &le; ₹50 Cr, Turnover &le; ₹250 Cr)</option>
+              <option value="micro" ${msme.enterprise_type === 'micro' ? 'selected' : ''}>Micro Enterprise (Investment &le; â‚¹1 Cr, Turnover &le; â‚¹5 Cr)</option>
+              <option value="small" ${msme.enterprise_type === 'small' ? 'selected' : ''}>Small Enterprise (Investment &le; â‚¹10 Cr, Turnover &le; â‚¹50 Cr)</option>
+              <option value="medium" ${msme.enterprise_type === 'medium' ? 'selected' : ''}>Medium Enterprise (Investment &le; â‚¹50 Cr, Turnover &le; â‚¹250 Cr)</option>
             </select>
           </div>
         </div>
@@ -5352,7 +5355,7 @@ async function renderMsmePage(container) {
     </div>
   `;
 
-  container.querySelector('#btnSaveMsme').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveMsme'); if (_btn) _btn.addEventListener('click', async () => {
     const msmeData = {
       registered: container.querySelector('#msmeRegistered').checked,
       udyam_number: container.querySelector('#msmeUdyamNumber').value.trim(),
@@ -5397,7 +5400,7 @@ async function renderOpeningBalancesPage(container) {
           <small style="color:#6b7280;">Date from which you began entering transactions in ConvosisBooks</small>
         </div>
         <div class="form-group">
-          <label style="font-weight:600; font-size:13px;">Opening Cash in Hand (₹)</label>
+          <label style="font-weight:600; font-size:13px;">Opening Cash in Hand (â‚¹)</label>
           <input type="number" id="obCashInHand" value="${org.opening_cash || 0}" step="0.01" class="form-control" style="max-width:280px;">
           <small style="color:#6b7280;">Initial physical cash balance on migration date</small>
         </div>
@@ -5411,28 +5414,28 @@ async function renderOpeningBalancesPage(container) {
         <div style="padding:16px; border:1px solid var(--bd); border-radius:8px; background:var(--bg-card);">
           <div style="font-weight:600; font-size:14px; margin-bottom:4px;">Bank Accounts</div>
           <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">Set opening balances for checking, savings, and loan accounts.</p>
-          <a href="#/banking/accounts" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">Manage Bank Accounts →</a>
+          <a href="#/banking/accounts" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">Manage Bank Accounts â†’</a>
         </div>
         <div style="padding:16px; border:1px solid var(--bd); border-radius:8px; background:var(--bg-card);">
           <div style="font-weight:600; font-size:14px; margin-bottom:4px;">Item Opening Stock</div>
           <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">Enter opening inventory quantities and per-unit valuation.</p>
-          <a href="#/inventory/items" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">Manage Items & Stock →</a>
+          <a href="#/inventory/items" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">Manage Items & Stock â†’</a>
         </div>
         <div style="padding:16px; border:1px solid var(--bd); border-radius:8px; background:var(--bg-card);">
           <div style="font-weight:600; font-size:14px; margin-bottom:4px;">Customer Receivables</div>
           <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">Track outstanding balances owed by customers on migration.</p>
-          <a href="#/sales/customers" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">View Customers →</a>
+          <a href="#/sales/customers" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">View Customers â†’</a>
         </div>
         <div style="padding:16px; border:1px solid var(--bd); border-radius:8px; background:var(--bg-card);">
           <div style="font-weight:600; font-size:14px; margin-bottom:4px;">Vendor Payables</div>
           <p style="font-size:12px; color:#6b7280; margin-bottom:12px;">Configure opening bills and balances payable to suppliers.</p>
-          <a href="#/purchases/vendors" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">View Vendors →</a>
+          <a href="#/purchases/vendors" class="btn-outline" style="font-size:12px; display:inline-block; text-decoration:none;">View Vendors â†’</a>
         </div>
       </div>
     </div>
   `;
 
-  container.querySelector('#btnSaveOpeningBalances').addEventListener('click', async () => {
+  { const _btn = container.querySelector('#btnSaveOpeningBalances'); if (_btn) _btn.addEventListener('click', async () => {
     const migration_date = container.querySelector('#obDate').value;
     const opening_cash = parseFloat(container.querySelector('#obCashInHand').value) || 0;
     try {
@@ -5446,7 +5449,7 @@ async function renderOpeningBalancesPage(container) {
 }
 
 async function renderEnterpriseSettingsPage(container) {
-  container.innerHTML = `<div class="spin" style="margin:40px auto;">Loading settings registry…</div>`;
+  container.innerHTML = `<div class="spin" style="margin:40px auto;">Loading settings registryâ€¦</div>`;
   const registry = await api('/settings/enterprise/registry/');
   const categories = registry.categories || [];
   const preferences = registry.preferences || {};
@@ -5608,7 +5611,7 @@ async function renderEnterpriseSettingsPage(container) {
     }
 
     const schema = preferences[submodule.prefGroup];
-    detail.innerHTML = `${header}<div class="spin" style="margin:28px auto;">Loading saved preferences…</div>`;
+    detail.innerHTML = `${header}<div class="spin" style="margin:28px auto;">Loading saved preferencesâ€¦</div>`;
     let response;
     try {
       response = await api(`/settings/enterprise/preferences/${encodeURIComponent(submodule.prefGroup)}/`);
@@ -5791,7 +5794,7 @@ async function renderBusinessLocationsPage(container) {
   container.style.padding = '28px 36px 60px';
   container.style.overflow = 'auto';
   container.style.height = '';
-  container.innerHTML = `<div class="spin" style="margin:40px auto;">Loading branches…</div>`;
+  container.innerHTML = `<div class="spin" style="margin:40px auto;">Loading branchesâ€¦</div>`;
   let locations = [];
   let users = [];
   let series = [];
@@ -6028,16 +6031,16 @@ async function renderBusinessLocationsPage(container) {
     updateLocationTypeFields();
     updateLocationAccessCount();
     if (window.setupSearchableSelect) {
-      setupSearchableSelect(root.querySelector('#locationPrimaryContact'), { placeholder: 'Search contacts…' });
+      setupSearchableSelect(root.querySelector('#locationPrimaryContact'), { placeholder: 'Search contactsâ€¦' });
     }
-    root.querySelector('#locationChild').addEventListener('change', event => {
+    { const _el = root.querySelector('#locationChild'); if (_el) _el.addEventListener('change', event => {
       root.querySelector('#parentLocationWrap').hidden = !event.target.checked;
       root.querySelector('#locationParent').required = event.target.checked;
       if (!event.target.checked && root.querySelector('input[name="locationType"]:checked')?.value === 'business') {
         root.querySelector('#locationParent').value = '';
       }
     });
-    root.querySelector('#locationIsDefault').addEventListener('change', event => {
+    { const _el = root.querySelector('#locationIsDefault'); if (_el) _el.addEventListener('change', event => {
       if (!event.target.checked) return;
       const message = locationId
         ? 'Set this branch as the default location? The existing default location will be changed.'
@@ -6046,9 +6049,9 @@ async function renderBusinessLocationsPage(container) {
         event.target.checked = false;
       }
     });
-    root.querySelector('#btnCancelLocation').addEventListener('click', () => renderBusinessLocationsPage(container));
+    { const _el = root.querySelector('#btnCancelLocation'); if (_el) _el.addEventListener('click', () => renderBusinessLocationsPage(container)); }
     if (locationId) {
-      root.querySelector('#btnDeleteLocation').addEventListener('click', async () => {
+      { const _el = root.querySelector('#btnDeleteLocation'); if (_el) _el.addEventListener('click', async () => {
         if (!window.confirm(`Delete "${location.name}"? This action cannot be undone.`)) return;
         const deleteButton = root.querySelector('#btnDeleteLocation');
         deleteButton.disabled = true;
@@ -6106,7 +6109,7 @@ async function renderBusinessLocationsPage(container) {
       selectedSeriesList.innerHTML = selected.map(item => `
         <span class="settings-location-series-chip">
           <span>${esc(getSeriesLabel(item))}</span>
-          <button type="button" data-remove-series-id="${Number(item.id)}" aria-label="Remove ${esc(getSeriesLabel(item))}">×</button>
+          <button type="button" data-remove-series-id="${Number(item.id)}" aria-label="Remove ${esc(getSeriesLabel(item))}">Ã—</button>
         </span>`).join('') || '<span class="settings-location-series-placeholder">Select transaction series</span>';
     };
     const renderSeriesOptions = () => {
@@ -6198,13 +6201,13 @@ async function renderBusinessLocationsPage(container) {
     });
     seriesPickerObserver.observe(document.body, { childList: true, subtree: true });
     refreshSeriesPicker(location.default_transaction_series_id);
-    root.querySelector('#locationCountry').addEventListener('change', event => {
+    { const _el = root.querySelector('#locationCountry'); if (_el) _el.addEventListener('change', event => {
       const stateControl = root.querySelector('#locationStateControl');
       const currentState = root.querySelector('#locationState').value;
       stateControl.innerHTML = renderLocationStateControl(event.target.value, currentState);
     });
     root.querySelector('#locationPincode').setAttribute('inputmode', String(location.country || 'India').toLowerCase() === 'india' ? 'numeric' : 'text');
-    root.querySelector('#locationCountry').addEventListener('change', event => {
+    { const _el = root.querySelector('#locationCountry'); if (_el) _el.addEventListener('change', event => {
       root.querySelector('#locationPincode').setAttribute('inputmode', event.target.value.toLowerCase() === 'india' ? 'numeric' : 'text');
     });
     let selectedLogoData = !locationId ? '__no_logo__' : (location.logo_data || '');
@@ -6277,7 +6280,7 @@ async function renderBusinessLocationsPage(container) {
       };
       reader.readAsDataURL(file);
     });
-    root.querySelector('#btnAddLocationSeries').addEventListener('click', async () => {
+    { const _el = root.querySelector('#btnAddLocationSeries'); if (_el) _el.addEventListener('click', async () => {
       try {
         const seriesConfig = await api('/settings/transaction-series/');
         openAddTransactionSeriesModal(container, seriesConfig.supported_types || [], async (savedSeriesId) => {
@@ -6304,7 +6307,7 @@ async function renderBusinessLocationsPage(container) {
         locationNameInput.style.borderColor = '';
       }
     });
-    root.querySelector('#btnSaveLocation').addEventListener('click', async () => {
+    { const _el = root.querySelector('#btnSaveLocation'); if (_el) _el.addEventListener('click', async () => {
       const saveButton = root.querySelector('#btnSaveLocation');
       if (saveButton.disabled) return;
       const cancelButton = root.querySelector('#btnCancelLocation');
@@ -6507,7 +6510,7 @@ async function renderBusinessLocationsPage(container) {
         <tr>
           <td>
             <a href="javascript:void(0)" class="location-name-link" data-location-id="${location.id}" style="color:#2563eb;text-decoration:none;font-weight:500;cursor:pointer;">${esc(location.name)}</a>
-            ${isHeadOffice ? ' <span class="head-office-star" style="color:#f59e0b;font-size:14px;vertical-align:middle;margin-left:4px;" title="Head Office">⭐</span>' : ''}
+            ${isHeadOffice ? ' <span class="head-office-star" style="color:#f59e0b;font-size:14px;vertical-align:middle;margin-left:4px;" title="Head Office">â­</span>' : ''}
           </td>
           <td>${esc(defaultSeries)}</td>
           <td>${esc(typeLabel)}</td>
@@ -6521,20 +6524,20 @@ async function renderBusinessLocationsPage(container) {
       button.addEventListener('click', () => openLocation(Number(button.dataset.locationId)))
     );
   };
-  container.querySelector('#btnAddLocation').addEventListener('click', () => openLocation());
-  container.querySelector('#locationListSearch').addEventListener('input', () => {
+  { const _el = container.querySelector('#btnAddLocation'); if (_el) _el.addEventListener('click', () => openLocation()); }
+  { const _el = container.querySelector('#locationListSearch'); if (_el) _el.addEventListener('input', () => {
     currentPage = 0;
     renderLocationRows();
   });
-  container.querySelector('#locationListStatus').addEventListener('change', () => {
+  { const _el = container.querySelector('#locationListStatus'); if (_el) _el.addEventListener('change', () => {
     currentPage = 0;
     renderLocationRows();
   });
-  container.querySelector('#locationPrevPage').addEventListener('click', () => {
+  { const _el = container.querySelector('#locationPrevPage'); if (_el) _el.addEventListener('click', () => {
     currentPage -= 1;
     renderLocationRows();
   });
-  container.querySelector('#locationNextPage').addEventListener('click', () => {
+  { const _el = container.querySelector('#locationNextPage'); if (_el) _el.addEventListener('click', () => {
     currentPage += 1;
     renderLocationRows();
   });
@@ -6556,4 +6559,5 @@ window.renderSettingsDashboard = renderSettingsDashboard;
 window.renderBusinessLocationsPage = renderBusinessLocationsPage;
 window.renderSettingsShell = renderSettingsShell;
 window.renderRoleEditorPage = renderRoleEditorPage;
+
 

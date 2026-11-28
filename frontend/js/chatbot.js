@@ -781,9 +781,9 @@
     initDraggableConvobot(launcher);
     applySavedPosition();
 
-    $('#convobot-close-btn').addEventListener('click', () => toggleDoubtBot(false));
-    $('#convobot-max-btn').addEventListener('click', toggleMaximize);
-    $('#convobot-reset-btn').addEventListener('click', resetChat);
+    on('#convobot-close-btn', 'click', () => toggleDoubtBot(false));
+    on('#convobot-max-btn', 'click', toggleMaximize);
+    on('#convobot-reset-btn', 'click', resetChat);
     const resetPosBtn = $('#convobot-reset-pos-btn');
     if (resetPosBtn) resetPosBtn.addEventListener('click', resetConvobotPosition);
     window.addEventListener('resize', () => { if (!isDragging) applySavedPosition(); });

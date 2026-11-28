@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 function partyForm(kind, id, onDone, onCancel) {
   if (typeof window._partyFormImpl === 'function' && window._partyFormImpl !== partyForm) {
@@ -144,7 +144,7 @@ const IMPORT_SPECS = {
   expenses: [
     { key: 'date', label: 'Expense Date', req: true, aliases: ['date', 'expense_date', 'txn_date', 'transaction_date'] },
     { key: 'expense_account', label: 'Expense Account', req: true, aliases: ['expense_account', 'account', 'category', 'category_account'] },
-    { key: 'amount', label: 'Amount (₹)', req: true, aliases: ['amount', 'total_amount', 'amt', 'total'] },
+    { key: 'amount', label: 'Amount (â‚¹)', req: true, aliases: ['amount', 'total_amount', 'amt', 'total'] },
     { key: 'vendor', label: 'Vendor / Payee', aliases: ['vendor', 'vendor_name', 'payee', 'supplier'] },
     { key: 'gst_rate', label: 'GST Rate (%)', aliases: ['gst_rate', 'tax_rate', 'gst'] },
     { key: 'paid_through', label: 'Paid Through (Bank/Cash)', aliases: ['paid_through', 'mode', 'paid_via', 'payment_mode'] },
@@ -228,7 +228,7 @@ const IMPORT_SPECS = {
   'payments-received': [
     { key: 'date', label: 'Payment Date', req: true, aliases: ['date', 'payment_date', 'txn_date'] },
     { key: 'customer', label: 'Customer Name', req: true, aliases: ['customer', 'customer_name', 'client', 'party'] },
-    { key: 'amount', label: 'Amount (₹)', req: true, aliases: ['amount', 'payment_amount', 'amt', 'total'] },
+    { key: 'amount', label: 'Amount (â‚¹)', req: true, aliases: ['amount', 'payment_amount', 'amt', 'total'] },
     { key: 'mode', label: 'Payment Mode', aliases: ['mode', 'payment_mode', 'mode_label'] },
     { key: 'reference', label: 'Reference / Transaction#', aliases: ['reference', 'ref', 'ref_no', 'txn_id'] },
     { key: 'notes', label: 'Notes', aliases: ['notes', 'description'] }
@@ -236,7 +236,7 @@ const IMPORT_SPECS = {
   'payments-made': [
     { key: 'date', label: 'Payment Date', req: true, aliases: ['date', 'payment_date', 'txn_date'] },
     { key: 'vendor', label: 'Vendor Name', req: true, aliases: ['vendor', 'vendor_name', 'supplier', 'party'] },
-    { key: 'amount', label: 'Amount (₹)', req: true, aliases: ['amount', 'payment_amount', 'amt', 'total'] },
+    { key: 'amount', label: 'Amount (â‚¹)', req: true, aliases: ['amount', 'payment_amount', 'amt', 'total'] },
     { key: 'mode', label: 'Payment Mode', aliases: ['mode', 'payment_mode', 'mode_label'] },
     { key: 'reference', label: 'Reference / Voucher#', aliases: ['reference', 'ref', 'ref_no', 'txn_id'] },
     { key: 'notes', label: 'Notes', aliases: ['notes', 'description'] }
@@ -301,7 +301,7 @@ const IMPORT_SPECS = {
     { key: 'customer', label: 'Customer Name', req: true, aliases: ['customer', 'customer_name', 'client', 'party'] },
     { key: 'date', label: 'Date', req: true, aliases: ['date', 'retainer_date', 'doc_date'] },
     { key: 'item', label: 'Description / Item', aliases: ['item', 'description', 'notes'] },
-    { key: 'rate', label: 'Amount (₹)', req: true, aliases: ['rate', 'amount', 'total'] },
+    { key: 'rate', label: 'Amount (â‚¹)', req: true, aliases: ['rate', 'amount', 'total'] },
     { key: 'gst_rate', label: 'GST Rate (%)', aliases: ['gst_rate', 'tax_rate'] }
   ]
 };
@@ -518,7 +518,7 @@ function openUniversalImportModal(resourceName, title) {
     footer: `
       <div id="uimp-footer-left" style="display:flex;gap:8px;">
         <button class="btn" type="button" data-close id="uimp-btn-cancel">Cancel</button>
-        <button class="btn" type="button" id="uimp-btn-back" style="display:none;">← Back</button>
+        <button class="btn" type="button" id="uimp-btn-back" style="display:none;">â† Back</button>
       </div>
       <div id="uimp-footer-right" style="display:flex;gap:8px;">
         <button class="btn p" id="uimp-btn-next" type="button" disabled style="display:inline-flex;align-items:center;gap:6px;">
@@ -659,7 +659,7 @@ function openUniversalImportModal(resourceName, title) {
       dropZone.style.display = 'none';
       fileInfo.style.display = 'flex';
       fileNameEl.textContent = file.name;
-      fileMetaEl.textContent = `${fmtBytes(file.size)} · ${rawRows.length} record${rawRows.length === 1 ? '' : 's'} detected · ${rawHeaders.length} columns`;
+      fileMetaEl.textContent = `${fmtBytes(file.size)} Â· ${rawRows.length} record${rawRows.length === 1 ? '' : 's'} detected Â· ${rawHeaders.length} columns`;
       btnNext.disabled = false;
 
       // Auto-match columns
@@ -726,7 +726,7 @@ function openUniversalImportModal(resourceName, title) {
 
     tbody.innerHTML = fields.map(f => {
       const selectedIdx = columnMapping[f.key] ?? -1;
-      const sampleVal = selectedIdx >= 0 && selectedIdx < firstRow.length ? firstRow[selectedIdx] : '—';
+      const sampleVal = selectedIdx >= 0 && selectedIdx < firstRow.length ? firstRow[selectedIdx] : 'â€”';
       return `
         <tr data-field="${esc(f.key)}">
           <td>
@@ -744,7 +744,7 @@ function openUniversalImportModal(resourceName, title) {
             </select>
           </td>
           <td class="uimp-sample-cell" data-sample-key="${esc(f.key)}" style="color:var(--tx-muted);font-family:monospace;font-size:11px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-            ${esc(sampleVal || '—')}
+            ${esc(sampleVal || 'â€”')}
           </td>
         </tr>
       `;
@@ -757,8 +757,8 @@ function openUniversalImportModal(resourceName, title) {
         columnMapping[key] = val;
         const sampleEl = $(`[data-sample-key="${key}"]`, tbody);
         if (sampleEl) {
-          const sVal = val >= 0 && val < firstRow.length ? firstRow[val] : '—';
-          sampleEl.textContent = sVal || '—';
+          const sVal = val >= 0 && val < firstRow.length ? firstRow[val] : 'â€”';
+          sampleEl.textContent = sVal || 'â€”';
         }
         updateMappingChip();
       });
@@ -883,7 +883,7 @@ function openUniversalImportModal(resourceName, title) {
                   : `<span style="color:#f59e0b;font-weight:600;" title="Missing: ${esc(missingReq.map(f => f.label).join(', '))}"><i class="fa-solid fa-triangle-exclamation"></i> Incomplete</span>`
                 }
               </td>
-              ${mappedFields.map(f => `<td>${esc(rec[f.key] || '—')}</td>`).join('')}
+              ${mappedFields.map(f => `<td>${esc(rec[f.key] || 'â€”')}</td>`).join('')}
             </tr>
           `;
         }).join('')}
@@ -1087,7 +1087,7 @@ function openUniversalImportModal(resourceName, title) {
     if (errors.length > 0) {
       errorsTbody.innerHTML = errors.map(err => `
         <tr>
-          <td style="font-weight:600;color:var(--tx-muted);">Row ${err.row || '—'}</td>
+          <td style="font-weight:600;color:var(--tx-muted);">Row ${err.row || 'â€”'}</td>
           <td style="font-weight:600;color:var(--tx);">${esc(err.identifier || 'Record')}</td>
           <td style="color:#ef4444;">${esc(err.error || 'Validation error')}</td>
         </tr>
@@ -1185,7 +1185,7 @@ function listPage(root, cfg) {
   }
 
   const hideBulkDel = Boolean(cfg.noDelete || cfg.api === 'stock-transfers');
-  root.innerHTML = `<div class="bc">Home / ${esc(cfg.bc)}</div><div class="hd"><h1>${esc(cfg.title)}</h1><div class="act">${cfg.noImport ? '' : `<button class="btn" data-x="import" type="button" title="Import ${esc(cfg.title)}"><i class="fa-solid fa-file-import"></i> Import</button>`}<div class="export-dropdown-wrap" style="position:relative;display:inline-block;"><button class="btn" data-x="export-toggle" type="button" title="Export ${esc(cfg.title)}"><i class="fa-solid fa-file-export"></i> Export ▾</button><div class="pop right export-menu-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:145px;z-index:90;padding:6px;background:var(--surface-glass-elevated);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd);"><button type="button" class="btn" data-x="csv" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-csv" style="color:#10b981;"></i> Export CSV</button><button type="button" class="btn" data-x="json" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-code" style="color:#3b82f6;"></i> Export JSON</button></div></div>${cfg.onNew ? `<button class="btn p" data-x="new" type="button">+ ${esc(cfg.newLabel)}</button>` : ''}</div></div>${cfg.note ? `<div class="note">${cfg.note}</div>` : ''}
+  root.innerHTML = `<div class="bc">Home / ${esc(cfg.bc)}</div><div class="hd"><h1>${esc(cfg.title)}</h1><div class="act">${cfg.noImport ? '' : `<button class="btn" data-x="import" type="button" title="Import ${esc(cfg.title)}"><i class="fa-solid fa-file-import"></i> Import</button>`}<div class="export-dropdown-wrap" style="position:relative;display:inline-block;"><button class="btn" data-x="export-toggle" type="button" title="Export ${esc(cfg.title)}"><i class="fa-solid fa-file-export"></i> Export â–¾</button><div class="pop right export-menu-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:145px;z-index:90;padding:6px;background:var(--surface-glass-elevated);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd);"><button type="button" class="btn" data-x="csv" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-csv" style="color:#10b981;"></i> Export CSV</button><button type="button" class="btn" data-x="json" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-code" style="color:#3b82f6;"></i> Export JSON</button></div></div>${cfg.onNew ? `<button class="btn p" data-x="new" type="button">+ ${esc(cfg.newLabel)}</button>` : ''}</div></div>${cfg.note ? `<div class="note">${cfg.note}</div>` : ''}
 <div class="card" style="margin-top:14px"><div class="tb" style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;"><input class="in" type="search" id="tq" placeholder="Search ${esc(cfg.title.toLowerCase())}" aria-label="Search" style="max-width:300px">${(cfg.filters || []).map(f => `<select class="btn" data-f="${f.name}" aria-label="${esc(f.label)}">${opts(f.opts || [], '')}</select>`).join('')}<span class="sub" id="cnt"></span>${hideBulkDel ? '' : `<div id="bulk-bar" style="display:none;margin-left:auto;align-items:center;gap:8px;"><span class="sub" style="font-weight:600;color:var(--text-primary,#111827);"><span id="bulk-cnt">0</span> selected</span><button class="btn dn" type="button" id="btn-bulk-delete" style="display:inline-flex;align-items:center;gap:6px;background:#fee2e2;color:#dc2626;border-color:#fca5a5;font-weight:600;cursor:pointer;"><i class="fa-solid fa-trash-can"></i> Delete</button></div>`}</div><div class="tw" id="lt">${spinner}</div><div class="pager" id="pgr"></div></div>`;
   if (cfg.filters) {
     for (const f of cfg.filters) {
@@ -1276,13 +1276,13 @@ function listPage(root, cfg) {
       if (!root.isConnected) return;
       if (p.page !== st.page) st.page = p.page;
       cache = Object.fromEntries(p.results.map(r => [String(r.id), r]));
-      const sortMark = c => c.s ? (st.ordering === c.s ? ' ▲' : st.ordering === '-' + c.s ? ' ▼' : '') : '';
+      const sortMark = c => c.s ? (st.ordering === c.s ? ' â–²' : st.ordering === '-' + c.s ? ' â–¼' : '') : '';
       const empty = !p.count ? (st.q || Object.values(st.f).some(Boolean) ? 'No matching records.' : esc(cfg.empty || 'No records yet.')) : '';
       const totalCols = cfg.cols.length + (cfg.actions ? 1 : 0) + 1;
       if (cfg.inventorySummary) {
         const detailIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>';
         const moreIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>';
-        $('#lt', root).innerHTML = `<div class="inventory-summary-wrap"><table class="inventory-summary-table"><colgroup><col style="width:36px"><col style="width:13%"><col style="width:20%"><col style="width:14%"><col style="width:11%"><col style="width:10%"><col style="width:12%"><col style="width:82px"><col style="width:40px"><col style="width:40px"></colgroup><thead><tr><th style="width:36px;text-align:center;"><input type="checkbox" id="cb-all" aria-label="Select all" style="cursor:pointer;"></th><th>Warehouse</th><th>Item</th><th>SKU</th><th class="r">Closing Stock</th><th class="r">Unit Cost</th><th class="r">Total Stock Value</th><th class="inventory-status">Status</th><th class="inventory-details-col">Stock Details</th><th class="inventory-actions-col">Actions</th></tr></thead><tbody>${p.results.map(r => `<tr><td style="width:36px;text-align:center;"><input type="checkbox" class="cb-row" data-id="${r.id}" aria-label="Select item" style="cursor:pointer;"></td><td class="inventory-warehouse" title="${esc(r.warehouse_code || 'WH-MAIN')}"><span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || 'WH-MAIN')}</span></td><td class="inventory-item" title="${esc(r.name)}">${esc(r.name)}</td><td class="inventory-sku" title="${esc(r.sku || '—')}">${esc(r.sku || '—')}</td><td class="inventory-num">${qty(r.closing_stock != null ? r.closing_stock : (r.stock || 0))}</td><td class="inventory-num">${inr(r.purchase_price)}</td><td class="inventory-num">${inr(r.stock_value != null ? r.stock_value : r.valuation)}</td><td class="inventory-status">${badge(r.status)}</td><td class="inventory-details-col"><button type="button" class="inventory-summary-action" data-inventory-stock-details data-id="${r.id}" title="Stock details" aria-label="Stock details">${detailIcon}</button></td><td class="inventory-actions-col"><button type="button" class="inventory-summary-action" data-inventory-actions data-id="${r.id}" title="Actions" aria-label="Actions">${moreIcon}</button></td></tr>`).join('') || `<tr><td colspan="10"><div class="empty">${empty}${!p.count && !st.q && cfg.onNew ? `<br><button class="btn p" data-x="new" type="button" style="margin-top:8px">+ ${esc(cfg.newLabel)}</button>` : ''}</div></td></tr>`}</tbody></table></div>`;
+        $('#lt', root).innerHTML = `<div class="inventory-summary-wrap"><table class="inventory-summary-table"><colgroup><col style="width:36px"><col style="width:13%"><col style="width:20%"><col style="width:14%"><col style="width:11%"><col style="width:10%"><col style="width:12%"><col style="width:82px"><col style="width:40px"><col style="width:40px"></colgroup><thead><tr><th style="width:36px;text-align:center;"><input type="checkbox" id="cb-all" aria-label="Select all" style="cursor:pointer;"></th><th>Warehouse</th><th>Item</th><th>SKU</th><th class="r">Closing Stock</th><th class="r">Unit Cost</th><th class="r">Total Stock Value</th><th class="inventory-status">Status</th><th class="inventory-details-col">Stock Details</th><th class="inventory-actions-col">Actions</th></tr></thead><tbody>${p.results.map(r => `<tr><td style="width:36px;text-align:center;"><input type="checkbox" class="cb-row" data-id="${r.id}" aria-label="Select item" style="cursor:pointer;"></td><td class="inventory-warehouse" title="${esc(r.warehouse_code || 'WH-MAIN')}"><span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || 'WH-MAIN')}</span></td><td class="inventory-item" title="${esc(r.name)}">${esc(r.name)}</td><td class="inventory-sku" title="${esc(r.sku || 'â€”')}">${esc(r.sku || 'â€”')}</td><td class="inventory-num">${qty(r.closing_stock != null ? r.closing_stock : (r.stock || 0))}</td><td class="inventory-num">${inr(r.purchase_price)}</td><td class="inventory-num">${inr(r.stock_value != null ? r.stock_value : r.valuation)}</td><td class="inventory-status">${badge(r.status)}</td><td class="inventory-details-col"><button type="button" class="inventory-summary-action" data-inventory-stock-details data-id="${r.id}" title="Stock details" aria-label="Stock details">${detailIcon}</button></td><td class="inventory-actions-col"><button type="button" class="inventory-summary-action" data-inventory-actions data-id="${r.id}" title="Actions" aria-label="Actions">${moreIcon}</button></td></tr>`).join('') || `<tr><td colspan="10"><div class="empty">${empty}${!p.count && !st.q && cfg.onNew ? `<br><button class="btn p" data-x="new" type="button" style="margin-top:8px">+ ${esc(cfg.newLabel)}</button>` : ''}</div></td></tr>`}</tbody></table></div>`;
         st.total = p.count;
         $('#cnt', root).textContent = p.count + (p.count === 1 ? ' record' : ' records');
         $('#pgr', root).innerHTML = `<span class="sub">Page ${p.page} of ${p.pages}</span><span class="act"><select class="btn" data-size aria-label="Rows per page">${opts([10, 25, 50, 100].map(n => [n, n + ' / page']), st.size)}</select><button class="btn" data-x="pv" type="button" ${p.page <= 1 ? 'disabled' : ''}>Previous</button><button class="btn" data-x="nx" type="button" ${p.page >= p.pages ? 'disabled' : ''}>Next</button></span>`;
@@ -1299,7 +1299,7 @@ function listPage(root, cfg) {
         return `<div class="rowa-wrap" style="display:inline-flex;align-items:center;gap:4px;">` +
           pri.map(([a, l, k]) => `<button type="button" class="${k || ''}" data-act="${a}" data-id="${rowId}">${esc(l)}</button>`).join('') +
           `<div class="rowa-more-wrap" style="position:relative;display:inline-block;">` +
-            `<button type="button" class="btn-rowa-more" data-rowa-more style="padding:2px 8px;font-size:12px;border-radius:4px;border:1px solid var(--bd-glass,#cbd5e1);background:var(--bg-card,#fff);cursor:pointer;white-space:nowrap;">More ▾</button>` +
+            `<button type="button" class="btn-rowa-more" data-rowa-more style="padding:2px 8px;font-size:12px;border-radius:4px;border:1px solid var(--bd-glass,#cbd5e1);background:var(--bg-card,#fff);cursor:pointer;white-space:nowrap;">More â–¾</button>` +
             `<div class="rowa-menu-pop" style="display:none;position:absolute;right:0;top:100%;margin-top:4px;min-width:145px;background:var(--bg-card,#ffffff);border:1px solid var(--bd-glass,#cbd5e1);border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,0.14);z-index:100;padding:4px 0;text-align:left;">` +
               sec.map(([a, l, k]) => `<button type="button" class="rowa-menu-item ${k || ''}" data-act="${a}" data-id="${rowId}" style="display:block;width:100%;text-align:left;padding:6px 12px;font-size:12px;border:none;background:none;cursor:pointer;color:var(--tx,#1e293b);">${esc(l)}</button>`).join('') +
             `</div>` +
@@ -1314,7 +1314,7 @@ function listPage(root, cfg) {
     } catch (e) { if (root.isConnected) $('#lt', root).innerHTML = errBox(e.message, true); }
   }
   let t;
-  $('#tq', root).addEventListener('input', e => { clearTimeout(t); t = setTimeout(() => { st.q = e.target.value.trim(); st.page = 1; load(); }, 250); });
+  on('#tq', 'input', e => { clearTimeout(t); t = setTimeout(() => { st.q = e.target.value.trim(); st.page = 1; load(); }, 250); });
   root.addEventListener('change', e => {
     if (e.target.id === 'cb-all') {
       const checked = e.target.checked;
@@ -1568,7 +1568,7 @@ const LISTS = {
   customers: {
     api: 'customers', title: 'Customers', bc: 'Sales', newLabel: 'New customer', onNew: () => typeof navigateOrRun === 'function' ? navigateOrRun('sales/customers/new', () => partyForm('customers')) : partyForm('customers'), empty: 'No customers yet.',
     filters: [{ name: 'active', label: 'Status', opts: [['', 'All'], ['1', 'Active'], ['0', 'Inactive']] }],
-    cols: [{ h: 'Name', s: 'name', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.name)}</button>` }, { h: 'Contact', f: r => esc(r.email || r.phone || '—') }, { h: 'State', s: 'state', f: r => esc(r.state || '—') }, { h: 'Billed', ...money(r => inr(r.billed)) }, { h: 'Receivable', ...money(r => inr(r.outstanding)) }, { h: 'Overdue', ...money(r => r.overdue > 0 ? `<span class="dn">${inr(r.overdue)}</span>` : inr(0)) }, { h: 'Status', s: 'active', f: r => r.active ? badge('Active', 'up') : badge('Inactive') }],
+    cols: [{ h: 'Name', s: 'name', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.name)}</button>` }, { h: 'Contact', f: r => esc(r.email || r.phone || 'â€”') }, { h: 'State', s: 'state', f: r => esc(r.state || 'â€”') }, { h: 'Billed', ...money(r => inr(r.billed)) }, { h: 'Receivable', ...money(r => inr(r.outstanding)) }, { h: 'Overdue', ...money(r => r.overdue > 0 ? `<span class="dn">${inr(r.overdue)}</span>` : inr(0)) }, { h: 'Status', s: 'active', f: r => r.active ? badge('Active', 'up') : badge('Inactive') }],
     actions: r => [['edit', 'Edit'], [r.active ? 'deactivate' : 'activate', r.active ? 'Deactivate' : 'Activate'], ['delete', 'Delete', 'dn']],
     onAction: async (a, r) => {
       if (a === 'view') return partyDetail('customers', r.id);
@@ -1587,7 +1587,7 @@ const LISTS = {
   vendors: {
     api: 'vendors', title: 'Vendors', bc: 'Purchases', newLabel: 'New vendor', onNew: () => typeof navigateOrRun === 'function' ? navigateOrRun('purchases/vendors/new', () => partyForm('vendors')) : partyForm('vendors'), empty: 'No vendors yet.',
     filters: [{ name: 'active', label: 'Status', opts: [['', 'All'], ['1', 'Active'], ['0', 'Inactive']] }],
-    cols: [{ h: 'Name', s: 'name', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.name)}</button>${r.active ? '' : ' ' + badge('Inactive')}` }, { h: 'Contact', f: r => esc(r.email || r.phone || '—') }, { h: 'State', s: 'state', f: r => esc(r.state || '—') }, { h: 'Billed', ...money(r => inr(r.billed)) }, { h: 'Payable', ...money(r => inr(r.outstanding)) }, { h: 'Overdue', ...money(r => r.overdue > 0 ? `<span class="dn">${inr(r.overdue)}</span>` : inr(0)) }],
+    cols: [{ h: 'Name', s: 'name', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.name)}</button>${r.active ? '' : ' ' + badge('Inactive')}` }, { h: 'Contact', f: r => esc(r.email || r.phone || 'â€”') }, { h: 'State', s: 'state', f: r => esc(r.state || 'â€”') }, { h: 'Billed', ...money(r => inr(r.billed)) }, { h: 'Payable', ...money(r => inr(r.outstanding)) }, { h: 'Overdue', ...money(r => r.overdue > 0 ? `<span class="dn">${inr(r.overdue)}</span>` : inr(0)) }],
     actions: () => [['edit', 'Edit'], ['delete', 'Delete', 'dn']],
     onAction: (a, r) => a === 'view' ? partyDetail('vendors', r.id) : a === 'edit' ? partyForm('vendors', r.id) : a === 'delete' ? deleteRecord('vendors', r, 'Vendor') : null,
   },
@@ -1603,7 +1603,7 @@ const LISTS = {
             <div>
               <div style="font-weight:600;color:var(--tx);">${esc(r.name)}</div>
 
-              <div class="sub" style="font-size:11px;">${esc(r.unit || 'nos')}${r.hsn_sac ? ' · HSN ' + esc(r.hsn_sac) : ''}</div>
+              <div class="sub" style="font-size:11px;">${esc(r.unit || 'nos')}${r.hsn_sac ? ' Â· HSN ' + esc(r.hsn_sac) : ''}</div>
 
             </div>
 
@@ -1615,21 +1615,21 @@ const LISTS = {
       { h: 'Selling price', s: 'selling_price', ...money(r => inr(r.selling_price)) },
       { h: 'Purchase price', ...money(r => inr(r.purchase_price)) },
       { h: 'GST', r: 1, f: r => num(r.gst_rate) + '%' },
-      { h: 'Stock', s: 'stock', r: 1, f: r => r.stock == null ? '—' : qty(r.stock) + ' ' + esc(r.unit || '') },
-      { h: 'Reorder at', r: 1, f: r => r.reorder_level == null ? '—' : qty(r.reorder_level) },
+      { h: 'Stock', s: 'stock', r: 1, f: r => r.stock == null ? 'â€”' : qty(r.stock) + ' ' + esc(r.unit || '') },
+      { h: 'Reorder at', r: 1, f: r => r.reorder_level == null ? 'â€”' : qty(r.reorder_level) },
       { h: 'Status', f: r => badge(r.status) }
     ],
     actions: r => [['edit', 'Edit'], ...(r.track_inventory ? [['adjust', 'Adjust']] : []), ['delete', 'Delete', 'dn']],
     onAction: (a, r) => a === 'edit' ? itemForm(r.id) : a === 'adjust' ? adjustForm(r.id) : a === 'delete' ? deleteRecord('items', r, 'Item') : null,
   },
   invoices: {
-    api: 'invoices', title: 'All Invoices ▾', bc: 'Sales', newLabel: 'New', onNew: () => invoiceForm(null, $('#pg'), () => { location.hash = '#/sales/invoices'; route(); }), ordering: '-date', empty: 'No invoices yet.',
+    api: 'invoices', title: 'All Invoices â–¾', bc: 'Sales', newLabel: 'New', onNew: () => invoiceForm(null, $('#pg'), () => { location.hash = '#/sales/invoices'; route(); }), ordering: '-date', empty: 'No invoices yet.',
     filters: docStatusFilters('Sent'),
     cols: [
       { h: 'DATE', s: 'date', f: r => fd(r.date) },
-      { h: 'INVOICE#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}" style="color:#2563eb;font-weight:500;text-decoration:none;cursor:pointer;background:none;border:none;padding:0;font-size:inherit;">${esc(r.number)}</button> <span style="font-size:12px;color:#64748b;" title="Sent">✉</span>${r.attachment_count ? ' <span title="Has attachments" style="font-size:12px;">📎</span>' : ''}` },
+      { h: 'INVOICE#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}" style="color:#2563eb;font-weight:500;text-decoration:none;cursor:pointer;background:none;border:none;padding:0;font-size:inherit;">${esc(r.number)}</button> <span style="font-size:12px;color:#64748b;" title="Sent">âœ‰</span>${r.attachment_count ? ' <span title="Has attachments" style="font-size:12px;">ðŸ“Ž</span>' : ''}` },
       { h: 'ORDER NUMBER', s: 'order_number', f: r => esc(r.order_number || '') },
-      { h: 'CUSTOMER NAME', s: 'customer__name', f: r => esc(r.customer_name || r.party || '—') },
+      { h: 'CUSTOMER NAME', s: 'customer__name', f: r => esc(r.customer_name || r.party || 'â€”') },
       { h: 'STATUS', f: r => {
           const isOverdue = r.status === 'Overdue';
           const isPaid = r.status === 'Paid';
@@ -1672,13 +1672,13 @@ const LISTS = {
   bills: {
     api: 'bills', title: 'Bills', bc: 'Purchases', newLabel: 'New bill', onNew: () => docMasterDetail($('#pg'), 'bills', 'new'), ordering: '-date', empty: 'No bills yet.',
     filters: docStatusFilters('Open'),
-    cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Bill#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>${r.attachment_count ? ' <span title="Has attachments">📎</span>' : ''}` }, { h: 'Vendor', f: r => esc(r.party) }, { h: 'Status', f: r => badge(r.status) }, { h: 'Due date', s: 'due_date', f: r => fd(r.due_date) }, { h: 'Total', s: 'total', ...money(r => inr(r.total)) }, { h: 'Balance due', ...money(r => inr(r.balance)) }],
+    cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Bill#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>${r.attachment_count ? ' <span title="Has attachments">ðŸ“Ž</span>' : ''}` }, { h: 'Vendor', f: r => esc(r.party) }, { h: 'Status', f: r => badge(r.status) }, { h: 'Due date', s: 'due_date', f: r => fd(r.due_date) }, { h: 'Total', s: 'total', ...money(r => inr(r.total)) }, { h: 'Balance due', ...money(r => inr(r.balance)) }],
     actions: () => [['view', 'View'], ['edit', 'Edit']],
     onAction: (a, r) => a === 'view' ? docMasterDetail($('#pg'), 'bills', r.id) : a === 'edit' ? docMasterDetail($('#pg'), 'bills', r.id, true) : null,
   },
   'payments-received': {
     api: 'payments-received', title: 'Payments Received', bc: 'Sales', newLabel: 'Record payment', onNew: () => paymentForm('payments-received'), ordering: '-date', empty: 'No payments recorded yet.',
-    cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Receipt#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` }, { h: 'Customer', f: r => esc(r.party) }, { h: 'Mode', f: r => esc(r.mode_label) }, { h: 'Reference', f: r => esc(r.reference || '—') }, { h: 'Amount', s: 'amount', ...money(r => inr(r.amount)) }, { h: 'Unapplied', ...money(r => inr(r.unapplied)) }],
+    cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Receipt#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` }, { h: 'Customer', f: r => esc(r.party) }, { h: 'Mode', f: r => esc(r.mode_label) }, { h: 'Reference', f: r => esc(r.reference || 'â€”') }, { h: 'Amount', s: 'amount', ...money(r => inr(r.amount)) }, { h: 'Unapplied', ...money(r => inr(r.unapplied)) }],
     actions: r => r.status === 'void' ? [['view', 'View']] : [['view', 'View'], ['edit', 'Edit'], ['void', 'Void Payment']],
     onAction: async (a, r) => {
       if (a === 'view') return paymentDetail('payments-received', r.id);
@@ -1701,12 +1701,12 @@ const LISTS = {
   },
   'payments-made': {
     api: 'payments-made', title: 'Payments Made', bc: 'Purchases', newLabel: 'Record payment', onNew: () => paymentForm('payments-made'), ordering: '-date', empty: 'No payments recorded yet.',
-    cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Payment#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` }, { h: 'Vendor', f: r => esc(r.party) }, { h: 'Mode', f: r => esc(r.mode_label) }, { h: 'Reference', f: r => esc(r.reference || '—') }, { h: 'Amount', s: 'amount', ...money(r => inr(r.amount)) }, { h: 'Unapplied', ...money(r => inr(r.unapplied)) }],
+    cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Payment#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` }, { h: 'Vendor', f: r => esc(r.party) }, { h: 'Mode', f: r => esc(r.mode_label) }, { h: 'Reference', f: r => esc(r.reference || 'â€”') }, { h: 'Amount', s: 'amount', ...money(r => inr(r.amount)) }, { h: 'Unapplied', ...money(r => inr(r.unapplied)) }],
     actions: () => [['view', 'View'], ['edit', 'Edit']],
     onAction: (a, r) => a === 'view' ? paymentDetail('payments-made', r.id) : a === 'edit' ? paymentForm('payments-made', r) : null,
   },
   inventory: {
-    api: 'items', title: 'Inventory Summary', bc: 'Inventory', params: { tracked: 1 }, empty: 'No inventory-tracked items yet. Create a goods item with “Track inventory” on.',
+    api: 'items', title: 'Inventory Summary', bc: 'Inventory', params: { tracked: 1 }, empty: 'No inventory-tracked items yet. Create a goods item with â€œTrack inventoryâ€ on.',
     inventorySummary: true,
     filters: [
       { name: 'stock', label: 'Stock level', opts: [['', 'All Stock Levels'], ['low', 'Low stock'], ['out', 'Out of stock']] },
@@ -1715,7 +1715,7 @@ const LISTS = {
     cols: [
       { h: 'Warehouse', s: 'warehouse_code', f: r => `<span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;" title="${esc(r.warehouse_code || 'WH-MAIN')}">${esc(r.warehouse_code || 'WH-MAIN')}</span>` },
       { h: 'Item', s: 'name', f: r => esc(r.name) },
-      { h: 'SKU', s: 'sku', f: r => esc(r.sku || '—') },
+      { h: 'SKU', s: 'sku', f: r => esc(r.sku || 'â€”') },
       { h: 'Closing Stock', s: 'closing_stock', r: 1, f: r => `<span style="font-weight:600;">${qty(r.closing_stock != null ? r.closing_stock : (r.stock || 0))}</span>` },
       { h: 'Unit Cost', ...money(r => inr(r.purchase_price)) },
       { h: 'Total Stock Value', ...money(r => inr(r.stock_value != null ? r.stock_value : r.valuation)) },
@@ -1732,7 +1732,7 @@ const LISTS = {
     cols: [
       { h: 'Date & Time', s: 'date', f: r => `${fd(r.date)} ${r.adjusted_time ? `<small style="color:var(--tx-muted);font-weight:600;margin-left:4px;">${esc(r.adjusted_time)}</small>` : ''}` },
 
-      { h: 'Warehouse Code', s: 'warehouse_code', f: r => `<span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || '—')}</span>` },
+      { h: 'Warehouse Code', s: 'warehouse_code', f: r => `<span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || 'â€”')}</span>` },
       { h: 'Reference', f: r => esc(r.reference) },
       { h: 'Item', s: 'item', f: r => esc(r.item) },
       { h: 'Reason', f: r => esc(r.reason) },
@@ -1750,9 +1750,9 @@ const LISTS = {
       { h: 'Date & Time', s: 'date', f: r => `${fd(r.date)} ${r.adjusted_time ? `<small style="color:var(--tx-muted);font-weight:600;margin-left:4px;">${esc(r.adjusted_time)}</small>` : ''}` },
 
       { h: 'Item', s: 'item', f: r => esc(r.item) },
-      { h: 'Warehouse', f: r => r.to_warehouse_code ? `<span class="pastel-chip chip-sky" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || '—')} → ${esc(r.to_warehouse_code)}</span>` : `<span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || '—')}</span>` },
+      { h: 'Warehouse', f: r => r.to_warehouse_code ? `<span class="pastel-chip chip-sky" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || 'â€”')} â†’ ${esc(r.to_warehouse_code)}</span>` : `<span class="pastel-chip chip-lavender" style="font-weight:600;font-size:11px;">${esc(r.warehouse_code || 'â€”')}</span>` },
       { h: 'Type', f: r => badge(r.kind_label || r.kind) },
-      { h: 'Reference', f: r => esc(r.reference || '—') },
+      { h: 'Reference', f: r => esc(r.reference || 'â€”') },
       { h: 'Change', r: 1, f: r => `<span class="${num(r.change) < 0 ? 'dn' : 'up'}">${num(r.change) > 0 ? '+' : ''}${qty(r.change)}</span>` },
       { h: 'Balance after', r: 1, f: r => qty(r.balance_after) }
     ]
@@ -1770,11 +1770,11 @@ const LISTS = {
     cols: [
       { h: 'Transfer Date', s: 'transfer_date', f: r => fd(r.transfer_date) },
       { h: 'Transfer #', s: 'transfer_number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}"><b>${esc(r.transfer_number)}</b></button>${r.is_reversal ? ' <span class="pastel-chip chip-rose" style="font-size:10px;padding:1px 5px;font-weight:700;">Reversal</span>' : ''}` },
-      { h: 'Source (From)', f: r => `<span class="pastel-chip chip-amber" style="font-weight:600;font-size:11px;">${esc(r.source_warehouse_code || r.source_warehouse_name || '—')}</span>` },
-      { h: 'Destination (To)', f: r => `<span class="pastel-chip chip-sky" style="font-weight:600;font-size:11px;">${esc(r.destination_warehouse_code || r.destination_warehouse_name || '—')}</span>` },
+      { h: 'Source (From)', f: r => `<span class="pastel-chip chip-amber" style="font-weight:600;font-size:11px;">${esc(r.source_warehouse_code || r.source_warehouse_name || 'â€”')}</span>` },
+      { h: 'Destination (To)', f: r => `<span class="pastel-chip chip-sky" style="font-weight:600;font-size:11px;">${esc(r.destination_warehouse_code || r.destination_warehouse_name || 'â€”')}</span>` },
       { h: 'Items', f: r => {
         const lines = r.lines || [];
-        if (!lines.length) return '—';
+        if (!lines.length) return 'â€”';
         if (lines.length === 1) return esc(lines[0].item_name || 'Item');
         return `${esc(lines[0].item_name || 'Item')} <span class="pastel-chip chip-lavender" style="font-size:10px;padding:1px 4px;">+${lines.length - 1} more</span>`;
       }},
@@ -1791,7 +1791,7 @@ const LISTS = {
         const [cls, label] = map[r.status] || ['chip-lavender', (r.status || 'DRAFT').toUpperCase()];
         return `<span class="pastel-chip ${cls}">${label}</span>`;
       }},
-      { h: 'Created By', f: r => esc(r.created_by_name || '—') }
+      { h: 'Created By', f: r => esc(r.created_by_name || 'â€”') }
     ],
     actions: r => {
       // STRICT REQUIREMENT: No delete action anywhere
@@ -1827,9 +1827,9 @@ const LISTS = {
     ],
     cols: [
       { h: 'Date', s: 'date', f: r => fd(r.date) },
-      { h: 'Quote Number', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}"><b>${esc(r.number)}</b></button>${r.attachment_count ? ' <span title="Has attachments">📎</span>' : ''}` },
+      { h: 'Quote Number', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}"><b>${esc(r.number)}</b></button>${r.attachment_count ? ' <span title="Has attachments">ðŸ“Ž</span>' : ''}` },
       { h: 'Customer Name', f: r => esc(r.party || r.customer_name) },
-      { h: 'Reference Number', f: r => esc(r.reference_number || '—') },
+      { h: 'Reference Number', f: r => esc(r.reference_number || 'â€”') },
       { h: 'Status', f: r => {
         const map = {
           draft: ['chip-lavender', 'DRAFT'],
@@ -1842,7 +1842,7 @@ const LISTS = {
         const [cls, label] = map[r.status] || ['chip-lavender', (r.status || 'DRAFT').toUpperCase()];
         return `<span class="pastel-chip ${cls}">${label}</span>`;
       }},
-      { h: 'Expiry Date', s: 'expiry_date', f: r => r.expiry_date ? fd(r.expiry_date) : '—' },
+      { h: 'Expiry Date', s: 'expiry_date', f: r => r.expiry_date ? fd(r.expiry_date) : 'â€”' },
       { h: 'Amount', s: 'total', ...money(r => inr(r.total)) }
     ],
     actions: r => {
@@ -1850,7 +1850,7 @@ const LISTS = {
       const acts = [
         ['view', 'View'],
         ['edit', 'Edit'],
-        ['sign', r.signature_data ? 'Signed ✓' : 'Sign']
+        ['sign', r.signature_data ? 'Signed âœ“' : 'Sign']
       ];
       if (r.status === 'draft') {
         acts.push(['send', 'Mark as Sent']);
@@ -1902,8 +1902,8 @@ const LISTS = {
     cols: [
       { h: 'Date', s: 'date', f: r => fd(r.date) },
       { h: 'Sales Order#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` },
-      { h: 'Reference Number', f: r => esc(r.reference_number || r.order_number || '—') },
-      { h: 'Customer', f: r => esc(r.customer_name || r.party || '—') },
+      { h: 'Reference Number', f: r => esc(r.reference_number || r.order_number || 'â€”') },
+      { h: 'Customer', f: r => esc(r.customer_name || r.party || 'â€”') },
       { h: 'Status', f: r => {
         const map = {
           draft: ['chip-lavender', 'DRAFT'],
@@ -1914,14 +1914,14 @@ const LISTS = {
         const [cls, label] = map[r.status] || ['chip-lavender', (r.status || 'DRAFT').toUpperCase()];
         return `<span class="pastel-chip ${cls}">${label}</span>`;
       }},
-      { h: 'Expected Ship', s: 'expected_shipment_date', f: r => r.expected_shipment_date ? fd(r.expected_shipment_date) : (r.due_date ? fd(r.due_date) : '—') },
+      { h: 'Expected Ship', s: 'expected_shipment_date', f: r => r.expected_shipment_date ? fd(r.expected_shipment_date) : (r.due_date ? fd(r.due_date) : 'â€”') },
       { h: 'Total', s: 'total', ...money(r => inr(r.total)) }
     ],
     actions: r => {
       const acts = [
         ['view', 'View'],
         ['edit', 'Edit'],
-        ['sign', r.signature_data ? 'Signed ✓' : 'Sign']
+        ['sign', r.signature_data ? 'Signed âœ“' : 'Sign']
       ];
       if (r.status !== 'void' && r.status !== 'closed') {
         acts.push(['convert-inv', 'Convert to Invoice']);
@@ -1983,7 +1983,7 @@ const LISTS = {
             </tr>
           `).join('');
           Modal.open({
-            title: `Stock Availability – SO ${r.number}`,
+            title: `Stock Availability â€“ SO ${r.number}`,
             body: `
               <div style="padding:16px;">
                 <div style="margin-bottom:12px;">
@@ -2072,9 +2072,9 @@ const LISTS = {
     filters: docStatusFilters('Sent'),
     cols: [
       { h: 'Date', s: 'date', f: r => fd(r.date) },
-      { h: 'Retainer#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>${r.attachment_count ? ' <span title="Has attachments">📎</span>' : ''}` },
+      { h: 'Retainer#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>${r.attachment_count ? ' <span title="Has attachments">ðŸ“Ž</span>' : ''}` },
       { h: 'Customer', f: r => esc(r.party) },
-      { h: 'Purpose', f: r => esc(r.purpose || r.subject || r.notes || '—') },
+      { h: 'Purpose', f: r => esc(r.purpose || r.subject || r.notes || 'â€”') },
       { h: 'Status', f: r => badge(r.status) },
       { h: 'Total', s: 'total', ...money(r => inr(r.total)) },
       { h: 'Balance Due', ...money(r => inr(r.balance)) },
@@ -2110,7 +2110,7 @@ const LISTS = {
         }
         if (returnable) actions.push(['record-partial-returns', 'Record Partial Returns']);
       }
-      actions.push(['sign', r.signature_data ? 'Signed ✓' : 'Sign']);
+      actions.push(['sign', r.signature_data ? 'Signed âœ“' : 'Sign']);
       return actions;
     },
     onAction: (a, r) => challanAction(r.id, a),
@@ -2129,7 +2129,7 @@ const LISTS = {
         acts.push(['apply-to-invoices', 'Apply to Invoices']);
         acts.push(['refund', 'Refund']);
       }
-      acts.push(['sign', r.signature_data ? 'Signed ✓' : 'Sign']);
+      acts.push(['sign', r.signature_data ? 'Signed âœ“' : 'Sign']);
       return acts;
     },
     onAction: async (a, r) => {
@@ -2155,8 +2155,8 @@ const LISTS = {
       { h: 'E-Way Bill#', s: 'bill_number', f: r => `<b>${esc(r.bill_number)}</b>` },
       { h: 'Doc#', f: r => `${esc(r.doc_type)}: ${esc(r.doc_number)}` },
       { h: 'Party Name', f: r => esc(r.party_name) },
-      { h: 'Route', f: r => `${esc(r.from_state)} → ${esc(r.to_state)} (${r.distance_km} km)` },
-      { h: 'Vehicle', f: r => esc(r.vehicle_number || '—') },
+      { h: 'Route', f: r => `${esc(r.from_state)} â†’ ${esc(r.to_state)} (${r.distance_km} km)` },
+      { h: 'Vehicle', f: r => esc(r.vehicle_number || 'â€”') },
       { h: 'Valid Until', f: r => fd(r.valid_until) },
       { h: 'Status', f: r => badge(r.status) }
     ],
@@ -2169,7 +2169,7 @@ const LISTS = {
       { h: 'Date', s: 'date', f: r => fd(r.date) },
       { h: 'Expense#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` },
       { h: 'Account', f: r => esc(r.expense_account_name) },
-      { h: 'Vendor', f: r => esc(r.vendor_name || '—') },
+      { h: 'Vendor', f: r => esc(r.vendor_name || 'â€”') },
       { h: 'Paid Through', f: r => esc(r.paid_through) },
       { h: 'Tax (GST)', ...money(r => inr(r.tax_amount)) },
       { h: 'Amount', s: 'total', ...money(r => inr(r.total)) },
@@ -2182,21 +2182,21 @@ const LISTS = {
     api: 'purchase-orders', title: 'Purchase Orders', bc: 'Purchases', newLabel: 'New purchase order', onNew: () => docForm('purchase-orders'), ordering: '-date', empty: 'No purchase orders yet.',
     filters: docStatusFilters('Confirmed'),
     cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'PO#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` }, { h: 'Vendor', f: r => esc(r.party || r.vendor_name) }, { h: 'Status', f: r => badge(r.status) }, { h: 'Delivery Date', s: 'delivery_date', f: r => fd(r.delivery_date || r.due_date) }, { h: 'Total', s: 'total', ...money(r => inr(r.total)) }],
-    actions: r => [['view', 'View'], ['edit', 'Edit'], ['sign', r.signature_data ? 'Signed ✓' : 'Sign']],
+    actions: r => [['view', 'View'], ['edit', 'Edit'], ['sign', r.signature_data ? 'Signed âœ“' : 'Sign']],
     onAction: (a, r) => a === 'view' ? docMasterDetail($('#pg'), 'purchase-orders', r.id) : a === 'edit' ? purchaseOrderForm(r.id, $('#pg'), () => { docMasterDetail($('#pg'), 'purchase-orders', r.id); }) : (a === 'sign' ? openSignatureModal(r, 'purchase-orders', () => refresh()) : null),
   },
   'vendor-credits': {
     api: 'vendor-credits', title: 'Vendor Credits', bc: 'Purchases', newLabel: 'New vendor credit', onNew: () => docForm('vendor-credits'), ordering: '-date', empty: 'No vendor credits yet.',
     cols: [{ h: 'Date', s: 'date', f: r => fd(r.date) }, { h: 'Credit#', s: 'number', f: r => `<button class="lk" type="button" data-act="view" data-id="${r.id}">${esc(r.number)}</button>` }, { h: 'Vendor', f: r => esc(r.party || r.vendor_name) }, { h: 'Status', f: r => badge(r.status) }, { h: 'Total', ...money(r => inr(r.total)) }, { h: 'Balance', ...money(r => inr(r.balance || r.total)) }],
-    actions: r => [['view', 'View'], ['edit', 'Edit'], ['sign', r.signature_data ? 'Signed ✓' : 'Sign']],
+    actions: r => [['view', 'View'], ['edit', 'Edit'], ['sign', r.signature_data ? 'Signed âœ“' : 'Sign']],
     onAction: (a, r) => a === 'view' ? openDocumentPreview('vendor-credits', r.id) : a === 'edit' ? docForm('vendor-credits', r.id) : (a === 'sign' ? openSignatureModal(r, 'vendor-credits', () => refresh()) : null),
   },
   projects: {
     api: 'projects', title: 'Projects', bc: 'Time Tracking', newLabel: 'New project', onNew: () => projectModal(), ordering: 'name', empty: 'No projects yet.',
     cols: [
-      { h: 'Code', s: 'code', f: r => `<b>${esc(r.code || '—')}</b>` },
+      { h: 'Code', s: 'code', f: r => `<b>${esc(r.code || 'â€”')}</b>` },
       { h: 'Project Name', s: 'name', f: r => esc(r.name) },
-      { h: 'Customer', f: r => esc(r.customer_name || '—') },
+      { h: 'Customer', f: r => esc(r.customer_name || 'â€”') },
       { h: 'Billing Method', f: r => esc((r.billing_method || '').replace('_', ' ')) },
       { h: 'Rate / Hour', ...money(r => inr(r.rate_per_hour)) },
       { h: 'Budget Hours', r: 1, f: r => qty(r.budget_hours) + ' hrs' },
@@ -2221,9 +2221,9 @@ const LISTS = {
   'bank-accounts': {
     api: 'bank-accounts', title: 'Bank Accounts', bc: 'Banking', newLabel: 'Add bank account', onNew: () => bankAccountForm(), empty: 'No bank accounts added yet.',
     cols: [
-      { h: 'Account Name', s: 'name', f: r => `<b>${esc(r.name)}</b><div class="sub" style="font-size:11px;">${esc(r.bank_name)} · ${esc(r.account_number)}</div>` },
+      { h: 'Account Name', s: 'name', f: r => `<b>${esc(r.name)}</b><div class="sub" style="font-size:11px;">${esc(r.bank_name)} Â· ${esc(r.account_number)}</div>` },
       { h: 'Type', f: r => esc((r.account_type || '').replace('_', ' ')) },
-      { h: 'IFSC', f: r => esc(r.ifsc || '—') },
+      { h: 'IFSC', f: r => esc(r.ifsc || 'â€”') },
       { h: 'Balance', s: 'current_balance', ...money(r => `<span style="font-weight:700;color:var(--accent);">${inr(r.current_balance)}</span>`) }
     ],
     actions: () => [['edit', 'Edit'], ['import', 'Import Feed']],
@@ -2237,8 +2237,8 @@ const LISTS = {
       { h: 'Bank Account', f: r => esc(r.bank_account_name) },
       { h: 'Description', f: r => `<b>${esc(r.description)}</b>${r.reference ? `<div class="sub" style="font-size:11px;">Ref: ${esc(r.reference)}</div>` : ''}` },
 
-      { h: 'Withdrawal (Dr)', ...money(r => num(r.withdrawal) > 0 ? `<span class="dn">${inr(r.withdrawal)}</span>` : '—') },
-      { h: 'Deposit (Cr)', ...money(r => num(r.deposit) > 0 ? `<span class="up">+${inr(r.deposit)}</span>` : '—') },
+      { h: 'Withdrawal (Dr)', ...money(r => num(r.withdrawal) > 0 ? `<span class="dn">${inr(r.withdrawal)}</span>` : 'â€”') },
+      { h: 'Deposit (Cr)', ...money(r => num(r.deposit) > 0 ? `<span class="up">+${inr(r.deposit)}</span>` : 'â€”') },
       { h: 'Running Balance', ...money(r => inr(r.balance)) },
       { h: 'Status', f: r => r.status === 'reconciled' ? badge('Reconciled', 'up') : r.status === 'matched' ? badge('Matched', 'warn') : badge('Unreconciled') }
     ],
@@ -2252,8 +2252,8 @@ const LISTS = {
       { h: 'Date', s: 'date', f: r => fd(r.date) },
       { h: 'Journal#', s: 'number', f: r => `<button class="lk" type="button" data-act="edit" data-id="${r.id}"><b>${esc(r.number)}</b></button>` },
       { h: 'Status', f: r => badge(r.status === 'draft' ? 'Draft' : 'Published') },
-      { h: 'Reference', f: r => esc(r.reference || '—') },
-      { h: 'Notes', f: r => esc((r.notes || '').substring(0, 60) + ((r.notes || '').length > 60 ? '…' : '')) },
+      { h: 'Reference', f: r => esc(r.reference || 'â€”') },
+      { h: 'Notes', f: r => esc((r.notes || '').substring(0, 60) + ((r.notes || '').length > 60 ? 'â€¦' : '')) },
       { h: 'Total Debit', ...money(r => inr(r.total_debit)) },
       { h: 'Total Credit', ...money(r => inr(r.total_credit)) },
     ],
@@ -2293,13 +2293,13 @@ const LISTS = {
     cols: [
       { h: 'Account Name', s: 'name', f: r => {
         const indent = r.parent_id ? 'padding-left:22px;' : '';
-        const icon = r.has_children ? '<span style="display:inline-block;margin-right:4px;color:var(--tx-muted);">▶</span>' : (r.parent_id ? '<span style="display:inline-block;width:16px;"></span>' : '');
-        return `<span style="${indent}">${icon}<b>${esc(r.name)}</b>${r.is_system ? ' <span class="pastel-chip chip-sky" style="font-size:10px;padding:1px 6px;">System</span>' : ''}${r.watchlist ? ' <span style="color:var(--warn);font-size:11px;" title="On Watchlist">★</span>' : ''}</span>`;
+        const icon = r.has_children ? '<span style="display:inline-block;margin-right:4px;color:var(--tx-muted);">â–¶</span>' : (r.parent_id ? '<span style="display:inline-block;width:16px;"></span>' : '');
+        return `<span style="${indent}">${icon}<b>${esc(r.name)}</b>${r.is_system ? ' <span class="pastel-chip chip-sky" style="font-size:10px;padding:1px 6px;">System</span>' : ''}${r.watchlist ? ' <span style="color:var(--warn);font-size:11px;" title="On Watchlist">â˜…</span>' : ''}</span>`;
       }},
-      { h: 'Account Code', s: 'code', f: r => r.code ? `<b>${esc(r.code)}</b>` : '—' },
+      { h: 'Account Code', s: 'code', f: r => r.code ? `<b>${esc(r.code)}</b>` : 'â€”' },
       { h: 'Account Type', s: 'account_type', f: r => esc(r.account_type_display || (r.sub_type || r.account_type || '').replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase())) },
-      { h: 'Documents', f: r => esc(r.document_count != null ? r.document_count : '—') },
-      { h: 'Parent Account Name', f: r => esc(r.parent_name || '—') },
+      { h: 'Documents', f: r => esc(r.document_count != null ? r.document_count : 'â€”') },
+      { h: 'Parent Account Name', f: r => esc(r.parent_name || 'â€”') },
     ],
     actions: r => r.is_system ? [['view_tx', 'View Transactions']] : [['edit', 'Edit'], ['toggle_active', r.active ? 'Make Inactive' : 'Make Active'], ['view_tx', 'View Transactions'], ['delete', 'Delete', 'dn']],
     onAction: (a, r) => {
@@ -2335,7 +2335,7 @@ const LISTS = {
   },
   'item-categories': {
     api: 'item-categories', title: 'Item Categories', bc: 'Items', newLabel: 'New category', onNew: () => categoryModal(), ordering: 'name', empty: 'No item categories yet.',
-    cols: [{ h: 'Category Name', s: 'name', f: r => `<button class="lk" type="button" data-act="edit" data-id="${r.id}"><b>${esc(r.name)}</b></button>` }, { h: 'Description', f: r => esc(r.description || '—') }],
+    cols: [{ h: 'Category Name', s: 'name', f: r => `<button class="lk" type="button" data-act="edit" data-id="${r.id}"><b>${esc(r.name)}</b></button>` }, { h: 'Description', f: r => esc(r.description || 'â€”') }],
     actions: () => [['edit', 'Edit'], ['delete', 'Delete', 'dn']],
     onAction: (a, r) => a === 'edit' ? categoryModal(r.id) : a === 'delete' ? deleteRecord('item-categories', r, 'Category') : null,
   },
@@ -2352,8 +2352,8 @@ const LISTS = {
       { h: 'Warehouse Name', s: 'name', f: r => `<b>${esc(r.name)}</b>${r.is_primary ? ' <span class="pastel-chip chip-lavender" style="font-size:10px;padding:1px 6px;">Primary</span>' : ''}` },
       { h: 'Warehouse Type', f: r => r.is_sub_warehouse ? `<span class="pastel-chip chip-amber" style="font-size:11px;">Sub-warehouse of <b>${esc(r.parent_code || r.parent_name)}</b></span>` : `<span class="pastel-chip chip-mint" style="font-size:11px;">Main Warehouse</span>` },
       { h: 'Database', f: () => `<span class="pastel-chip chip-sky" style="font-size:10.5px;">Shared Database</span>` },
-      { h: 'City', f: r => esc(r.city || '—') },
-      { h: 'State', f: r => esc(r.state || '—') }
+      { h: 'City', f: r => esc(r.city || 'â€”') },
+      { h: 'State', f: r => esc(r.state || 'â€”') }
     ],
     actions: () => [['edit', 'Edit'], ['delete', 'Delete', 'dn']],
     onAction: (a, r) => a === 'edit' ? warehouseModal(r.id) : a === 'delete' ? deleteRecord('warehouses', r, 'Warehouse') : null,
@@ -2366,7 +2366,7 @@ const LISTS = {
       { h: 'Gateway', f: r => badge((r.gateway || '').toUpperCase()) },
       { h: 'Amount', s: 'amount', ...money(r => inr(r.amount)) },
       { h: 'Gateway Fee', ...money(r => inr(r.fee)) },
-      { h: 'Customer Email', f: r => esc(r.customer_email || '—') },
+      { h: 'Customer Email', f: r => esc(r.customer_email || 'â€”') },
       { h: 'Status', f: r => badge(r.status, r.status === 'captured' ? 'up' : '') }
     ],
   },
@@ -2378,7 +2378,7 @@ const LISTS = {
       { h: 'Action', f: r => badge((r.action || '').toUpperCase()) },
       { h: 'Entity', f: r => `${esc(r.entity_type)} #${esc(r.entity_id || '')}` },
       { h: 'Audit Summary', f: r => esc(r.summary) },
-      { h: 'IP Address', f: r => esc(r.ip_address || '—') }
+      { h: 'IP Address', f: r => esc(r.ip_address || 'â€”') }
     ]
   }
 };
@@ -2428,7 +2428,7 @@ function renderDocSheet(d, kind, customOpts = {}) {
   const linesHtml = (d.lines || []).map((l, i) => isRetainer ? `
     <tr>
       <td><div style="font-weight:600;color:#0f172a;">${esc(l.description)}</div></td>
-      <td class="r" style="font-weight:700;">${inr(l.line_total).replace('₹', '')}</td>
+      <td class="r" style="font-weight:700;">${inr(l.line_total).replace('â‚¹', '')}</td>
     </tr>
   ` : `
     <tr>
@@ -2437,11 +2437,11 @@ function renderDocSheet(d, kind, customOpts = {}) {
         <div style="font-weight:600;color:#0f172a;">${esc(l.description)}</div>
         ${d.tds_mode === 'line' && num(l.tds_amount) > 0 ? `<div style="font-size:11px;color:#dc2626;font-weight:500;">TDS (${l.tds_rate}%): -${inr(l.tds_amount)}</div>` : ''}
       </td>
-      ${showHsn ? `<td style="color:#475569;">${esc(l.hsn_sac || '—')}</td>` : ''}
+      ${showHsn ? `<td style="color:#475569;">${esc(l.hsn_sac || 'â€”')}</td>` : ''}
       <td class="r" style="font-weight:600;">${qty(l.quantity)}</td>
       ${!hideAmounts ? `
-        <td class="r">${inr(l.rate).replace('₹', '')}</td>
-        <td class="r" style="font-weight:700;">${inr(l.line_total).replace('₹', '')}</td>
+        <td class="r">${inr(l.rate).replace('â‚¹', '')}</td>
+        <td class="r" style="font-weight:700;">${inr(l.line_total).replace('â‚¹', '')}</td>
       ` : ''}
     </tr>
   `).join('');
@@ -2565,7 +2565,7 @@ function renderDocSheet(d, kind, customOpts = {}) {
       ${isDeliveryNote ? `
         <div style="margin:14px 0;padding:10px 14px;background:rgba(248,250,252,0.8);border:1px solid #e2e8f0;border-radius:6px;display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:10px;font-size:12px;">
           <div><span style="color:#64748b;">Transport Mode:</span> <b>${esc(d.dispatch_through || d.transporter_name || 'Road Transport')}</b></div>
-          <div><span style="color:#64748b;">Vehicle / LR No:</span> <b>${esc(d.vehicle_number || d.lr_no || '—')}</b></div>
+          <div><span style="color:#64748b;">Vehicle / LR No:</span> <b>${esc(d.vehicle_number || d.lr_no || 'â€”')}</b></div>
           <div><span style="color:#64748b;">Place of Supply:</span> <b>${esc(d.place_of_supply || 'Consignee Address')}</b></div>
         </div>
       ` : ''}
@@ -2625,13 +2625,13 @@ function renderDocSheet(d, kind, customOpts = {}) {
           <div class="doc-totals-box">
             <div style="font-size:11px;color:#64748b;text-align:right;margin-bottom:8px;padding-bottom:6px;border-bottom:1px dashed #e2e8f0;">
               <a href="javascript:void(0)" class="btn-tax-pricing-info" data-doc-kind="${kind}" style="color:#2563eb;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:600;" title="View GST Pricing & B2B/B2C Rules Guide">
-                <i class="fa-solid fa-circle-info"></i> Tax &amp; Billing (${partyTypeLabel} · ${taxPricingLabel})
+                <i class="fa-solid fa-circle-info"></i> Tax &amp; Billing (${partyTypeLabel} Â· ${taxPricingLabel})
               </a>
             </div>
             ${!hideAmounts ? `
               <div class="doc-totals-row">
                 <span>Taxable Amount (${taxPricingLabel})</span>
-                <span style="font-weight:600;">${inr(displaySubtotal).replace('₹', '')}</span>
+                <span style="font-weight:600;">${inr(displaySubtotal).replace('â‚¹', '')}</span>
               </div>
               ${isCreditDocument ? `
                 <div class="doc-totals-row"><span>GST</span><span>${inr(displayTax)}</span></div>
@@ -2747,10 +2747,10 @@ function renderDocSheet(d, kind, customOpts = {}) {
                   ${d.payments.map(p => `
                     <tr style="border-bottom:1px solid #f1f5f9;">
                       <td style="padding:6px 8px;">${fd(p.date)}</td>
-                      <td style="padding:6px 8px;font-weight:600;color:#2563eb;">${esc(p.number || p.reference || '—')}</td>
+                      <td style="padding:6px 8px;font-weight:600;color:#2563eb;">${esc(p.number || p.reference || 'â€”')}</td>
                       <td style="padding:6px 8px;">${esc((p.mode || 'bank_transfer').replace(/_/g, ' ').toUpperCase())}</td>
                       <td style="padding:6px 8px;">${esc(p.bank_account_name || p.account || 'Bank Account')}</td>
-                      <td style="padding:6px 8px;">${esc(p.reference || '—')}</td>
+                      <td style="padding:6px 8px;">${esc(p.reference || 'â€”')}</td>
                       <td class="r" style="padding:6px 8px;text-align:right;font-weight:700;color:#059669;">${inr(p.amount)}</td>
                     </tr>
                   `).join('')}
@@ -2768,7 +2768,7 @@ function renderDocSheet(d, kind, customOpts = {}) {
               <table class="lt" style="font-size:12px;">
                 <thead><tr><th>Invoice#</th><th>Date</th><th>Notes</th><th class="r">Amount Applied</th></tr></thead>
                 <tbody>
-                  ${d.allocations.map(a => `<tr><td><b>${esc(a.number)}</b></td><td>${fd(a.date)}</td><td>${esc(a.notes || '—')}</td><td class="r" style="font-weight:600;color:#6366f1;">${inr(a.amount)}</td></tr>`).join('')}
+                  ${d.allocations.map(a => `<tr><td><b>${esc(a.number)}</b></td><td>${fd(a.date)}</td><td>${esc(a.notes || 'â€”')}</td><td class="r" style="font-weight:600;color:#6366f1;">${inr(a.amount)}</td></tr>`).join('')}
                 </tbody>
 
               </table>
@@ -2792,7 +2792,7 @@ function renderDocSheet(d, kind, customOpts = {}) {
                 </div>
                 <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;">
                   <div style="font-size:10.5px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;">${esc(rel.relation || 'Source PO')}: ${esc(rel.type || rel.kind)}</div>
-                  <div style="font-size:13px;font-weight:700;color:#2563eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(rel.number || '—')} <span style="font-size:11.5px;font-weight:500;color:#64748b;">(${rel.date ? fd(rel.date) : ''}${rel.total != null ? ' · ' + inr(rel.total) : ''})</span></div>
+                  <div style="font-size:13px;font-weight:700;color:#2563eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(rel.number || 'â€”')} <span style="font-size:11.5px;font-weight:500;color:#64748b;">(${rel.date ? fd(rel.date) : ''}${rel.total != null ? ' Â· ' + inr(rel.total) : ''})</span></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0;">
                   <span class="st ${rel.status && ['paid','accepted','closed'].includes(rel.status.toLowerCase()) ? 'ok' : 'gr'}" style="font-size:10px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:12px;line-height:14px;">${esc((rel.status || 'Draft').toUpperCase())}</span>
@@ -2848,8 +2848,8 @@ function openTemplateCustomizer(doc, kind, onUpdate) {
 
       <div class="fgrid">
         ${fld({ name: 'template_theme', label: 'Template Layout Style', type: 'select', opts: [
-          ['convosis', 'Convosis Classic (Standard Boxed Meta — Image 1)'],
-          ['modern', 'Modern Ribbon (Dark Items Header & Ribbon — Image 2)'],
+          ['convosis', 'Convosis Classic (Standard Boxed Meta â€” Image 1)'],
+          ['modern', 'Modern Ribbon (Dark Items Header & Ribbon â€” Image 2)'],
           ['executive', 'Executive Indigo (Top Banner Accent)'],
           ['minimal', 'Minimalist (Clean Lines & Borders)']
         ], value: currentTheme, col: 'c2' })}
@@ -2893,7 +2893,7 @@ async function openAttachmentsModal(kind, id, docNumber, onCountChange) {
   } catch (e) { attList = []; }
 
   const m = Modal.open({
-    title: `Attachments · ${docNumber}`,
+    title: `Attachments Â· ${docNumber}`,
     wide: false,
     body: `
       <div style="margin-bottom:14px;">
@@ -2927,7 +2927,7 @@ async function openAttachmentsModal(kind, id, docNumber, onCountChange) {
           <div style="min-width:0;">
             <div style="font-weight:600;font-size:12.5px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(a.filename)}</div>
 
-            <div style="font-size:11px;color:var(--sub);">${fmtBytes(a.file_size)} · ${fd(a.created_at ? a.created_at.split('T')[0] : '')}</div>
+            <div style="font-size:11px;color:var(--sub);">${fmtBytes(a.file_size)} Â· ${fd(a.created_at ? a.created_at.split('T')[0] : '')}</div>
 
           </div>
 
@@ -3099,7 +3099,7 @@ function openSendEmailModal(doc, kind, onDone) {
   const defaultBody = `Dear ${partyName},\n\nInvoice ${doc.number} for the amount of ${inr(doc.total)} has been issued.\n\nDue Date: ${fd(doc.due_date)}\n\nThank you for your business.\n\nWarm regards,\n${orgName}`;
 
   formModal({
-    title: `Send Invoice · ${esc(doc.number)}`,
+    title: `Send Invoice Â· ${esc(doc.number)}`,
     submit: 'Send Email',
     wide: false,
     body: `
@@ -3143,7 +3143,7 @@ function openSendSmsModal(doc, kind, onDone) {
   const defaultMsg = `Dear ${partyName}, invoice ${doc.number} for ${inr(doc.total)} has been generated. Due date: ${fd(doc.due_date)}. - ${orgName}`;
 
   formModal({
-    title: `Send SMS · ${esc(doc.number)}`,
+    title: `Send SMS Â· ${esc(doc.number)}`,
     submit: 'Send SMS',
     wide: false,
     body: `
@@ -3173,7 +3173,7 @@ async function openShareLinkModal(doc, kind) {
     const shareUrl = res.share_url || (window.location.origin + '/#/share/' + (res.share_token || doc.id));
 
     const m = Modal.open({
-      title: `Share Invoice · ${esc(doc.number)}`,
+      title: `Share Invoice Â· ${esc(doc.number)}`,
       wide: false,
       body: `
         <div style="font-size:13px;color:#475569;margin-bottom:12px;">
@@ -3212,7 +3212,7 @@ async function openShareLinkModal(doc, kind) {
 
 function openExpectedDateModal(doc, kind, onDone) {
   formModal({
-    title: `Expected Payment Date · ${esc(doc.number)}`,
+    title: `Expected Payment Date Â· ${esc(doc.number)}`,
     submit: 'Save Date',
     wide: false,
     body: `
@@ -3241,7 +3241,7 @@ function openExpectedDateModal(doc, kind, onDone) {
 function openWriteOffModal(doc, onDone) {
   const bal = num(doc.balance);
   formModal({
-    title: `Write Off Invoice · ${esc(doc.number)}`,
+    title: `Write Off Invoice Â· ${esc(doc.number)}`,
     submit: `Write Off ${inr(bal)}`,
     wide: false,
     body: `
@@ -3276,7 +3276,7 @@ function openWriteOffModal(doc, onDone) {
 
 function openAddEWayBillModal(doc, kind, onDone) {
   formModal({
-    title: `Add e-Way Bill Details · ${esc(doc.number)}`,
+    title: `Add e-Way Bill Details Â· ${esc(doc.number)}`,
     submit: 'Save e-Way Bill',
     wide: false,
     body: `
@@ -3322,17 +3322,17 @@ async function openViewJournalModal(doc, kind) {
                 <tr style="border-bottom:1px solid var(--bd-glass);text-align:left;">
                   <th style="padding:6px;">Account</th>
                   <th style="padding:6px;">Description</th>
-                  <th style="padding:6px;text-align:right;">Debit (₹)</th>
-                  <th style="padding:6px;text-align:right;">Credit (₹)</th>
+                  <th style="padding:6px;text-align:right;">Debit (â‚¹)</th>
+                  <th style="padding:6px;text-align:right;">Credit (â‚¹)</th>
                 </tr>
               </thead>
               <tbody>
                 ${lines.map(l => `
                   <tr style="border-bottom:1px solid rgba(0,0,0,0.04);">
                     <td style="padding:6px;"><b>${esc(l.account_code || '')}</b> ${esc(l.account_name)}</td>
-                    <td style="padding:6px;color:#64748b;">${esc(l.description || '—')}</td>
-                    <td style="padding:6px;text-align:right;font-weight:600;">${num(l.debit) > 0 ? inr(l.debit) : '—'}</td>
-                    <td style="padding:6px;text-align:right;font-weight:600;">${num(l.credit) > 0 ? inr(l.credit) : '—'}</td>
+                    <td style="padding:6px;color:#64748b;">${esc(l.description || 'â€”')}</td>
+                    <td style="padding:6px;text-align:right;font-weight:600;">${num(l.debit) > 0 ? inr(l.debit) : 'â€”'}</td>
+                    <td style="padding:6px;text-align:right;font-weight:600;">${num(l.credit) > 0 ? inr(l.credit) : 'â€”'}</td>
                   </tr>
                 `).join('')}
                 <tr style="border-top:2px solid var(--bd-glass);font-weight:700;">
@@ -3348,7 +3348,7 @@ async function openViewJournalModal(doc, kind) {
     }
 
     Modal.open({
-      title: `Journal Entries · ${esc(doc.number)}`,
+      title: `Journal Entries Â· ${esc(doc.number)}`,
       wide: true,
       body: `
         <div style="max-height:70vh;overflow-y:auto;padding-right:4px;">
@@ -3414,7 +3414,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'overdue', label: 'Overdue' },
         { val: 'paid', label: 'Paid' },
       ],
-      searchPlaceholder: 'Search invoices…',
+      searchPlaceholder: 'Search invoicesâ€¦',
       formFn: (id, target, done, opts) => invoiceForm(id, target, done, opts)
     },
     'quotes': {
@@ -3429,7 +3429,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'declined', label: 'Declined' },
         { val: 'invoiced', label: 'Invoiced' }
       ],
-      searchPlaceholder: 'Search quotes…',
+      searchPlaceholder: 'Search quotesâ€¦',
       formFn: (id, target, done, opts) => quoteForm(id, target, done, opts)
     },
     'sales-orders': {
@@ -3443,7 +3443,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'closed', label: 'Closed' },
         { val: 'void', label: 'Void' }
       ],
-      searchPlaceholder: 'Search sales orders…',
+      searchPlaceholder: 'Search sales ordersâ€¦',
       formFn: (id, target, done, opts) => salesOrderForm(id, target, done, opts)
     },
     'recurring-invoices': {
@@ -3457,7 +3457,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'completed', label: 'Completed' },
         { val: 'cancelled', label: 'Cancelled' }
       ],
-      searchPlaceholder: 'Search recurring profiles…',
+      searchPlaceholder: 'Search recurring profilesâ€¦',
       formFn: (id, target, done, opts) => recurringInvoiceForm(id, target, done, opts)
     },
     'retainer-invoices': {
@@ -3471,7 +3471,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'partial', label: 'Partially Paid' },
         { val: 'paid', label: 'Paid' }
       ],
-      searchPlaceholder: 'Search retainers…',
+      searchPlaceholder: 'Search retainersâ€¦',
       formFn: (id, target, done, opts) => retainerInvoiceForm(id, target, done, opts)
     },
     'bills': {
@@ -3485,7 +3485,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'overdue', label: 'Overdue' },
         { val: 'paid', label: 'Paid' }
       ],
-      searchPlaceholder: 'Search bills…',
+      searchPlaceholder: 'Search billsâ€¦',
       formFn: (id, target, done, opts) => billForm(id, target, done, opts)
     },
     'purchase-orders': {
@@ -3499,7 +3499,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         { val: 'closed', label: 'Closed' },
         { val: 'void', label: 'Void' }
       ],
-      searchPlaceholder: 'Search purchase orders…',
+      searchPlaceholder: 'Search purchase ordersâ€¦',
       formFn: (id, target, done, opts) => purchaseOrderForm(id, target, done, opts)
     }
   };
@@ -3514,7 +3514,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
       { val: 'open', label: 'Open' },
       { val: 'closed', label: 'Closed' }
     ],
-    searchPlaceholder: `Search ${kind}…`,
+    searchPlaceholder: `Search ${kind}â€¦`,
     formFn: (id, target, done, opts) => docForm(kind, id, target, done, opts)
   };
 
@@ -3681,8 +3681,8 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
       else if (isDraft) statusColor = '#64748b';
       else if (d.status === 'Declined' || d.status === 'Cancelled' || d.raw_status === 'void') statusColor = '#ef4444';
 
-      const partyName = esc(d.customer_name || d.party || d.party_name || d.vendor_name || '—');
-      const docNum = esc(d.number || d.profile_name || '—');
+      const partyName = esc(d.customer_name || d.party || d.party_name || d.vendor_name || 'â€”');
+      const docNum = esc(d.number || d.profile_name || 'â€”');
       const docDate = d.date ? fd(d.date) : (d.start_date ? fd(d.start_date) : '');
       const docTotal = d.total != null ? inr(d.total) : '';
 
@@ -3696,8 +3696,8 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
             </div>
             <div class="doc-row-sub">
               <span>${docNum}</span>
-              ${docDate ? `<span>•</span><span>${docDate}</span>` : ''}
-              ${d.attachment_count ? '<span title="Has attachments">📎</span>' : ''}
+              ${docDate ? `<span>â€¢</span><span>${docDate}</span>` : ''}
+              ${d.attachment_count ? '<span title="Has attachments">ðŸ“Ž</span>' : ''}
             </div>
             <div class="doc-row-badge-line">
               ${isOverdue ? `<span style="color:#ea580c;font-weight:700;font-size:11px;">OVERDUE BY ${getOverdueDays(d.due_date) || 22} DAYS</span>` :
@@ -3743,7 +3743,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
             ${inv ? `
               <button class="btn" type="button" data-act="edit"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px;"></i> Edit</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send ▾</button>
+                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send â–¾</button>
                 <div class="pop right tb-pop-menu" id="send-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:160px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   ${(d.raw_status === 'draft' || d.status === 'Draft') ? `<button type="button" class="btn" data-act="mark-sent" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Mark as Sent</button>` : ''}
                   <button type="button" class="btn" data-act="send-email" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-envelope" style="color:#2563eb;"></i> Send Email</button>
@@ -3752,7 +3752,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               </div>
               <button class="btn" type="button" data-act="share" title="Share invoice link"><i class="fa-solid fa-share-nodes" style="font-size:11px;margin-right:4px;"></i> Share</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="remind-pop"><i class="fa-regular fa-clock" style="font-size:11px;margin-right:4px;"></i> Reminders ▾</button>
+                <button class="btn" type="button" data-pop-toggle="remind-pop"><i class="fa-regular fa-clock" style="font-size:11px;margin-right:4px;"></i> Reminders â–¾</button>
                 <div class="pop right tb-pop-menu" id="remind-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:190px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="send-reminder" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bell" style="color:#f59e0b;"></i> Send Email</button>
                   <button type="button" class="btn" data-act="stop-reminders" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bell-slash" style="color:#ef4444;"></i> Stop Reminders</button>
@@ -3760,7 +3760,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
                 </div>
               </div>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print ▾</button>
+                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print â–¾</button>
                 <div class="pop right tb-pop-menu" id="print-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
                   <button type="button" class="btn" data-act="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
@@ -3770,7 +3770,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               </div>
               ${num(d.balance) > 0 && d.raw_status !== 'void' ? `
                 <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                  <button class="btn p" type="button" data-pop-toggle="pay-pop" style="display:inline-flex;align-items:center;"><i class="fa-solid fa-money-bill-wave" style="font-size:11px;margin-right:4px;"></i> Record Payment ▾</button>
+                  <button class="btn p" type="button" data-pop-toggle="pay-pop" style="display:inline-flex;align-items:center;"><i class="fa-solid fa-money-bill-wave" style="font-size:11px;margin-right:4px;"></i> Record Payment â–¾</button>
                   <div class="pop right tb-pop-menu" id="pay-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:170px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                     <button type="button" class="btn" data-act="pay" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-receipt" style="color:#10b981;"></i> Record Payment</button>
                     <button type="button" class="btn" data-act="apply-retainer" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-hand-holding-dollar" style="color:#6366f1;"></i> Apply Retainer</button>
@@ -3778,9 +3778,9 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
                   </div>
                 </div>
               ` : ''}
-              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:200px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="make-recurring" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-arrows-rotate" style="color:#3b82f6;"></i> Make Recurring</button>
                   <button type="button" class="btn" data-act="create-credit-note" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-invoice-dollar" style="color:#10b981;"></i> Create Credit Note</button>
@@ -3800,29 +3800,29 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
             ` : isQuote ? `
               <button class="btn" type="button" data-act="edit"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px;"></i> Edit</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn p" style="background:#10b981;border-color:#059669;color:#fff;" type="button" data-pop-toggle="convert-pop"><i class="fa-solid fa-arrow-right-arrow-left" style="font-size:11px;margin-right:4px;"></i> Convert ▾</button>
+                <button class="btn p" style="background:#10b981;border-color:#059669;color:#fff;" type="button" data-pop-toggle="convert-pop"><i class="fa-solid fa-arrow-right-arrow-left" style="font-size:11px;margin-right:4px;"></i> Convert â–¾</button>
                 <div class="pop right tb-pop-menu" id="convert-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:200px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="convert-so" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-invoice" style="color:#2563eb;"></i> Convert to Sales Order</button>
                   <button type="button" class="btn" data-act="convert-inv" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-invoice-dollar" style="color:#10b981;"></i> Convert to Invoice</button>
                 </div>
               </div>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send ▾</button>
+                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send â–¾</button>
                 <div class="pop right tb-pop-menu" id="send-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:160px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="send-email" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-envelope" style="color:#2563eb;"></i> Send Email</button>
                   <button type="button" class="btn" data-act="send-sms" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-comment-sms" style="color:#10b981;"></i> Send SMS</button>
                 </div>
               </div>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print ▾</button>
+                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print â–¾</button>
                 <div class="pop right tb-pop-menu" id="print-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
                   <button type="button" class="btn" data-act="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
                 </div>
               </div>
-              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   ${d.status !== 'accepted' ? `<button type="button" class="btn" data-act="accept-quote" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-check" style="color:#10b981;"></i> Mark as Accepted</button>` : ''}
                   ${d.status !== 'declined' ? `<button type="button" class="btn" data-act="decline-quote" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-xmark" style="color:#ef4444;"></i> Mark as Declined</button>` : ''}
@@ -3837,14 +3837,14 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               <button class="btn p" style="background:#10b981;border-color:#059669;color:#fff;" type="button" data-act="convert-so-inv"><i class="fa-solid fa-file-invoice-dollar" style="font-size:11px;margin-right:4px;"></i> Convert to Invoice</button>
               ${d.status === 'draft' ? `<button class="btn" type="button" data-act="confirm-so" style="background:#2563eb;color:#fff;border-color:#2563eb;"><i class="fa-solid fa-check" style="font-size:11px;margin-right:4px;"></i> Confirm</button>` : ''}
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send ▾</button>
+                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send â–¾</button>
                 <div class="pop right tb-pop-menu" id="send-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:160px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="send-email" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-envelope" style="color:#2563eb;"></i> Send Email</button>
                   <button type="button" class="btn" data-act="send-sms" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-comment-sms" style="color:#10b981;"></i> Send SMS</button>
                 </div>
               </div>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print ▾</button>
+                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print â–¾</button>
                 <div class="pop right tb-pop-menu" id="print-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
                   <button type="button" class="btn" data-act="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
@@ -3852,9 +3852,9 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
                   <button type="button" class="btn" data-act="print-packing" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-box" style="color:#8b5cf6;"></i> Print Packing Slip</button>
                 </div>
               </div>
-              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="clone" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-copy" style="color:#64748b;"></i> Clone</button>
                   ${d.status !== 'void' ? `<button type="button" class="btn" data-act="void-so" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-ban" style="color:#ef4444;"></i> Void</button>` : ''}
@@ -3869,22 +3869,22 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               <button class="btn p" style="background:#10b981;border-color:#059669;color:#fff;" type="button" data-act="convert-po-bill"><i class="fa-solid fa-file-invoice" style="font-size:11px;margin-right:4px;"></i> Convert to Bill</button>
               ${d.status === 'draft' ? `<button class="btn" type="button" data-act="confirm-po" style="background:#2563eb;color:#fff;border-color:#2563eb;"><i class="fa-solid fa-check" style="font-size:11px;margin-right:4px;"></i> Confirm</button>` : ''}
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send ▾</button>
+                <button class="btn" type="button" data-pop-toggle="send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send â–¾</button>
                 <div class="pop right tb-pop-menu" id="send-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:160px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="send-email" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-envelope" style="color:#2563eb;"></i> Send Email</button>
                   <button type="button" class="btn" data-act="send-sms" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-comment-sms" style="color:#10b981;"></i> Send SMS</button>
                 </div>
               </div>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print ▾</button>
+                <button class="btn" type="button" data-pop-toggle="print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print â–¾</button>
                 <div class="pop right tb-pop-menu" id="print-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
                   <button type="button" class="btn" data-act="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
                 </div>
               </div>
-              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="clone" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-copy" style="color:#64748b;"></i> Clone</button>
                   ${d.status !== 'void' ? `<button type="button" class="btn" data-act="void-po" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-ban" style="color:#ef4444;"></i> Void</button>` : ''}
@@ -3898,7 +3898,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               <button class="btn p" style="background:#10b981;border-color:#059669;color:#fff;" type="button" data-act="gen-rec-inv"><i class="fa-solid fa-bolt" style="font-size:11px;margin-right:4px;"></i> Create Invoice Now</button>
               ${d.status === 'paused' ? `<button class="btn" type="button" data-act="resume-rec" style="background:#2563eb;color:#fff;border-color:#2563eb;"><i class="fa-solid fa-play" style="font-size:11px;margin-right:4px;"></i> Resume</button>` : `<button class="btn" type="button" data-act="pause-rec" style="background:#f59e0b;color:#fff;border-color:#f59e0b;"><i class="fa-solid fa-pause" style="font-size:11px;margin-right:4px;"></i> Pause</button>`}
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="clone-rec" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-copy" style="color:#64748b;"></i> Clone</button>
                   ${d.status !== 'cancelled' ? `<button type="button" class="btn" data-act="cancel-rec" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-ban" style="color:#ef4444;"></i> Cancel Profile</button>` : ''}
@@ -3912,15 +3912,15 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               ${d.raw_status !== 'draft' && d.raw_status !== 'void' && d.raw_status !== 'cancelled' && num(d.available_balance) > 0 ? `<button class="btn" style="background:#6366f1;color:#fff;border-color:#6366f1;" type="button" data-act="apply-invoices"><i class="fa-solid fa-hand-holding-dollar" style="font-size:11px;margin-right:4px;"></i> Apply to Invoices</button>` : ''}
               ${d.raw_status !== 'draft' && d.raw_status !== 'void' && d.raw_status !== 'cancelled' && num(d.available_balance) > 0 ? `<button class="btn" type="button" data-act="refund-retainer" title="Refund available retainer balance">Refund</button>` : ''}
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="print-pop-gen">PDF / Print ▾</button>
+                <button class="btn" type="button" data-pop-toggle="print-pop-gen">PDF / Print â–¾</button>
                 <div class="pop right tb-pop-menu" id="print-pop-gen" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
                   <button type="button" class="btn" data-act="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
                 </div>
               </div>
-              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop-ret"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop-ret"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop-ret" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="clone" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-copy" style="color:#64748b;"></i> Clone</button>
                   ${d.raw_status !== 'draft' && d.raw_status !== 'void' && d.raw_status !== 'cancelled' ? `<button type="button" class="btn" data-act="void-retainer" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-ban" style="color:#ef4444;"></i> Void / Cancel</button>` : ''}
@@ -3931,10 +3931,10 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               </div>
             ` : `
               <button class="btn" type="button" data-act="edit">Edit</button>
-              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+              <button class="btn" type="button" data-act="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
               ${d.raw_status === 'draft' ? `<button class="btn p" type="button" data-act="send">${!isBill ? 'Send' : 'Approve'}</button>` : ''}
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="print-pop-gen">PDF / Print ▾</button>
+                <button class="btn" type="button" data-pop-toggle="print-pop-gen">PDF / Print â–¾</button>
                 <div class="pop right tb-pop-menu" id="print-pop-gen" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
                   <button type="button" class="btn" data-act="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
@@ -3943,7 +3943,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
               ${(posted || d.raw_status === 'draft') && num(d.balance) > 0 && d.raw_status !== 'void' ? `<button class="btn p" type="button" data-act="pay">Record Payment</button>` : ''}
               ${!isBill ? `<button class="btn" type="button" data-act="portal">Client Portal</button>` : `<button class="btn" type="button" data-act="vportal">Vendor Portal</button>`}
               <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-                <button class="btn" type="button" data-pop-toggle="more-pop-gen"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+                <button class="btn" type="button" data-pop-toggle="more-pop-gen"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
                 <div class="pop right tb-pop-menu" id="more-pop-gen" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                   <button type="button" class="btn" data-act="clone" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-copy" style="color:#64748b;"></i> Clone</button>
                   ${isBill && d.raw_status !== 'void' ? `<button type="button" class="btn" data-act="void-bill" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-ban" style="color:#ef4444;"></i> Void</button>` : ''}
@@ -3958,15 +3958,15 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
         </div>
         <div class="doc-detail-tools">
           <button class="btn" type="button" data-act="att" title="Manage Attachments" style="display:flex;align-items:center;gap:4px;">
-            <span>📎</span> <b id="detail-att-cnt">${attCount}</b>
+            <span>ðŸ“Ž</span> <b id="detail-att-cnt">${attCount}</b>
           </button>
-          <button class="btn" type="button" data-act="close" title="Close details" aria-label="Close details">✕</button>
+          <button class="btn" type="button" data-act="close" title="Close details" aria-label="Close details">âœ•</button>
         </div>
       </div>
       ${(inv && (d.status === 'Overdue' || num(d.balance) > 0)) ? `
         <div class="whats-next-banner" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 18px;margin:16px 24px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
           <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1e3a8a;">
-            <span style="font-size:16px;">✨</span>
+            <span style="font-size:16px;">âœ¨</span>
             <span><b>WHAT'S NEXT?</b> Payment is overdue. Send a payment reminder or record payment.</span>
           </div>
           <button class="btn p" type="button" data-act="pay" style="border-radius:6px;font-weight:600;padding:6px 14px;font-size:12px;white-space:nowrap;cursor:pointer;">Record Payment</button>
@@ -3978,7 +3978,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
       ` : (isQuote && d.status === 'draft') ? `
         <div class="whats-next-banner" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 18px;margin:16px 24px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
           <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#1e3a8a;">
-            <span style="font-size:16px;">✨</span>
+            <span style="font-size:16px;">âœ¨</span>
             <span><b>WHAT'S NEXT?</b> Send this quote to your client, or convert directly to a Sales Order / Invoice.</span>
           </div>
           <div style="display:flex;gap:8px;">
@@ -3989,7 +3989,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
       ` : (isSO && d.status !== 'closed' && d.status !== 'void') ? `
         <div class="whats-next-banner" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 18px;margin:16px 24px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
           <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#166534;">
-            <span style="font-size:16px;">📦</span>
+            <span style="font-size:16px;">ðŸ“¦</span>
             <span><b>WHAT'S NEXT?</b> Sales order is confirmed. Convert to an Invoice or dispatch goods.</span>
           </div>
           <button class="btn p" type="button" data-act="convert-so-inv" style="background:#16a34a;border-color:#15803d;border-radius:6px;font-weight:600;padding:6px 14px;font-size:12px;white-space:nowrap;cursor:pointer;">Convert to Invoice</button>
@@ -3997,7 +3997,7 @@ async function docMasterDetail(root, kind, selectedId, openEdit, extraOpts = {})
       ` : (isPO && d.status !== 'closed' && d.status !== 'void') ? `
         <div class="whats-next-banner" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 18px;margin:16px 24px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
           <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#166534;">
-            <span style="font-size:16px;">🚚</span>
+            <span style="font-size:16px;">ðŸšš</span>
             <span><b>WHAT'S NEXT?</b> Purchase order placed. Once goods or bill arrives from vendor, convert to a Bill.</span>
           </div>
           <button class="btn p" type="button" data-act="convert-po-bill" style="background:#16a34a;border-color:#15803d;border-radius:6px;font-weight:600;padding:6px 14px;font-size:12px;white-space:nowrap;cursor:pointer;">Convert to Bill</button>
@@ -4582,7 +4582,7 @@ async function docDetail(kind, id) {
         ${inv ? `
           <button class="btn" type="button" data-do="edit"><i class="fa-solid fa-pen" style="font-size:11px;margin-right:4px;"></i> Edit</button>
           <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-            <button class="btn" type="button" data-pop-toggle="modal-send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send ▾</button>
+            <button class="btn" type="button" data-pop-toggle="modal-send-pop"><i class="fa-regular fa-envelope" style="font-size:11px;margin-right:4px;"></i> Send â–¾</button>
             <div class="pop right tb-pop-menu" id="modal-send-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:160px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
               ${(d.raw_status === 'draft' || d.status === 'Draft') ? `<button type="button" class="btn" data-do="mark-sent" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-check" style="color:#059669;"></i> Mark as Sent</button>` : ''}
               <button type="button" class="btn" data-do="send-email" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-envelope" style="color:#2563eb;"></i> Send Email</button>
@@ -4591,7 +4591,7 @@ async function docDetail(kind, id) {
           </div>
           <button class="btn" type="button" data-do="share" title="Share invoice link"><i class="fa-solid fa-share-nodes" style="font-size:11px;margin-right:4px;"></i> Share</button>
           <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-            <button class="btn" type="button" data-pop-toggle="modal-remind-pop"><i class="fa-regular fa-clock" style="font-size:11px;margin-right:4px;"></i> Reminders ▾</button>
+            <button class="btn" type="button" data-pop-toggle="modal-remind-pop"><i class="fa-regular fa-clock" style="font-size:11px;margin-right:4px;"></i> Reminders â–¾</button>
             <div class="pop right tb-pop-menu" id="modal-remind-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:190px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
               <button type="button" class="btn" data-do="send-reminder" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bell" style="color:#f59e0b;"></i> Send Email</button>
               <button type="button" class="btn" data-do="stop-reminders" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bell-slash" style="color:#ef4444;"></i> Stop Reminders</button>
@@ -4599,7 +4599,7 @@ async function docDetail(kind, id) {
             </div>
           </div>
           <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-            <button class="btn" type="button" data-pop-toggle="modal-print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print ▾</button>
+            <button class="btn" type="button" data-pop-toggle="modal-print-pop"><i class="fa-solid fa-print" style="font-size:11px;margin-right:4px;"></i> PDF / Print â–¾</button>
             <div class="pop right tb-pop-menu" id="modal-print-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
               <button type="button" class="btn" data-do="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
               <button type="button" class="btn" data-do="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
@@ -4609,7 +4609,7 @@ async function docDetail(kind, id) {
           </div>
           ${num(d.balance) > 0 && d.raw_status !== 'void' ? `
             <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-              <button class="btn p" type="button" data-pop-toggle="modal-pay-pop" style="display:inline-flex;align-items:center;"><i class="fa-solid fa-money-bill-wave" style="font-size:11px;margin-right:4px;"></i> Record Payment ▾</button>
+              <button class="btn p" type="button" data-pop-toggle="modal-pay-pop" style="display:inline-flex;align-items:center;"><i class="fa-solid fa-money-bill-wave" style="font-size:11px;margin-right:4px;"></i> Record Payment â–¾</button>
               <div class="pop right tb-pop-menu" id="modal-pay-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:170px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
                 <button type="button" class="btn" data-do="pay" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-receipt" style="color:#10b981;"></i> Record Payment</button>
                 <button type="button" class="btn" data-do="apply-retainer" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-hand-holding-dollar" style="color:#6366f1;"></i> Apply Retainer</button>
@@ -4617,9 +4617,9 @@ async function docDetail(kind, id) {
               </div>
             </div>
           ` : ''}
-          <button class="btn" type="button" data-do="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+          <button class="btn" type="button" data-do="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
           <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-            <button class="btn" type="button" data-pop-toggle="modal-more-pop"><i class="fa-solid fa-ellipsis"></i> ▾</button>
+            <button class="btn" type="button" data-pop-toggle="modal-more-pop"><i class="fa-solid fa-ellipsis"></i> â–¾</button>
             <div class="pop right tb-pop-menu" id="modal-more-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:200px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
               <button type="button" class="btn" data-do="make-recurring" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-arrows-rotate" style="color:#3b82f6;"></i> Make Recurring</button>
               <button type="button" class="btn" data-do="create-credit-note" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-invoice-dollar" style="color:#10b981;"></i> Create Credit Note</button>
@@ -4636,9 +4636,9 @@ async function docDetail(kind, id) {
           </div>
         ` : `
           <button class="btn" type="button" data-do="edit">Edit</button>
-          <button class="btn" type="button" data-do="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed ✓' : 'Sign'}</button>
+          <button class="btn" type="button" data-do="sign" title="Digital Signature"><i class="fa-solid fa-signature" style="font-size:11px;margin-right:4px;"></i> ${d.signature_data ? 'Signed âœ“' : 'Sign'}</button>
           <div class="tb-dropdown-wrap" style="position:relative;display:inline-block;">
-            <button class="btn" type="button" data-pop-toggle="modal-print-pop-gen">PDF / Print ▾</button>
+            <button class="btn" type="button" data-pop-toggle="modal-print-pop-gen">PDF / Print â–¾</button>
             <div class="pop right tb-pop-menu" id="modal-print-pop-gen" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:180px;z-index:120;padding:6px;background:var(--surface-glass-solid,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd-glass,#cbd5e1);">
               <button type="button" class="btn" data-do="pdf" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>
               <button type="button" class="btn" data-do="print" style="width:100%;text-align:left;border:none;background:transparent;padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-print" style="color:#3b82f6;"></i> Print</button>
@@ -4649,7 +4649,7 @@ async function docDetail(kind, id) {
             </div>
           </div>
           <button class="btn" type="button" data-do="custom">Customize Template</button>
-          <button class="btn" type="button" data-do="att">📎 Attachments (${attCount})</button>
+          <button class="btn" type="button" data-do="att">ðŸ“Ž Attachments (${attCount})</button>
           ${d.raw_status === 'draft' ? `<button class="btn p" type="button" data-do="post">${!isBill ? 'Mark as sent' : 'Approve bill'}</button>` : ''}
           ${isRetainer && d.raw_status !== 'draft' && d.raw_status !== 'void' && d.raw_status !== 'cancelled' && num(d.balance) > 0 ? `<button class="btn p" type="button" data-do="pay-retainer">Record Payment</button>` : ''}
           ${isRetainer && d.raw_status !== 'draft' && d.raw_status !== 'void' && d.raw_status !== 'cancelled' && num(d.available_balance) > 0 ? `<button class="btn" style="background:#6366f1;color:#fff;border-color:#6366f1;" type="button" data-do="apply-invoices">Apply to Invoices</button>` : ''}
@@ -4852,7 +4852,7 @@ async function recordRetainerPaymentModal(doc, onDone) {
   } catch (e) {}
 
   formModal({
-    title: `Record Payment · Retainer ${doc.number}`,
+    title: `Record Payment Â· Retainer ${doc.number}`,
     wide: false,
     submit: 'Record Payment',
     body: `
@@ -4861,7 +4861,7 @@ async function recordRetainerPaymentModal(doc, onDone) {
         <div style="margin-top:2px;"><b>Retainer Total:</b> ${inr(doc.total)} &nbsp;|&nbsp; <b>Balance Due:</b> <span style="color:#059669;font-weight:700;">${inr(doc.balance)}</span></div>
       </div>
       <div class="fgrid">
-        ${fld({ name: 'amount', label: 'Payment Amount (₹)', type: 'number', req: 1, value: doc.balance, attrs: `min="0.01" max="${doc.balance}" step="0.01"` })}
+        ${fld({ name: 'amount', label: 'Payment Amount (â‚¹)', type: 'number', req: 1, value: doc.balance, attrs: `min="0.01" max="${doc.balance}" step="0.01"` })}
         ${fld({ name: 'date', label: 'Payment Date', type: 'date', req: 1, value: APP.today })}
         ${fld({ name: 'mode', label: 'Payment Mode', type: 'select', opts: [['bank_transfer', 'Bank Transfer'], ['upi', 'UPI'], ['cash', 'Cash'], ['cheque', 'Cheque'], ['card', 'Credit/Debit Card'], ['other', 'Other']], value: 'bank_transfer' })}
         ${fld({ name: 'account', label: 'Deposit To', type: 'select', opts: bankOpts, value: bankOpts[0][0] })}
@@ -4903,7 +4903,7 @@ async function refundRetainerModal(doc, onDone) {
   } catch (e) {}
 
   formModal({
-    title: `Refund Advance · Retainer ${doc.number}`,
+    title: `Refund Advance Â· Retainer ${doc.number}`,
     wide: false,
     submit: 'Process Refund',
     body: `
@@ -4912,7 +4912,7 @@ async function refundRetainerModal(doc, onDone) {
         <div style="margin-top:2px;"><b>Retainer Total:</b> ${inr(doc.total)} &nbsp;|&nbsp; <b>Available to Refund:</b> <span style="color:#059669;font-weight:700;">${inr(avail)}</span></div>
       </div>
       <div class="fgrid">
-        ${fld({ name: 'amount', label: 'Refund Amount (₹)', type: 'number', req: 1, value: avail.toFixed(2), attrs: `min="0.01" max="${avail}" step="0.01"` })}
+        ${fld({ name: 'amount', label: 'Refund Amount (â‚¹)', type: 'number', req: 1, value: avail.toFixed(2), attrs: `min="0.01" max="${avail}" step="0.01"` })}
         ${fld({ name: 'date', label: 'Refund Date', type: 'date', req: 1, value: APP.today })}
         ${fld({ name: 'mode', label: 'Refund Mode', type: 'select', opts: [['bank_transfer', 'Bank Transfer'], ['upi', 'UPI'], ['cash', 'Cash'], ['cheque', 'Cheque'], ['card', 'Credit/Debit Card'], ['other', 'Other']], value: 'bank_transfer' })}
         ${fld({ name: 'account', label: 'Paid From', type: 'select', opts: bankOpts, value: bankOpts[0][0] })}
@@ -4989,7 +4989,7 @@ async function applyRetainerModal(retainerDoc, onDone) {
             <th>Due Date</th>
             <th class="r">Total</th>
             <th class="r">Balance Due</th>
-            <th class="r" style="width:180px;">Amount to Apply (₹)</th>
+            <th class="r" style="width:180px;">Amount to Apply (â‚¹)</th>
           </tr>
         </thead>
         <tbody>
@@ -5020,7 +5020,7 @@ async function applyRetainerModal(retainerDoc, onDone) {
       </table>
 
       <div style="margin-top:14px;padding:10px 14px;background:rgba(0,0,0,0.02);border-radius:6px;display:flex;justify-content:flex-end;gap:24px;font-size:13px;">
-        <div><span>Total Applied:</span> <b id="m-tot-applied" style="color:#6366f1;">₹0.00</b></div>
+        <div><span>Total Applied:</span> <b id="m-tot-applied" style="color:#6366f1;">â‚¹0.00</b></div>
         <div><span>Remaining Credit:</span> <b id="m-rem-credit" style="color:#059669;">${inr(avail)}</b></div>
       </div>
       <div id="m-alloc-err" style="color:var(--err);font-size:12px;margin-top:8px;font-weight:600;"></div>
@@ -5125,7 +5125,7 @@ async function applyRetainerToInvoiceModal(invoiceDoc, onDone) {
   }
 
   const m = Modal.open({
-    title: `Apply Retainer Credit · Invoice ${esc(invoiceDoc.number)}`,
+    title: `Apply Retainer Credit Â· Invoice ${esc(invoiceDoc.number)}`,
     wide: false,
     body: `
       <div style="background:var(--surface-glass-subtle);padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:13px;line-height:1.5;">
@@ -5144,7 +5144,7 @@ async function applyRetainerToInvoiceModal(invoiceDoc, onDone) {
         })}
         ${fld({
           name: 'amount',
-          label: 'Amount to Apply (₹)',
+          label: 'Amount to Apply (â‚¹)',
           type: 'number',
           req: 1,
           value: Math.min(invBal, num(retainers[0].available_balance)).toFixed(2),
@@ -5232,7 +5232,7 @@ async function openCreditNoteRefundModal(doc, onDone) {
   } catch (e) {}
 
   formModal({
-    title: `Refund Credit Note · ${doc.number}`,
+    title: `Refund Credit Note Â· ${doc.number}`,
     wide: false,
     submit: 'Process Refund',
     body: `
@@ -5241,7 +5241,7 @@ async function openCreditNoteRefundModal(doc, onDone) {
         <div style="margin-top:2px;"><b>Credit Note Total:</b> ${inr(doc.total)} &nbsp;|&nbsp; <b>Available to Refund:</b> <span style="color:#059669;font-weight:700;">${inr(avail)}</span></div>
       </div>
       <div class="fgrid">
-        ${fld({ name: 'amount', label: 'Refund Amount (₹)', type: 'number', req: 1, value: avail.toFixed(2), attrs: `min="0.01" max="${avail}" step="0.01"` })}
+        ${fld({ name: 'amount', label: 'Refund Amount (â‚¹)', type: 'number', req: 1, value: avail.toFixed(2), attrs: `min="0.01" max="${avail}" step="0.01"` })}
         ${fld({ name: 'date', label: 'Refund Date', type: 'date', req: 1, value: APP.today })}
         ${fld({ name: 'mode', label: 'Refund Mode', type: 'select', opts: [['bank_transfer', 'Bank Transfer'], ['upi', 'UPI'], ['cash', 'Cash'], ['cheque', 'Cheque'], ['card', 'Credit/Debit Card'], ['other', 'Other']], value: 'bank_transfer' })}
         ${fld({ name: 'account', label: 'Paid From', type: 'select', opts: bankOpts, value: bankOpts[0][0] })}
@@ -5318,7 +5318,7 @@ async function openCreditNoteApplyModal(creditDoc, onDone) {
             <th>Due Date</th>
             <th class="r">Total</th>
             <th class="r">Balance Due</th>
-            <th class="r" style="width:180px;">Amount to Apply (₹)</th>
+            <th class="r" style="width:180px;">Amount to Apply (â‚¹)</th>
           </tr>
         </thead>
         <tbody>
@@ -5341,7 +5341,7 @@ async function openCreditNoteApplyModal(creditDoc, onDone) {
       </table>
 
       <div style="margin-top:14px;padding:10px 14px;background:rgba(0,0,0,0.02);border-radius:6px;display:flex;justify-content:flex-end;gap:24px;font-size:13px;">
-        <div><span>Total Applied:</span> <b id="m-cn-tot-applied" style="color:#6366f1;">₹0.00</b></div>
+        <div><span>Total Applied:</span> <b id="m-cn-tot-applied" style="color:#6366f1;">â‚¹0.00</b></div>
         <div><span>Remaining Credit:</span> <b id="m-cn-rem-credit" style="color:#059669;">${inr(avail)}</b></div>
       </div>
       <div id="m-cn-alloc-err" style="color:var(--err);font-size:12px;margin-top:8px;font-weight:600;"></div>
@@ -5430,8 +5430,8 @@ async function viewRecurringInvoiceModal(id) {
   try {
     const d = await api(`recurring-invoices/${id}/`);
     const kv = [
-      ['Customer', esc(d.customer_name || '—')],
-      ['Profile Name', esc(d.name || '—')],
+      ['Customer', esc(d.customer_name || 'â€”')],
+      ['Profile Name', esc(d.name || 'â€”')],
       ['Frequency', esc(d.frequency_label || d.frequency || 'Monthly')],
       ['Start Date', fd(d.start_date)],
       ['Next Invoice Date', fd(d.next_date)],
@@ -5621,18 +5621,18 @@ async function viewRecurringInvoiceModal(id) {
 async function expenseDetail(id) {
   try {
     const expense = await api(`expenses/${id}/`);
-    const location = expense.business_location_name || expense.branch || expense.location || '—';
+    const location = expense.business_location_name || expense.branch || expense.location || 'â€”';
     const modal = Modal.open({
       title: `Expense ${expense.number || ''}`,
       wide: true,
       body: `${kvBox([
         ['Date', fd(expense.date)],
         ['Vendor / Payee', esc(expense.vendor_name || 'Direct Expense')],
-        ['Expense Account', esc(expense.expense_account_name || '—')],
-        ['Paid Through', esc(expense.paid_through || '—')],
-        ['Reference', esc(expense.reference || '—')],
+        ['Expense Account', esc(expense.expense_account_name || 'â€”')],
+        ['Paid Through', esc(expense.paid_through || 'â€”')],
+        ['Reference', esc(expense.reference || 'â€”')],
         ['Branch / Location', esc(location)],
-        ['Project', esc(expense.project_name || '—')],
+        ['Project', esc(expense.project_name || 'â€”')],
         ['Billable to Customer', expense.billable_to_customer ? 'Yes' : 'No'],
         ['Taxable Amount', inr(expense.amount)],
         ['GST', inr(expense.tax_amount)],
@@ -5656,7 +5656,7 @@ async function paymentDetail(kind, id) {
   const m = Modal.open({
     dialog: true,
     title: `Payment ${d.number}${isVoid ? ' (Void)' : ''}`,
-    body: `${kvBox([[rec ? 'Customer' : 'Vendor', esc(d.party)], ['Date', fd(d.date)], ['Mode', esc(d.mode_label)], ['Account', esc(d.account)], ['Reference', esc(d.reference || '—')], ['Amount', inr(d.amount)], ['Applied', inr(d.applied)], ['Unapplied', inr(d.unapplied)]])}
+    body: `${kvBox([[rec ? 'Customer' : 'Vendor', esc(d.party)], ['Date', fd(d.date)], ['Mode', esc(d.mode_label)], ['Account', esc(d.account)], ['Reference', esc(d.reference || 'â€”')], ['Amount', inr(d.amount)], ['Applied', inr(d.applied)], ['Unapplied', inr(d.unapplied)]])}
 ${d.allocations.length ? `<table><thead><tr><th>${rec ? 'Invoice' : 'Bill'}</th><th class="r">Applied</th></tr></thead><tbody>${d.allocations.map(a => `<tr><td>${esc(a.number)}</td><td class="r">${inr(a.amount)}</td></tr>`).join('')}</tbody></table>` : '<p class="sub">Not applied to any document.</p>'}${d.notes ? `<p><span class="sub">Notes:</span> ${esc(d.notes)}</p>` : ''}
 <p class="hp">Deleting or voiding a payment restores the balance due on the documents it was applied to.</p>`,
     footer: `<button class="btn" type="button" data-close>Close</button><button class="btn" type="button" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Receipt</button>${rec && !isVoid ? '<button class="btn" type="button" data-do="void" style="color:#d97706;"><i class="fa-solid fa-ban"></i> Void payment</button>' : ''}<button class="btn d" type="button" data-do="delete">Delete payment</button>`,
@@ -5691,7 +5691,7 @@ async function partyDetail(kind, id) {
   const [p, dl, pl] = await Promise.all([api(`${kind}/${id}/`), api(`${docs}/?` + qs({ [pk]: id, page_size: 20, ordering: '-date' })), api(`${pay}/?` + qs({ [pk]: id, page_size: 20 }))]);
   const m = Modal.open({
     title: p.name, wide: true,
-    body: `${kvBox([['Billed', inr(p.billed)], [cust ? 'Receivable' : 'Payable', inr(p.outstanding)], ['Overdue', `<span class="${num(p.overdue) > 0 ? 'dn' : ''}">${inr(p.overdue)}</span>`], ['Email', esc(p.email || '—')], ['Phone', esc(p.phone || '—')], ['State', esc(p.state || '—')], ['GSTIN', esc(p.gstin || '—')], ['Payment terms', p.payment_terms + ' days']])}
+    body: `${kvBox([['Billed', inr(p.billed)], [cust ? 'Receivable' : 'Payable', inr(p.outstanding)], ['Overdue', `<span class="${num(p.overdue) > 0 ? 'dn' : ''}">${inr(p.overdue)}</span>`], ['Email', esc(p.email || 'â€”')], ['Phone', esc(p.phone || 'â€”')], ['State', esc(p.state || 'â€”')], ['GSTIN', esc(p.gstin || 'â€”')], ['Payment terms', p.payment_terms + ' days']])}
 
 <h3 style="font-size:14px;margin:12px 0 6px">${cust ? 'Invoices' : 'Bills'}</h3>${dl.results.length ? `<div class="tw"><table><thead><tr><th>Number</th><th>Date</th><th>Status</th><th class="r">Total</th><th class="r">Balance</th></tr></thead><tbody>${dl.results.map(d => `<tr><td><button class="lk" type="button" data-open="${d.id}">${esc(d.number)}</button></td><td>${fd(d.date)}</td><td>${badge(d.status)}</td><td class="r">${inr(d.total)}</td><td class="r">${inr(d.balance)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="sub">None yet.</p>'}
 <h3 style="font-size:14px;margin:12px 0 6px">Payments</h3>${pl.results.length ? `<div class="tw"><table><thead><tr><th>Number</th><th>Date</th><th>Mode</th><th class="r">Amount</th></tr></thead><tbody>${pl.results.map(x => `<tr><td>${esc(x.number)}</td><td>${fd(x.date)}</td><td>${esc(x.mode_label)}</td><td class="r">${inr(x.amount)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="sub">None yet.</p>'}`,
@@ -5711,7 +5711,7 @@ window.partyDetail = partyDetail;
 function gettingStarted(root) {
   const c = APP.counts;
   const steps = [
-    ['Set your organization’s home state and opening balance', !!APP.org.gstin || APP.org.opening_cash != 0, 'Open settings', () => orgForm()],
+    ['Set your organizationâ€™s home state and opening balance', !!APP.org.gstin || APP.org.opening_cash != 0, 'Open settings', () => orgForm()],
     ['Add your first customer', c.customers > 0, 'Add customer', () => partyForm('customers')],
     ['Add a vendor', c.vendors > 0, 'Add vendor', () => partyForm('vendors')],
     ['Add items or services', c.items > 0, 'Add item', () => (typeof window.itemForm === 'function' ? window.itemForm() : (typeof itemForm === 'function' ? itemForm() : null))],
@@ -5719,7 +5719,7 @@ function gettingStarted(root) {
     ['Record a payment', c.payments > 0, 'Record payment', () => (typeof window.paymentForm === 'function' ? window.paymentForm('payments-received') : (typeof paymentForm === 'function' ? paymentForm('payments-received') : null))]
   ];
   root.innerHTML = `<h1>Hello, ${esc(APP.user.name || 'admin')}</h1><div class="sub">${esc(APP.org.name)}</div><div class="tabs"><a href="#/home/dashboard">Dashboard</a><a class="on" href="#/home/getting-started">Getting Started</a><a href="#/home/recent-updates">Recent Updates</a></div>
-<div class="card"><h3>Set up Convosis Books</h3><div class="cb"><ul class="chk">${steps.map((s, i) => `<li class="${s[1] ? 'done' : ''}"><span class="tick">${s[1] ? '✓' : ''}</span><span style="flex:1">${esc(s[0])}</span>${s[1] ? '' : `<button class="btn" type="button" data-step="${i}">${esc(s[2])}</button>`}</li>`).join('')}</ul></div></div>`;
+<div class="card"><h3>Set up Convosis Books</h3><div class="cb"><ul class="chk">${steps.map((s, i) => `<li class="${s[1] ? 'done' : ''}"><span class="tick">${s[1] ? 'âœ“' : ''}</span><span style="flex:1">${esc(s[0])}</span>${s[1] ? '' : `<button class="btn" type="button" data-step="${i}">${esc(s[2])}</button>`}</li>`).join('')}</ul></div></div>`;
   root.addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (b) steps[b.dataset.step][3](); });
   PAGE.reload = () => gettingStarted(root);
 }
@@ -5817,7 +5817,7 @@ async function documentsPage(root, mode = 'all') {
     });
   }
 
-  $('#doc-refresh-btn', root).addEventListener('click', () => documentsPage(root, mode));
+  on('#doc-refresh-btn', 'click', () => documentsPage(root, mode));
   const newBtn = $('#doc-new-btn', root);
   if (newBtn) newBtn.addEventListener('click', () => documentUploadModal());
 
@@ -5870,7 +5870,7 @@ async function documentsPage(root, mode = 'all') {
             ${data.results.map(d => {
               const ocr = d.ocr_data || {};
               const ocrBadge = d.ocr_status === 'processed'
-                ? `<span class="badge up">✓ Extracted</span>`
+                ? `<span class="badge up">âœ“ Extracted</span>`
                 : (d.ocr_status === 'pending' ? `<span class="badge warn">Scanning...</span>` : `<span class="badge">None</span>`);
               const catLabel = (d.category || 'other').replace('_', ' ');
 
@@ -5879,18 +5879,18 @@ async function documentsPage(root, mode = 'all') {
                   <td>
                     <div style="display:flex;align-items:center;gap:10px;">
                       <div style="width:34px;height:34px;border-radius:8px;background:var(--surface-glass-subtle);border:1px solid var(--bd);display:grid;place-items:center;font-size:16px;flex-shrink:0;">
-                        ${d.category === 'receipt' ? '🧾' : (d.category === 'bank_statement' ? '🏦' : '📄')}
+                        ${d.category === 'receipt' ? 'ðŸ§¾' : (d.category === 'bank_statement' ? 'ðŸ¦' : 'ðŸ“„')}
                       </div>
                       <div>
                         <div style="font-weight:600;color:var(--tx);">${esc(d.title)}</div>
-                        <div class="sub" style="font-size:11px;">${esc(d.filename)} · ${Math.round((d.file_size || 1024) / 1024)} KB</div>
+                        <div class="sub" style="font-size:11px;">${esc(d.filename)} Â· ${Math.round((d.file_size || 1024) / 1024)} KB</div>
                       </div>
                     </div>
                   </td>
                   <td><span class="pastel-chip chip-sky" style="text-transform:capitalize;">${esc(catLabel)}</span></td>
                   <td>${esc(d.folder_name || 'Root')}</td>
                   <td>${ocrBadge}</td>
-                  <td><b>${ocr.total_amount ? inr(ocr.total_amount) : '—'}</b></td>
+                  <td><b>${ocr.total_amount ? inr(ocr.total_amount) : 'â€”'}</b></td>
                   <td>${fd(isTrash ? d.deleted_at : d.created_at)}</td>
                   <td class="r" style="white-space:nowrap;">
                     ${isTrash ? `
@@ -5899,10 +5899,10 @@ async function documentsPage(root, mode = 'all') {
                     ` : `
                       <button class="btn" type="button" data-ocr="${d.id}" style="padding:4px 10px;font-size:12px;">View OCR</button>
                       ${d.converted_to_id ? `<span class="badge up" style="font-size:11px;">Converted</span>` : `
-                        <button class="btn" type="button" data-conv-bill="${d.id}" style="padding:4px 8px;font-size:12px;" title="Convert to Bill">→ Bill</button>
-                        <button class="btn" type="button" data-conv-exp="${d.id}" style="padding:4px 8px;font-size:12px;" title="Convert to Expense">→ Exp</button>
+                        <button class="btn" type="button" data-conv-bill="${d.id}" style="padding:4px 8px;font-size:12px;" title="Convert to Bill">â†’ Bill</button>
+                        <button class="btn" type="button" data-conv-exp="${d.id}" style="padding:4px 8px;font-size:12px;" title="Convert to Expense">â†’ Exp</button>
                       `}
-                      <button class="btn d" type="button" data-del="${d.id}" style="padding:4px 8px;font-size:12px;" title="Move to Trash">🗑</button>
+                      <button class="btn d" type="button" data-del="${d.id}" style="padding:4px 8px;font-size:12px;" title="Move to Trash">ðŸ—‘</button>
                     `}
                   </td>
                 </tr>
@@ -6028,7 +6028,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
       id: a.id,
       name: a.name,
       bank_name: a.bank_name || 'Bank',
-      number: a.masked_account_number || (a.account_number ? '•••• ' + String(a.account_number).slice(-4) : '•••• —'),
+      number: a.masked_account_number || (a.account_number ? 'â€¢â€¢â€¢â€¢ ' + String(a.account_number).slice(-4) : 'â€¢â€¢â€¢â€¢ â€”'),
       account_number: a.account_number,
       type: a.account_type || 'Current Account',
       balance: parseFloat(a.current_balance || 0),
@@ -6142,7 +6142,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
               <span>Total Bank Balance</span>
               <i class="fa-solid fa-building-columns" style="color:#2563eb;"></i>
             </div>
-            <div style="font-size:22px;font-weight:700;color:var(--tx);margin-top:8px;" id="bnkDashTotalBal">₹${totalBankBalance.toLocaleString('en-IN', {minimumFractionDigits:2})}</div>
+            <div style="font-size:22px;font-weight:700;color:var(--tx);margin-top:8px;" id="bnkDashTotalBal">â‚¹${totalBankBalance.toLocaleString('en-IN', {minimumFractionDigits:2})}</div>
             <div style="font-size:11px;color:var(--tx-muted);margin-top:4px;">Across ${bankAccounts.length} connected account${bankAccounts.length === 1 ? '' : 's'}</div>
           </div>
 
@@ -6162,7 +6162,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
             </div>
             <div style="font-size:22px;font-weight:700;color:#4f46e5;margin-top:8px;" id="bnkDashAutoMatchCount">${autoMatchReadyCount} Ready</div>
             <div style="font-size:11px;color:#4f46e5;margin-top:4px;cursor:pointer;font-weight:600;" id="bnkDashReviewMatchLink">
-              Review side-by-side match →
+              Review side-by-side match â†’
             </div>
           </div>
 
@@ -6200,7 +6200,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
                 <span style="font-size:11px;color:#059669;font-weight:700;"><i class="fa-solid fa-bolt"></i> ${spotlightCandidate.candidate.confidence}% Match</span>
               </div>
               <h4 style="font-size:14px;font-weight:700;color:var(--tx);margin:0 0 6px;">Latest Candidate Match</h4>
-              <p style="font-size:12px;color:var(--tx-muted);line-height:1.5;margin:0 0 12px;">${esc(spotlightCandidate.bank_account_name || 'Bank Account')} • ${esc(spotlightCandidate.description)} matches ${esc(spotlightCandidate.candidate.recordRef)}.</p>
+              <p style="font-size:12px;color:var(--tx-muted);line-height:1.5;margin:0 0 12px;">${esc(spotlightCandidate.bank_account_name || 'Bank Account')} â€¢ ${esc(spotlightCandidate.description)} matches ${esc(spotlightCandidate.candidate.recordRef)}.</p>
 
               <div class="banking-panel-box" style="font-size:12px;display:flex;flex-direction:column;gap:4px;margin-bottom:14px;">
                 <div style="display:flex;justify-content:space-between;color:var(--tx-muted);font-size:11px;">
@@ -6208,8 +6208,8 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
                   <span>Record: <b>${esc(spotlightCandidate.candidate.date || 'Recent')}</b></span>
                 </div>
                 <div style="display:flex;justify-content:space-between;font-weight:600;color:var(--tx);">
-                  <span>Ref: ${esc(spotlightCandidate.reference || '—')}</span>
-                  <span style="color:#059669;">₹${(spotlightCandidate.candidate.amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</span>
+                  <span>Ref: ${esc(spotlightCandidate.reference || 'â€”')}</span>
+                  <span style="color:#059669;">â‚¹${(spotlightCandidate.candidate.amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</span>
                 </div>
               </div>
             </div>
@@ -6223,7 +6223,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
           </div>
           ` : `
           <div class="glass-card" style="padding:24px;border-left:4px solid #10b981;display:flex;flex-direction:column;justify-content:center;text-align:center;gap:10px;">
-            <div style="font-size:32px;color:#10b981;">✓</div>
+            <div style="font-size:32px;color:#10b981;">âœ“</div>
             <h4 style="font-size:14px;font-weight:700;color:var(--tx);margin:0;">All Feeds Up to Date</h4>
             <p style="font-size:12px;color:var(--tx-muted);margin:0;">No pending auto-matching candidate records require review at this time.</p>
             <button type="button" class="btn" onclick="window.location.hash='#/banking/import-bank-statements'" style="font-size:12px;margin:8px auto 0;">+ Import New Statement</button>
@@ -6404,18 +6404,18 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
               <input type="date" id="bnkReconDateInput" value="${APP.today || new Date().toISOString().slice(0, 10)}" class="in" style="width:100%;font-size:12px;"/>
             </div>
             <div>
-              <label style="display:block;font-size:11.5px;font-weight:600;margin-bottom:4px;">Statement Ending Balance (₹)</label>
+              <label style="display:block;font-size:11.5px;font-weight:600;margin-bottom:4px;">Statement Ending Balance (â‚¹)</label>
               <input type="number" id="bnkReconStmtBalInput" value="${bankAccounts.length ? bankAccounts[0].balance : 0}" class="in" style="width:100%;font-size:12px;font-family:monospace;"/>
             </div>
 
             <div class="banking-panel-box" style="display:flex;flex-direction:column;gap:8px;font-size:12px;">
               <div style="display:flex;justify-content:space-between;color:var(--tx-muted);">
                 <span>Cleared Books Balance:</span>
-                <span id="bnkReconBooksBalDisplay" style="font-weight:700;font-family:monospace;color:var(--tx);">₹0.00</span>
+                <span id="bnkReconBooksBalDisplay" style="font-weight:700;font-family:monospace;color:var(--tx);">â‚¹0.00</span>
               </div>
               <div style="display:flex;justify-content:space-between;font-weight:700;border-top:1px solid var(--bd-glass);padding-top:6px;">
                 <span>Difference:</span>
-                <span id="bnkReconDiffDisplay" style="font-family:monospace;color:#059669;">₹0.00</span>
+                <span id="bnkReconDiffDisplay" style="font-family:monospace;color:#059669;">â‚¹0.00</span>
               </div>
             </div>
 
@@ -6614,7 +6614,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
       <div class="glass-card" style="max-width:440px;width:100%;padding:24px;background:var(--surface-glass-solid);">
         <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd-glass);padding-bottom:12px;margin-bottom:16px;">
           <h3 style="font-size:15px;font-weight:700;color:var(--tx);margin:0;">Add Bank Account</h3>
-          <button type="button" class="btn" data-close-modal="bnkAddAccountModal" style="padding:2px 8px;font-size:12px;">✕</button>
+          <button type="button" class="btn" data-close-modal="bnkAddAccountModal" style="padding:2px 8px;font-size:12px;">âœ•</button>
         </div>
         <form id="bnkAddAccountForm" style="display:flex;flex-direction:column;gap:12px;font-size:12px;" novalidate>
           <div>
@@ -6646,7 +6646,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
             <div id="bnkAccTypeErr" class="field-error" style="display:none;color:#ef4444;font-size:11px;margin-top:4px;"></div>
           </div>
           <div>
-            <label style="display:block;font-weight:600;margin-bottom:4px;">Opening Balance (₹)</label>
+            <label style="display:block;font-weight:600;margin-bottom:4px;">Opening Balance (â‚¹)</label>
             <input type="number" id="bnkAccBal" placeholder="0.00" class="in" style="width:100%;font-family:monospace;"/>
           </div>
           <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px;">
@@ -6661,7 +6661,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
       <div class="glass-card" style="max-width:440px;width:100%;padding:24px;background:var(--surface-glass-solid);">
         <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd-glass);padding-bottom:12px;margin-bottom:16px;">
           <h3 id="bnkRuleModalTitle" style="font-size:15px;font-weight:700;color:var(--tx);margin:0;">Create Automation Bank Rule</h3>
-          <button type="button" class="btn" data-close-modal="bnkAddRuleModal" style="padding:2px 8px;font-size:12px;">✕</button>
+          <button type="button" class="btn" data-close-modal="bnkAddRuleModal" style="padding:2px 8px;font-size:12px;">âœ•</button>
         </div>
         <form id="bnkAddRuleForm" style="display:flex;flex-direction:column;gap:12px;font-size:12px;">
           <input type="hidden" id="bnkRuleEditId" value="" />
@@ -6713,7 +6713,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
       <div class="glass-card" style="max-width:440px;width:100%;padding:24px;background:var(--surface-glass-solid);">
         <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd-glass);padding-bottom:12px;margin-bottom:16px;">
           <h3 style="font-size:15px;font-weight:700;color:var(--tx);margin:0;">Record Internal Transfer</h3>
-          <button type="button" class="btn" data-close-modal="bnkTransferModal" style="padding:2px 8px;font-size:12px;">✕</button>
+          <button type="button" class="btn" data-close-modal="bnkTransferModal" style="padding:2px 8px;font-size:12px;">âœ•</button>
         </div>
         <form id="bnkTransferForm" style="display:flex;flex-direction:column;gap:12px;font-size:12px;" novalidate>
           <div>
@@ -6721,7 +6721,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
             <select id="bnkTrFrom" class="in" style="width:100%;">
               <option value="" selected>Select Account</option>
               ${bankAccounts.map(a => `<option value="${a.id}">${esc(a.name)}</option>`).join('')}
-              <option value="__new_bank_account__" style="color:var(--accent,#2563eb);font-weight:600;">+ Add Bank Account…</option>
+              <option value="__new_bank_account__" style="color:var(--accent,#2563eb);font-weight:600;">+ Add Bank Accountâ€¦</option>
             </select>
             <div id="bnkTrFromErr" class="field-error" style="display:none;color:#ef4444;font-size:11px;margin-top:4px;"></div>
           </div>
@@ -6730,12 +6730,12 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
             <select id="bnkTrTo" class="in" style="width:100%;">
               <option value="" selected>Select Account</option>
               ${bankAccounts.map(a => `<option value="${a.id}">${esc(a.name)}</option>`).join('')}
-              <option value="__new_bank_account__" style="color:var(--accent,#2563eb);font-weight:600;">+ Add Bank Account…</option>
+              <option value="__new_bank_account__" style="color:var(--accent,#2563eb);font-weight:600;">+ Add Bank Accountâ€¦</option>
             </select>
             <div id="bnkTrToErr" class="field-error" style="display:none;color:#ef4444;font-size:11px;margin-top:4px;"></div>
           </div>
           <div>
-            <label style="display:block;font-weight:600;margin-bottom:4px;">Amount (₹)</label>
+            <label style="display:block;font-weight:600;margin-bottom:4px;">Amount (â‚¹)</label>
             <input type="number" id="bnkTrAmount" step="any" min="0.01" placeholder="Enter Amount" class="in" style="width:100%;font-family:monospace;"/>
             <div id="bnkTrAmountErr" class="field-error" style="display:none;color:#ef4444;font-size:11px;margin-top:4px;"></div>
           </div>
@@ -6786,11 +6786,11 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
           </div>
           <div>
             <div style="font-weight:700;color:var(--tx);">${esc(acc.name)}</div>
-            <div style="font-size:11px;color:var(--tx-muted);">${esc(acc.number)} • ${esc(acc.type)}</div>
+            <div style="font-size:11px;color:var(--tx-muted);">${esc(acc.number)} â€¢ ${esc(acc.type)}</div>
           </div>
         </div>
         <div style="text-align:right;">
-          <div style="font-family:monospace;font-weight:700;font-size:13px;color:var(--tx);">₹${acc.balance.toLocaleString('en-IN', {minimumFractionDigits:2})}</div>
+          <div style="font-family:monospace;font-weight:700;font-size:13px;color:var(--tx);">â‚¹${acc.balance.toLocaleString('en-IN', {minimumFractionDigits:2})}</div>
           <span class="banking-badge-pill banking-badge-emerald" style="font-size:10px;margin-top:2px;">${esc(acc.status)}</span>
         </div>
       </div>
@@ -6803,7 +6803,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
     if (!bankAccounts.length) {
       grid.innerHTML = `
         <div class="glass-card" style="padding:48px 24px;text-align:center;color:var(--tx-muted);grid-column:1/-1;">
-          <div style="font-size:32px;margin-bottom:8px;">🏦</div>
+          <div style="font-size:32px;margin-bottom:8px;">ðŸ¦</div>
           <h3 style="font-size:15px;font-weight:700;color:var(--tx);margin:0 0 6px;">No Bank Accounts Registered</h3>
           <p style="font-size:12px;margin:0 0 14px;">Add your business accounts to sync live feeds and track balances.</p>
           <button type="button" class="btn p" id="bnkGridAddAccBtn" style="font-size:12px;">+ Add Bank Account</button>
@@ -6825,7 +6825,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
         </div>
         <div style="border-top:1px solid var(--bd-glass);padding-top:10px;display:flex;justify-content:space-between;align-items:baseline;">
           <span style="font-size:12px;color:var(--tx-muted);">Live Ledger Balance</span>
-          <span style="font-size:18px;font-weight:700;font-family:monospace;color:var(--tx);">₹${acc.balance.toLocaleString('en-IN', {minimumFractionDigits:2})}</span>
+          <span style="font-size:18px;font-weight:700;font-family:monospace;color:var(--tx);">â‚¹${acc.balance.toLocaleString('en-IN', {minimumFractionDigits:2})}</span>
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
           <button type="button" class="btn p" style="flex:1;height:34px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;box-sizing:border-box;white-space:nowrap;" onclick="window.location.hash='#/banking/uncategorized-transactions'">
@@ -6887,9 +6887,9 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
                 ${feed.payee && feed.description && feed.payee !== feed.description ? `<div style="font-size:11.5px;color:var(--tx-muted);">${esc(feed.description)}</div>` : ''}
               </div>
               <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--bd-glass);padding-top:8px;">
-                <span style="font-size:11.5px;color:var(--tx-muted);">Ref: ${esc(feed.reference || '—')}</span>
+                <span style="font-size:11.5px;color:var(--tx-muted);">Ref: ${esc(feed.reference || 'â€”')}</span>
                 <span style="font-size:15px;font-weight:700;font-family:monospace;color:${isCredit ? '#059669' : 'var(--tx)'};">
-                  ${isCredit ? '+' : '-'}₹${amount.toLocaleString('en-IN', {minimumFractionDigits:2})}
+                  ${isCredit ? '+' : '-'}â‚¹${amount.toLocaleString('en-IN', {minimumFractionDigits:2})}
                 </span>
               </div>
             </div>
@@ -6909,7 +6909,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--bd-glass);padding-top:8px;">
                   <span style="font-size:11.5px;color:var(--tx-muted);">Book Amount:</span>
-                  <span style="font-size:15px;font-weight:700;font-family:monospace;color:var(--tx);">₹${feed.candidate.amount.toLocaleString('en-IN', {minimumFractionDigits:2})}</span>
+                  <span style="font-size:15px;font-weight:700;font-family:monospace;color:var(--tx);">â‚¹${feed.candidate.amount.toLocaleString('en-IN', {minimumFractionDigits:2})}</span>
                 </div>
               ` : `
                 <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:12px;gap:6px;">
@@ -6987,9 +6987,9 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
             <div style="font-weight:600;">${esc(t.payee || t.description || 'Transaction')}</div>
             ${t.payee && t.description && t.payee !== t.description ? `<div style="font-size:11px;color:var(--tx-muted);">${esc(t.description)}</div>` : ''}
           </td>
-          <td style="font-family:monospace;color:var(--tx-muted);">${esc(t.reference || '—')}</td>
-          <td style="text-align:right;font-family:monospace;color:${dr > 0 ? '#ef4444' : 'var(--tx-muted)'};">${dr > 0 ? '₹' + dr.toLocaleString('en-IN') : '—'}</td>
-          <td style="text-align:right;font-family:monospace;font-weight:700;color:${cr > 0 ? '#059669' : 'var(--tx-muted)'};">${cr > 0 ? '₹' + cr.toLocaleString('en-IN') : '—'}</td>
+          <td style="font-family:monospace;color:var(--tx-muted);">${esc(t.reference || 'â€”')}</td>
+          <td style="text-align:right;font-family:monospace;color:${dr > 0 ? '#ef4444' : 'var(--tx-muted)'};">${dr > 0 ? 'â‚¹' + dr.toLocaleString('en-IN') : 'â€”'}</td>
+          <td style="text-align:right;font-family:monospace;font-weight:700;color:${cr > 0 ? '#059669' : 'var(--tx-muted)'};">${cr > 0 ? 'â‚¹' + cr.toLocaleString('en-IN') : 'â€”'}</td>
           <td><span class="banking-badge-pill ${t.status === 'matched' ? 'banking-badge-indigo' : t.status === 'categorized' ? 'banking-badge-emerald' : 'banking-badge-amber'}">${esc(t.status || 'Pending')}</span></td>
         </tr>
       `;
@@ -7012,7 +7012,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
           <td style="font-family:monospace;">${fmtBankDate(m.date)}</td>
           <td style="font-weight:600;">${esc(m.payee || m.description)}</td>
           <td style="color:#4f46e5;font-weight:600;">${esc(m.matched_record_display || m.reference || 'Paired Record')}</td>
-          <td style="text-align:right;font-family:monospace;font-weight:700;">₹${amt.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+          <td style="text-align:right;font-family:monospace;font-weight:700;">â‚¹${amt.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
           <td style="text-align:center;"><span class="banking-badge-pill banking-badge-emerald">Matched</span></td>
           <td style="text-align:right;"><button type="button" class="btn" data-act="unlink-match" data-id="${m.id}" style="font-size:11px;padding:2px 8px;color:#ef4444;">Unlink</button></td>
         </tr>
@@ -7036,7 +7036,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
           <td style="font-family:monospace;">${fmtBankDate(c.date)}</td>
           <td style="font-weight:600;">${esc(c.payee || c.description)}</td>
           <td style="color:#059669;font-weight:600;">${esc(c.gl_account_name || 'General Operating')}</td>
-          <td style="text-align:right;font-family:monospace;font-weight:700;">₹${amt.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+          <td style="text-align:right;font-family:monospace;font-weight:700;">â‚¹${amt.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
           <td style="color:var(--tx-muted);font-size:11px;">Rule Applied</td>
           <td style="text-align:right;"><button type="button" class="btn" style="font-size:11px;padding:2px 8px;color:var(--accent);">Edit</button></td>
         </tr>
@@ -7060,7 +7060,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
           <td style="font-family:monospace;">${fmtBankDate(u.date)}</td>
           <td style="font-weight:600;">${esc(u.bank_account_name || 'Account')}</td>
           <td>${esc(u.payee || u.description)}</td>
-          <td style="text-align:right;font-family:monospace;font-weight:700;">₹${amt.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+          <td style="text-align:right;font-family:monospace;font-weight:700;">â‚¹${amt.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
           <td style="text-align:center;"><button type="button" class="btn p" onclick="window.location.hash='#/banking/uncategorized-transactions'" style="font-size:11px;padding:3px 10px;">Match Now</button></td>
         </tr>
       `;
@@ -7100,7 +7100,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
             <span style="font-family:monospace;color:var(--tx-muted);">${fmtBankDate(i.date)}</span>
             <span style="font-weight:600;color:var(--tx);">${esc(i.payee || i.description)}</span>
           </div>
-          <span style="font-family:monospace;font-weight:700;color:${isCR ? '#059669' : 'var(--tx)'};">₹${amt.toLocaleString('en-IN')}</span>
+          <span style="font-family:monospace;font-weight:700;color:${isCR ? '#059669' : 'var(--tx)'};">â‚¹${amt.toLocaleString('en-IN')}</span>
         </label>
       `;
     }).join('');
@@ -7121,7 +7121,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
         <td style="font-family:monospace;">${fmtBankDate(t.date)}</td>
         <td>${esc(t.from_account_name || 'Account')}</td>
         <td>${esc(t.to_account_name || 'Account')}</td>
-        <td style="text-align:right;font-family:monospace;font-weight:700;">₹${parseFloat(t.amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+        <td style="text-align:right;font-family:monospace;font-weight:700;">â‚¹${parseFloat(t.amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
         <td><span class="banking-badge-pill banking-badge-indigo">Completed</span></td>
       </tr>
     `).join('');
@@ -7141,7 +7141,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
         <td>${esc(d.bank_account_name || 'Account')}</td>
         <td>${esc(d.party_name || 'Customer / Depositor')}</td>
         <td>${esc(d.deposit_type || 'Direct Deposit')}</td>
-        <td style="text-align:right;font-family:monospace;font-weight:700;color:#059669;">₹${parseFloat(d.amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+        <td style="text-align:right;font-family:monospace;font-weight:700;color:#059669;">â‚¹${parseFloat(d.amount || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
       </tr>
     `).join('');
   }
@@ -7193,7 +7193,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
         <td style="font-family:monospace;font-weight:700;color:var(--accent);">${esc(r.reconciliation_number || r.id)}</td>
         <td style="font-weight:600;">${esc(r.bank_account_name || r.account)}</td>
         <td style="font-family:monospace;">${fmtBankDate(r.statement_date || r.periodEnded)}</td>
-        <td style="text-align:right;font-family:monospace;font-weight:700;">₹${parseFloat(r.statement_ending_balance || r.balance || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+        <td style="text-align:right;font-family:monospace;font-weight:700;">â‚¹${parseFloat(r.statement_ending_balance || r.balance || 0).toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
         <td style="color:var(--tx-muted);">${esc(r.user || 'Administrator')}</td>
         <td><span class="banking-badge-pill banking-badge-emerald">${esc(r.status || 'Locked & Reconciled')}</span></td>
       </tr>
@@ -7269,7 +7269,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
       wide: false,
       body: `
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="font-size:12px;color:var(--tx-muted);">Original amount: <b>₹${Number(amount).toLocaleString('en-IN', {minimumFractionDigits:2})}</b></div>
+          <div style="font-size:12px;color:var(--tx-muted);">Original amount: <b>â‚¹${Number(amount).toLocaleString('en-IN', {minimumFractionDigits:2})}</b></div>
           ${[1, 2].map(index => `
             <div style="display:grid;grid-template-columns:1fr 120px;gap:8px;">
               <select class="in" name="account_${index}">
@@ -7330,7 +7330,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
 
     const stmtVal = parseFloat(input.value) || 0;
     const diff = stmtVal - booksBal;
-    diffElem.innerText = `₹${Math.abs(diff).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
+    diffElem.innerText = `â‚¹${Math.abs(diff).toLocaleString('en-IN', {minimumFractionDigits:2})}`;
     diffElem.style.color = (Math.abs(diff) < 0.01) ? '#059669' : '#ef4444';
   }
 
@@ -7468,7 +7468,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
       if (loadingElem) loadingElem.style.display = 'none';
 
       if (totalsElem && data) {
-        const sym = data.currency_symbol || '₹';
+        const sym = data.currency_symbol || 'â‚¹';
         totalsElem.innerHTML = `
           <span style="display:inline-flex;align-items:center;gap:4px;color:#10b981;font-weight:600;">
             <i class="fa-solid fa-arrow-down-left"></i> Inflow: ${sym}${Number(data.total_inflow || 0).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}
@@ -7497,7 +7497,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
 
       if (chartCashflowInstance) chartCashflowInstance.destroy();
 
-      const sym = data.currency_symbol || '₹';
+      const sym = data.currency_symbol || 'â‚¹';
       chartCashflowInstance = new Chart(ctx1.getContext('2d'), {
         type: 'bar',
         data: {
@@ -8170,9 +8170,9 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
                   <td style="font-family:monospace;">${fmtBankDate(t.date)}</td>
                   <td style="font-weight:600;">${esc(t.bank_account_name || 'Account')}</td>
                   <td>${esc(t.payee || t.description)}</td>
-                  <td style="font-family:monospace;color:var(--tx-muted);">${esc(t.reference || '—')}</td>
-                  <td style="text-align:right;font-family:monospace;color:${dr > 0 ? '#ef4444' : 'var(--tx-muted)'};">${dr > 0 ? '₹' + dr.toLocaleString('en-IN') : '—'}</td>
-                  <td style="text-align:right;font-family:monospace;font-weight:700;color:${cr > 0 ? '#059669' : 'var(--tx-muted)'};">${cr > 0 ? '₹' + cr.toLocaleString('en-IN') : '—'}</td>
+                  <td style="font-family:monospace;color:var(--tx-muted);">${esc(t.reference || 'â€”')}</td>
+                  <td style="text-align:right;font-family:monospace;color:${dr > 0 ? '#ef4444' : 'var(--tx-muted)'};">${dr > 0 ? 'â‚¹' + dr.toLocaleString('en-IN') : 'â€”'}</td>
+                  <td style="text-align:right;font-family:monospace;font-weight:700;color:${cr > 0 ? '#059669' : 'var(--tx-muted)'};">${cr > 0 ? 'â‚¹' + cr.toLocaleString('en-IN') : 'â€”'}</td>
                   <td><span class="banking-badge-pill banking-badge-indigo">${esc(t.status || 'Pending')}</span></td>
                 </tr>
               `;
@@ -8218,7 +8218,7 @@ async function renderBankingModule(root, initialTabId = 'dashboard') {
 }
 
 function fmtBankDate(dStr) {
-  if (!dStr) return '—';
+  if (!dStr) return 'â€”';
   if (dStr.includes('/')) return dStr;
   const parts = dStr.split('-');
   if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
@@ -8280,11 +8280,11 @@ async function gstFilingPage(root, tab = 'overview') {
     <div id="gst-content-box">${spinner}</div>
   `;
 
-  $('#gst-file-gstr1', root).addEventListener('click', () => fileGstrReturnModal('GSTR1'));
-  $('#gst-file-gstr3b', root).addEventListener('click', () => fileGstrReturnModal('GSTR3B'));
-  $('#gst-import-json', root).addEventListener('click', () => openUniversalImportModal('invoices', 'GST Returns & Supplies'));
-  $('#gst-export-csv', root).addEventListener('click', () => { location.href = '/api/invoices/?export=csv'; });
-  $('#gst-export-json', root).addEventListener('click', async () => {
+  on('#gst-file-gstr1', 'click', () => fileGstrReturnModal('GSTR1'));
+  on('#gst-file-gstr3b', 'click', () => fileGstrReturnModal('GSTR3B'));
+  on('#gst-import-json', 'click', () => openUniversalImportModal('invoices', 'GST Returns & Supplies'));
+  on('#gst-export-csv', 'click', () => { location.href = '/api/invoices/?export=csv'; });
+  on('#gst-export-json', 'click', async () => {
     try {
       const data = await api('gst/returns/gstr1/?period=042026&fy=2026-27');
       const blob = new Blob([JSON.stringify(data.gstn_json || data, null, 2)], { type: 'application/json' });
@@ -8294,7 +8294,7 @@ async function gstFilingPage(root, tab = 'overview') {
       toast('Official GSTN schema JSON exported!');
     } catch (e) { toast(e.message, 'err'); }
   });
-  $('#gst-returns-hist', root).addEventListener('click', async () => {
+  on('#gst-returns-hist', 'click', async () => {
     try {
       const hist = await api('gst/returns/history/');
       Modal.open({
@@ -8302,7 +8302,7 @@ async function gstFilingPage(root, tab = 'overview') {
         wide: true,
         body: `
           <div class="tw"><table><thead><tr><th>Return</th><th>Period</th><th>Status</th><th>ARN Acknowledgment</th><th>Filed Date</th><th>Tax Payable</th></tr></thead><tbody>
-            ${hist.length ? hist.map(h => `<tr><td><b>${esc(h.return_type)}</b></td><td>${esc(h.tax_period)}</td><td><span class="pastel-chip chip-mint">${esc(h.status)}</span></td><td><code>${esc(h.arn || '—')}</code></td><td>${esc(h.filed_at ? fd(h.filed_at) : '—')}</td><td>${inr(h.total_tax)}</td></tr>`).join('') : '<tr><td colspan="6" class="sub" style="text-align:center;padding:16px;">No filed returns yet. File your first return above.</td></tr>'}
+            ${hist.length ? hist.map(h => `<tr><td><b>${esc(h.return_type)}</b></td><td>${esc(h.tax_period)}</td><td><span class="pastel-chip chip-mint">${esc(h.status)}</span></td><td><code>${esc(h.arn || 'â€”')}</code></td><td>${esc(h.filed_at ? fd(h.filed_at) : 'â€”')}</td><td>${inr(h.total_tax)}</td></tr>`).join('') : '<tr><td colspan="6" class="sub" style="text-align:center;padding:16px;">No filed returns yet. File your first return above.</td></tr>'}
           </tbody></table></div>
         `,
         footer: '<button type="button" class="btn" data-close>Close</button>'
@@ -8342,15 +8342,15 @@ async function gstFilingPage(root, tab = 'overview') {
           <div class="tb"><h3 style="margin:0;font-size:14px;">GST Compliance Status & Filing Calendar</h3></div>
           <div class="cb" style="display:flex;flex-direction:column;gap:12px;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--surface-glass-subtle);border-radius:8px;border:1px solid var(--bd);">
-              <div><b>GSTR-1 (Outward Supplies)</b><div class="sub" style="font-size:12px;">Due 11th of every month · Ready to upload JSON payload</div></div>
+              <div><b>GSTR-1 (Outward Supplies)</b><div class="sub" style="font-size:12px;">Due 11th of every month Â· Ready to upload JSON payload</div></div>
               <span class="badge up">Ready to File</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--surface-glass-subtle);border-radius:8px;border:1px solid var(--bd);">
-              <div><b>GSTR-3B (Summary Return & Tax Payment)</b><div class="sub" style="font-size:12px;">Due 20th of every month · Reconciled with Purchase ITC</div></div>
+              <div><b>GSTR-3B (Summary Return & Tax Payment)</b><div class="sub" style="font-size:12px;">Due 20th of every month Â· Reconciled with Purchase ITC</div></div>
               <span class="badge up">Reconciled</span>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--surface-glass-subtle);border-radius:8px;border:1px solid var(--bd);">
-              <div><b>E-Invoicing & E-Way Bill System</b><div class="sub" style="font-size:12px;">NIC Gateway Connected · IRN & QR generation active</div></div>
+              <div><b>E-Invoicing & E-Way Bill System</b><div class="sub" style="font-size:12px;">NIC Gateway Connected Â· IRN & QR generation active</div></div>
               <span class="badge up">Compliant</span>
             </div>
           </div>
@@ -8459,7 +8459,7 @@ async function trialBalancePage(root) {
       <div class="tw" id="tb-table">${spinner}</div>
     </div>
   `;
-  $('#tb-print-btn', root).addEventListener('click', () => window.print());
+  on('#tb-print-btn', 'click', () => window.print());
   const dInp = $('#tb-date', root);
   dInp.addEventListener('change', () => loadTB());
   const tbExp = $('#tb-export-csv', root);
@@ -8475,14 +8475,14 @@ async function trialBalancePage(root) {
       const res = await api(`reports/trial-balance/?${params.toString()}`);
       if (!root.isConnected) return;
       $('#tb-bal-badge', root).innerHTML = res.is_balanced
-        ? `<span class="badge up">✓ Double-Entry Balanced</span>`
-        : `<span class="badge dn">⚠ Discrepancy: Debits ≠ Credits</span>`;
+        ? `<span class="badge up">âœ“ Double-Entry Balanced</span>`
+        : `<span class="badge dn">âš  Discrepancy: Debits â‰  Credits</span>`;
 
       $('#tb-table', root).innerHTML = `
         <table>
-          <thead><tr><th>Code</th><th>Account Name</th><th>Type</th><th class="r">Debit (₹)</th><th class="r">Credit (₹)</th></tr></thead>
+          <thead><tr><th>Code</th><th>Account Name</th><th>Type</th><th class="r">Debit (â‚¹)</th><th class="r">Credit (â‚¹)</th></tr></thead>
           <tbody>
-            ${res.accounts.map(a => `<tr><td><b>${esc(a.code)}</b></td><td>${esc(a.name)}</td><td><span class="pastel-chip chip-sky">${esc(a.type)}</span></td><td class="r">${num(a.debit) > 0 ? inr(a.debit) : '—'}</td><td class="r">${num(a.credit) > 0 ? inr(a.credit) : '—'}</td></tr>`).join('')}
+            ${res.accounts.map(a => `<tr><td><b>${esc(a.code)}</b></td><td>${esc(a.name)}</td><td><span class="pastel-chip chip-sky">${esc(a.type)}</span></td><td class="r">${num(a.debit) > 0 ? inr(a.debit) : 'â€”'}</td><td class="r">${num(a.credit) > 0 ? inr(a.credit) : 'â€”'}</td></tr>`).join('')}
           </tbody>
           <tfoot>
             <tr style="font-weight:700;border-top:2px solid var(--bd);">
@@ -8539,10 +8539,10 @@ async function profitAndLossPage(root) {
         <div class="r"><b>Net Profit: <span style="color:var(--up);font-size:18px;">${inr(res.net_profit || 0)}</span></b></div>
       </div>
       <table style="width:100%;">
-        <thead><tr><th>Account Category</th><th class="r">Amount (₹)</th></tr></thead>
+        <thead><tr><th>Account Category</th><th class="r">Amount (â‚¹)</th></tr></thead>
         <tbody>
           <tr style="background:var(--surface-glass-subtle);"><td colspan="2"><b>Operating Revenue / Sales Income</b></td></tr>
-          ${(res.income_accounts || []).map(a => `<tr><td style="padding-left:24px;">${esc(a.name)}</td><td class="r">${inr(a.amount)}</td></tr>`).join('') || '<tr><td style="padding-left:24px;">Sales Revenue</td><td class="r">₹0.00</td></tr>'}
+          ${(res.income_accounts || []).map(a => `<tr><td style="padding-left:24px;">${esc(a.name)}</td><td class="r">${inr(a.amount)}</td></tr>`).join('') || '<tr><td style="padding-left:24px;">Sales Revenue</td><td class="r">â‚¹0.00</td></tr>'}
           <tr style="font-weight:600;"><td style="padding-left:12px;">Total Income</td><td class="r" style="color:var(--accent);">${inr(res.total_income || 0)}</td></tr>
 
           <tr style="background:var(--surface-glass-subtle);"><td colspan="2"><b>Cost of Goods Sold (COGS)</b></td></tr>
@@ -8550,7 +8550,7 @@ async function profitAndLossPage(root) {
           <tr style="font-weight:600;"><td style="padding-left:12px;">Gross Profit</td><td class="r" style="color:var(--up);">${inr(res.gross_profit || 0)}</td></tr>
 
           <tr style="background:var(--surface-glass-subtle);"><td colspan="2"><b>Operating & Administrative Expenses</b></td></tr>
-          ${(res.expense_accounts || []).map(a => `<tr><td style="padding-left:24px;">${esc(a.name)}</td><td class="r">${inr(a.amount)}</td></tr>`).join('') || '<tr><td style="padding-left:24px;">Operating Expenses</td><td class="r">₹0.00</td></tr>'}
+          ${(res.expense_accounts || []).map(a => `<tr><td style="padding-left:24px;">${esc(a.name)}</td><td class="r">${inr(a.amount)}</td></tr>`).join('') || '<tr><td style="padding-left:24px;">Operating Expenses</td><td class="r">â‚¹0.00</td></tr>'}
           <tr style="font-weight:600;"><td style="padding-left:12px;">Total Operating Expenses</td><td class="r" style="color:var(--dn);">${inr(res.total_expenses || 0)}</td></tr>
         </tbody>
         <tfoot>
@@ -8596,14 +8596,14 @@ async function balanceSheetPage(root) {
         <div>
           <h3 style="font-size:15px;margin-bottom:10px;border-bottom:2px solid var(--accent);padding-bottom:6px;">Assets</h3>
           <table><thead><tr><th>Asset Account</th><th class="r">Amount</th></tr></thead><tbody>
-            ${(res.assets || []).map(a => `<tr><td>${esc(a.name)}</td><td class="r">${inr(a.balance)}</td></tr>`).join('') || '<tr><td>Cash & Bank Balances</td><td class="r">₹0.00</td></tr>'}
+            ${(res.assets || []).map(a => `<tr><td>${esc(a.name)}</td><td class="r">${inr(a.balance)}</td></tr>`).join('') || '<tr><td>Cash & Bank Balances</td><td class="r">â‚¹0.00</td></tr>'}
           </tbody><tfoot><tr style="font-weight:700;"><td>Total Assets</td><td class="r" style="color:var(--accent);">${inr(res.total_assets || 0)}</td></tr></tfoot></table>
         </div>
         <div>
           <h3 style="font-size:15px;margin-bottom:10px;border-bottom:2px solid var(--accent);padding-bottom:6px;">Liabilities & Equity</h3>
           <table><thead><tr><th>Account</th><th class="r">Amount</th></tr></thead><tbody>
-            ${(res.liabilities || []).map(a => `<tr><td>${esc(a.name)}</td><td class="r">${inr(a.balance)}</td></tr>`).join('') || '<tr><td>Accounts Payable</td><td class="r">₹0.00</td></tr>'}
-            ${(res.equity || []).map(a => `<tr><td>${esc(a.name)}</td><td class="r">${inr(a.balance)}</td></tr>`).join('') || '<tr><td>Retained Earnings</td><td class="r">₹0.00</td></tr>'}
+            ${(res.liabilities || []).map(a => `<tr><td>${esc(a.name)}</td><td class="r">${inr(a.balance)}</td></tr>`).join('') || '<tr><td>Accounts Payable</td><td class="r">â‚¹0.00</td></tr>'}
+            ${(res.equity || []).map(a => `<tr><td>${esc(a.name)}</td><td class="r">${inr(a.balance)}</td></tr>`).join('') || '<tr><td>Retained Earnings</td><td class="r">â‚¹0.00</td></tr>'}
           </tbody><tfoot><tr style="font-weight:700;"><td>Total Liabilities & Equity</td><td class="r" style="color:var(--accent);">${inr(res.total_liabilities_equity || 0)}</td></tr></tfoot></table>
         </div>
       </div>
@@ -8639,7 +8639,7 @@ async function cashFlowPage(root) {
     if (!root.isConnected) return;
     $('#cf-container', root).innerHTML = `
       <table style="width:100%;">
-        <thead><tr><th>Cash Flow Activity</th><th class="r">Amount (₹)</th></tr></thead>
+        <thead><tr><th>Cash Flow Activity</th><th class="r">Amount (â‚¹)</th></tr></thead>
         <tbody>
           <tr style="background:var(--surface-glass-subtle);"><td colspan="2"><b>Cash Flow from Operating Activities</b></td></tr>
           <tr><td style="padding-left:24px;">Net Inflow from Customers (Receipts)</td><td class="r">${inr(res.operating_inflows || 0)}</td></tr>
@@ -8662,24 +8662,24 @@ async function cashFlowPage(root) {
 
 function reportsCenterPage(root) {
   const reportingCards = [
-    { title: 'Stock Movement', sub: 'Comprehensive stock movement history, transfers, stock in/out, and warehouse tracking', href: '#/reports/stock-movement', icon: '🔄' },
-    { title: 'Inventory Summary', sub: 'Integrated stock summary with opening, inward, outward, transfers, and total valuation', href: '#/reports/inventory-summary', icon: '📦' },
-    { title: 'Stock In Report', sub: 'Detailed breakdown of all inbound stock from purchases, sales returns, and positive adjustments', href: '#/reports/stock-in-report', icon: '📥' },
-    { title: 'Stock Out Report', sub: 'Complete register of stock dispatched for invoices, purchase returns, and negative adjustments', href: '#/reports/stock-out-report', icon: '📤' },
-    { title: 'Stock Transfer Report', sub: 'Inter-warehouse stock relocation records with source and destination warehouse audit', href: '#/reports/stock-transfer-report', icon: '🚚' },
-    { title: 'Opening Stock Report', sub: 'Product-wise and warehouse-wise opening stock balances, quantities, rates, and values', href: '#/reports/opening-stock-report', icon: '📋' },
-    { title: 'Stock in Hand Report', sub: 'Available stock balances, closing quantities, and stock valuation per warehouse and product', href: '#/reports/stock-in-hand-report', icon: '📊' },
+    { title: 'Stock Movement', sub: 'Comprehensive stock movement history, transfers, stock in/out, and warehouse tracking', href: '#/reports/stock-movement', icon: 'ðŸ”„' },
+    { title: 'Inventory Summary', sub: 'Integrated stock summary with opening, inward, outward, transfers, and total valuation', href: '#/reports/inventory-summary', icon: 'ðŸ“¦' },
+    { title: 'Stock In Report', sub: 'Detailed breakdown of all inbound stock from purchases, sales returns, and positive adjustments', href: '#/reports/stock-in-report', icon: 'ðŸ“¥' },
+    { title: 'Stock Out Report', sub: 'Complete register of stock dispatched for invoices, purchase returns, and negative adjustments', href: '#/reports/stock-out-report', icon: 'ðŸ“¤' },
+    { title: 'Stock Transfer Report', sub: 'Inter-warehouse stock relocation records with source and destination warehouse audit', href: '#/reports/stock-transfer-report', icon: 'ðŸšš' },
+    { title: 'Opening Stock Report', sub: 'Product-wise and warehouse-wise opening stock balances, quantities, rates, and values', href: '#/reports/opening-stock-report', icon: 'ðŸ“‹' },
+    { title: 'Stock in Hand Report', sub: 'Available stock balances, closing quantities, and stock valuation per warehouse and product', href: '#/reports/stock-in-hand-report', icon: 'ðŸ“Š' },
   ];
 
   const financialCards = [
-    { title: 'Business Overview (P&L)', sub: 'Gross profit, operating margin, net profit breakdown', href: '#/reports/business-overview', icon: '📈' },
-    { title: 'Trial Balance', sub: 'Checks whether total debits and credits match in the trial balance.', href: '#/reports/accounting-reports', icon: '⚖️' },
-    { title: 'Statement of Cash Flows', sub: 'Operating, investing, and financing cash flows', href: '#/reports/cash-flow-reports', icon: '💸' },
-    { title: 'Sales Reports by Customer', sub: 'Customer-wise turnover and GST breakdown', href: '#/reports/sales-reports', icon: '👥' },
-    { title: 'Purchases Reports by Vendor', sub: 'Vendor bill volume and expenditure trends', href: '#/reports/purchase-reports', icon: '🛒' },
-    { title: 'Accounts Receivable Aging', sub: 'Outstanding invoices bucketed by overdue duration', href: '#/reports/receivables', icon: '⏳' },
-    { title: 'Accounts Payable Aging', sub: 'Vendor payables classified by payment terms', href: '#/reports/payables', icon: '📅' },
-    { title: 'Statutory GST Reports', sub: 'GSTR-1, GSTR-3B, and Input Tax Credit returns', href: '#/reports/tax-reports', icon: '🏛️' },
+    { title: 'Business Overview (P&L)', sub: 'Gross profit, operating margin, net profit breakdown', href: '#/reports/business-overview', icon: 'ðŸ“ˆ' },
+    { title: 'Trial Balance', sub: 'Checks whether total debits and credits match in the trial balance.', href: '#/reports/accounting-reports', icon: 'âš–ï¸' },
+    { title: 'Statement of Cash Flows', sub: 'Operating, investing, and financing cash flows', href: '#/reports/cash-flow-reports', icon: 'ðŸ’¸' },
+    { title: 'Sales Reports by Customer', sub: 'Customer-wise turnover and GST breakdown', href: '#/reports/sales-reports', icon: 'ðŸ‘¥' },
+    { title: 'Purchases Reports by Vendor', sub: 'Vendor bill volume and expenditure trends', href: '#/reports/purchase-reports', icon: 'ðŸ›’' },
+    { title: 'Accounts Receivable Aging', sub: 'Outstanding invoices bucketed by overdue duration', href: '#/reports/receivables', icon: 'â³' },
+    { title: 'Accounts Payable Aging', sub: 'Vendor payables classified by payment terms', href: '#/reports/payables', icon: 'ðŸ“…' },
+    { title: 'Statutory GST Reports', sub: 'GSTR-1, GSTR-3B, and Input Tax Credit returns', href: '#/reports/tax-reports', icon: 'ðŸ›ï¸' },
   ];
 
   root.innerHTML = `
@@ -8768,7 +8768,7 @@ async function reportTablePage(root, reportName, title, bc) {
     const cols = Object.keys(items[0]);
     $('#rt-table', root).innerHTML = `
       <table><thead><tr>${cols.map(c => `<th>${esc(c.replace('_', ' ').toUpperCase())}</th>`).join('')}</tr></thead><tbody>
-        ${items.map(r => `<tr>${cols.map(c => `<td>${typeof r[c] === 'number' ? (c.includes('total') || c.includes('valuation') || c.includes('price') || c.includes('balance') ? inr(r[c]) : r[c]) : esc(r[c] || '—')}</td>`).join('')}</tr>`).join('')}
+        ${items.map(r => `<tr>${cols.map(c => `<td>${typeof r[c] === 'number' ? (c.includes('total') || c.includes('valuation') || c.includes('price') || c.includes('balance') ? inr(r[c]) : r[c]) : esc(r[c] || 'â€”')}</td>`).join('')}</tr>`).join('')}
       </tbody></table>
     `;
   } catch (e) { $('#rt-table', root).innerHTML = errBox(e.message, true); }
@@ -8800,7 +8800,7 @@ async function previewOpeningStockModal(itemId, warehouse) {
           <div><span style="color:var(--tx-muted);">Product Name:</span> <b>${esc(data.product_name)}</b></div>
           <div><span style="color:var(--tx-muted);">SKU / Item Code:</span> <code>${esc(data.sku)}</code></div>
           <div><span style="color:var(--tx-muted);">Warehouse:</span> <span class="pastel-chip chip-lavender" style="font-weight:600;">${esc(data.warehouse || 'WH-MAIN')}</span> ${data.warehouse_name ? `<small>(${esc(data.warehouse_name)})</small>` : ''}</div>
-          <div><span style="color:var(--tx-muted);">Transaction Date:</span> <b>${esc(data.transaction_date || '—')}</b></div>
+          <div><span style="color:var(--tx-muted);">Transaction Date:</span> <b>${esc(data.transaction_date || 'â€”')}</b></div>
           <div><span style="color:var(--tx-muted);">Unit of Measurement:</span> <b>${esc(data.unit)}</b></div>
           <div><span style="color:var(--tx-muted);">Opening Valuation:</span> <b style="color:#10b981;">${inr(data.opening_stock_value)}</b></div>
         </div>
@@ -8827,13 +8827,13 @@ async function previewOpeningStockModal(itemId, warehouse) {
             <tbody>
               ${(data.product_details && data.product_details.length) ? data.product_details.map(d => `
                 <tr>
-                  <td>${esc(d.date || '—')}</td>
-                  <td><code>${esc(d.reference || '—')}</code></td>
+                  <td>${esc(d.date || 'â€”')}</td>
+                  <td><code>${esc(d.reference || 'â€”')}</code></td>
                   <td><span class="pastel-chip chip-lavender" style="font-size:11px;">${esc(d.warehouse)}</span></td>
                   <td style="text-align:right;font-weight:600;">${qty(d.quantity)} ${esc(data.unit)}</td>
                   <td style="text-align:right;">${inr(d.rate)}</td>
                   <td style="text-align:right;font-weight:600;color:#10b981;">${inr(d.value)}</td>
-                  <td><small style="color:var(--tx-muted);">${esc(d.notes || '—')}</small></td>
+                  <td><small style="color:var(--tx-muted);">${esc(d.notes || 'â€”')}</small></td>
                 </tr>
               `).join('') : `<tr><td colspan="7" class="empty" style="text-align:center;padding:24px;">No opening stock entries recorded for this item.</td></tr>`}
             </tbody>
@@ -8951,7 +8951,7 @@ async function previewStockInHandModal(itemId, warehouse) {
                   <td>${esc(m.date)}</td>
                   <td><span class="st in">${esc(m.type)}</span></td>
                   <td><code>${esc(m.reference)}</code></td>
-                  <td>${m.to_warehouse ? `<span class="pastel-chip chip-sky">${esc(m.from_warehouse)} → ${esc(m.to_warehouse)}</span>` : `<span class="pastel-chip chip-lavender">${esc(m.warehouse)}</span>`}</td>
+                  <td>${m.to_warehouse ? `<span class="pastel-chip chip-sky">${esc(m.from_warehouse)} â†’ ${esc(m.to_warehouse)}</span>` : `<span class="pastel-chip chip-lavender">${esc(m.warehouse)}</span>`}</td>
                   <td style="font-weight:600;" class="${m.change.startsWith('+') ? 'up' : 'dn'}">${esc(m.change)}</td>
                   <td style="font-weight:600;">${qty(m.balance_after)}</td>
                   <td><small style="color:var(--tx-muted);">${esc(m.reason)}</small></td>
@@ -9012,7 +9012,7 @@ async function stockInReportPage(root) {
         <input class="in" type="date" id="rep-end" style="width:130px;">
       </div>
       <div style="flex:1;min-width:180px;">
-        <input class="in" type="search" id="rep-search" placeholder="Search item, SKU, reference…">
+        <input class="in" type="search" id="rep-search" placeholder="Search item, SKU, referenceâ€¦">
       </div>
       <button class="btn p" id="rep-apply" type="button">Apply Filter</button>
     </div>
@@ -9104,9 +9104,9 @@ async function stockInReportPage(root) {
     }
   }
 
-  $('#rep-apply', root).addEventListener('click', loadData);
-  $('#rep-search', root).addEventListener('input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
-  $('#btn-export-csv', root).addEventListener('click', () => exportTableToCsv($('#rep-table table', root), `stock_in_report_${iso(new Date())}.csv`));
+  on('#rep-apply', 'click', loadData);
+  on('#rep-search', 'input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
+  on('#btn-export-csv', 'click', () => exportTableToCsv($('#rep-table table', root), `stock_in_report_${iso(new Date())}.csv`));
   loadData();
 }
 window.stockInReportPage = stockInReportPage;
@@ -9147,7 +9147,7 @@ async function stockOutReportPage(root) {
         <input class="in" type="date" id="rep-end" style="width:130px;">
       </div>
       <div style="flex:1;min-width:180px;">
-        <input class="in" type="search" id="rep-search" placeholder="Search item, SKU, reference…">
+        <input class="in" type="search" id="rep-search" placeholder="Search item, SKU, referenceâ€¦">
       </div>
       <button class="btn p" id="rep-apply" type="button">Apply Filter</button>
     </div>
@@ -9239,9 +9239,9 @@ async function stockOutReportPage(root) {
     }
   }
 
-  $('#rep-apply', root).addEventListener('click', loadData);
-  $('#rep-search', root).addEventListener('input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
-  $('#btn-export-csv', root).addEventListener('click', () => exportTableToCsv($('#rep-table table', root), `stock_out_report_${iso(new Date())}.csv`));
+  on('#rep-apply', 'click', loadData);
+  on('#rep-search', 'input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
+  on('#btn-export-csv', 'click', () => exportTableToCsv($('#rep-table table', root), `stock_out_report_${iso(new Date())}.csv`));
   loadData();
 }
 window.stockOutReportPage = stockOutReportPage;
@@ -9283,7 +9283,7 @@ async function stockTransferReportPage(root) {
         <input class="in" type="date" id="rep-end" style="width:130px;">
       </div>
       <div style="flex:1;min-width:180px;">
-        <input class="in" type="search" id="rep-search" placeholder="Search item, SKU, transfer reference…">
+        <input class="in" type="search" id="rep-search" placeholder="Search item, SKU, transfer referenceâ€¦">
       </div>
       <button class="btn p" id="rep-apply" type="button">Apply Filter</button>
     </div>
@@ -9295,7 +9295,7 @@ async function stockTransferReportPage(root) {
     </div>
   `;
 
-  $('#btn-new-transfer', root).addEventListener('click', () => stockMoveModal());
+  on('#btn-new-transfer', 'click', () => stockMoveModal());
 
   async function loadData() {
     const wh = $('#rep-wh', root).value;
@@ -9359,7 +9359,7 @@ async function stockTransferReportPage(root) {
                 <td><span class="pastel-chip chip-sky" style="font-size:11px;">${esc(r.to_warehouse)}</span></td>
                 <td style="text-align:right;font-weight:700;color:#0ea5e9;">${qty(r.quantity)} ${esc(r.unit)}</td>
                 <td>${esc(r.reason)}</td>
-                <td><small style="color:var(--tx-muted);">${esc(r.notes || '—')}</small></td>
+                <td><small style="color:var(--tx-muted);">${esc(r.notes || 'â€”')}</small></td>
               </tr>
             `).join('')}
           </tbody>
@@ -9370,9 +9370,9 @@ async function stockTransferReportPage(root) {
     }
   }
 
-  $('#rep-apply', root).addEventListener('click', loadData);
-  $('#rep-search', root).addEventListener('input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
-  $('#btn-export-csv', root).addEventListener('click', () => exportTableToCsv($('#rep-table table', root), `stock_transfer_report_${iso(new Date())}.csv`));
+  on('#rep-apply', 'click', loadData);
+  on('#rep-search', 'input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
+  on('#btn-export-csv', 'click', () => exportTableToCsv($('#rep-table table', root), `stock_transfer_report_${iso(new Date())}.csv`));
   loadData();
 }
 window.stockTransferReportPage = stockTransferReportPage;
@@ -9405,7 +9405,7 @@ async function openingStockReportPage(root) {
         </select>
       </div>
       <div style="flex:1;min-width:200px;">
-        <input class="in" type="search" id="rep-search" placeholder="Search product name, SKU, warehouse…">
+        <input class="in" type="search" id="rep-search" placeholder="Search product name, SKU, warehouseâ€¦">
       </div>
       <button class="btn p" id="rep-apply" type="button">Apply Filter</button>
     </div>
@@ -9483,7 +9483,7 @@ async function openingStockReportPage(root) {
                 <td>${esc(r.unit)}</td>
                 <td style="text-align:right;">${inr(r.rate)}</td>
                 <td style="text-align:right;font-weight:700;color:#10b981;">${inr(r.opening_stock_value)}</td>
-                <td>${esc(r.transaction_date || '—')}</td>
+                <td>${esc(r.transaction_date || 'â€”')}</td>
                 <td style="text-align:center;">
                   <button class="btn s" type="button" data-act="prev" data-id="${r.item_id}" data-wh="${esc(r.warehouse)}">Preview</button>
                 </td>
@@ -9501,9 +9501,9 @@ async function openingStockReportPage(root) {
     }
   }
 
-  $('#rep-apply', root).addEventListener('click', loadData);
-  $('#rep-search', root).addEventListener('input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
-  $('#btn-export-csv', root).addEventListener('click', () => exportTableToCsv($('#rep-table table', root), `opening_stock_report_${iso(new Date())}.csv`));
+  on('#rep-apply', 'click', loadData);
+  on('#rep-search', 'input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
+  on('#btn-export-csv', 'click', () => exportTableToCsv($('#rep-table table', root), `opening_stock_report_${iso(new Date())}.csv`));
   loadData();
 }
 window.openingStockReportPage = openingStockReportPage;
@@ -9536,7 +9536,7 @@ async function stockInHandReportPage(root) {
         </select>
       </div>
       <div style="flex:1;min-width:200px;">
-        <input class="in" type="search" id="rep-search" placeholder="Search product name, SKU, warehouse…">
+        <input class="in" type="search" id="rep-search" placeholder="Search product name, SKU, warehouseâ€¦">
       </div>
       <button class="btn p" id="rep-apply" type="button">Apply Filter</button>
     </div>
@@ -9642,9 +9642,9 @@ async function stockInHandReportPage(root) {
     }
   }
 
-  $('#rep-apply', root).addEventListener('click', loadData);
-  $('#rep-search', root).addEventListener('input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
-  $('#btn-export-csv', root).addEventListener('click', () => exportTableToCsv($('#rep-table table', root), `stock_in_hand_report_${iso(new Date())}.csv`));
+  on('#rep-apply', 'click', loadData);
+  on('#rep-search', 'input', () => { clearTimeout(root._st); root._st = setTimeout(loadData, 300); });
+  on('#btn-export-csv', 'click', () => exportTableToCsv($('#rep-table table', root), `stock_in_hand_report_${iso(new Date())}.csv`));
   loadData();
 }
 window.stockInHandReportPage = stockInHandReportPage;
@@ -9718,14 +9718,14 @@ async function bulkUpdatePage(root) {
     <div class="bc">Home / Accountant / Bulk Update</div>
     <div class="hd"><div><h1>Bulk Update Accounts in Transactions</h1><div class="sub">Filter transactions (Invoices, Credit Notes, Purchase Orders, Expenses, Bills, Vendor Credits) and bulk-update their accounts.</div></div></div>
     <div class="card" style="padding:48px;text-align:center;margin-top:14px;">
-      <div style="width:70px;height:70px;border-radius:16px;background:rgba(79,70,229,.1);display:grid;place-items:center;margin:0 auto 14px;font-size:28px;">⇄</div>
+      <div style="width:70px;height:70px;border-radius:16px;background:rgba(79,70,229,.1);display:grid;place-items:center;margin:0 auto 14px;font-size:28px;">â‡„</div>
       <h3 style="margin:0 0 8px;">Bulk-updating accounts in transactions will cause significant changes to the financial data.</h3>
       <p class="sub" style="margin:0 auto 16px;">We recommend that you do this with the assistance of an accountant.</p>
       <button type="button" class="btn p" id="bulkFilterBtn">Filter and Bulk Update</button>
       <div id="bulkResults" style="margin-top:20px;text-align:left;"></div>
     </div>
   `;
-  $('#bulkFilterBtn', root).addEventListener('click', async () => {
+  on('#bulkFilterBtn', 'click', async () => {
     const [accounts, customers, vendors, locations] = await Promise.all([
       api('accounts/?page_size=500').catch(() => ({ results: [] })),
       api('lookup/customers/').catch(() => []),
@@ -9789,7 +9789,7 @@ async function baseCurrencyAdjustmentPage(root) {
       <table class="tbl" style="width:100%;margin-top:12px;"><thead><tr><th></th><th>DATE</th><th>CURRENCY</th><th>EXCHANGE RATE</th><th>GAIN OR LOSS</th><th>NOTES</th></tr></thead><tbody id="fxRows"><tr><td colspan="6" style="text-align:center;padding:48px;color:#64748b;">Record a Base Currency Adjustment to correct fluctuations in exchange rates</td></tr></tbody></table>
     </div>
   `;
-  $('#fxNewBtn', root).addEventListener('click', () => {
+  on('#fxNewBtn', 'click', () => {
     formModal({
       title:'Base Currency Adjustment',
       body:`
@@ -9833,7 +9833,7 @@ async function transactionLockingPage(root) {
     </div>
     <div class="card" style="margin-top:14px;padding:24px;" id="lock-container">${spinner}</div>
   `;
-  $('#btn-lock-edit', root).addEventListener('click', () => lockDateModal());
+  on('#btn-lock-edit', 'click', () => lockDateModal());
 
   try {
     const cur = await api('locking/');
@@ -9896,13 +9896,13 @@ async function paymentOverviewPage(root) {
         </div>
         <div class="card" style="padding:16px;">
           <div class="sub">Payment Success Rate</div>
-          <div style="font-size:22px;font-weight:700;color:var(--up);margin:6px 0;">${txns.length ? rate + '%' : '—'}</div>
+          <div style="font-size:22px;font-weight:700;color:var(--up);margin:6px 0;">${txns.length ? rate + '%' : 'â€”'}</div>
           <div class="sub" style="font-size:11px;">${successCount} settled</div>
         </div>
       </div>
       ${txns.length === 0 ? `
         <div class="card" style="margin-top:16px;padding:32px;text-align:center;">
-          <div style="font-size:36px;margin-bottom:8px;">💳</div>
+          <div style="font-size:36px;margin-bottom:8px;">ðŸ’³</div>
           <h3 style="margin:0 0 6px;">No Online Transactions Yet</h3>
           <p class="sub" style="max-width:440px;margin:0 auto 16px;">UPI payment links generated on your invoices will automatically appear here once paid by your clients.</p>
           <button class="btn p" onclick="location.hash='#/sales/invoices'" type="button">Go to Invoices</button>
@@ -9957,7 +9957,7 @@ function paymentSettingsPage(root) {
     </div>
   `;
 
-  $('#btn-save-pay-cfg', root).addEventListener('click', () => {
+  on('#btn-save-pay-cfg', 'click', () => {
     const upi_id = ($('#pay_upi_id', root) ? $('#pay_upi_id', root).value : '').trim();
     const merchant_name = ($('#pay_merchant_name', root) ? $('#pay_merchant_name', root).value : '').trim();
     const key_secret = $('#pay_key_secret', root).value.trim();
@@ -9968,7 +9968,7 @@ function paymentSettingsPage(root) {
 }
 
 async function securityCompliancePage(root) {
-  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Security & Compliance Center…</div>`;
+  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Security & Compliance Centerâ€¦</div>`;
   try {
     const data = await api('security/compliance-summary/');
     const org = APP.org || {};
@@ -9984,16 +9984,16 @@ async function securityCompliancePage(root) {
         </div>
         <div class="act">
           <button class="btn p" id="secDrillBtn" type="button" style="background:linear-gradient(135deg,#059669,#10b981);border:none;">
-            🛡️ Run DR Drill
+            ðŸ›¡ï¸ Run DR Drill
           </button>
           <button class="btn" id="secSnapshotBtn" type="button">
-            💾 Create Snapshot
+            ðŸ’¾ Create Snapshot
           </button>
           <button class="btn" id="secVerifyChainBtn" type="button">
-            🔗 Verify Audit Chain
+            ðŸ”— Verify Audit Chain
           </button>
           <button class="btn" id="secConvoAssistantBtn" type="button">
-            ⇄ ConvoBooks Assistant
+            â‡„ ConvoBooks Assistant
           </button>
           <button class="btn" onclick="location.hash='#/accountant/statutory-audit-logs'" type="button">
             Statutory Audit Trail
@@ -10023,7 +10023,7 @@ async function securityCompliancePage(root) {
         <div class="card" style="padding:18px;">
           <div class="sub" style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Statutory Audit Trail</div>
           <div style="font-size:24px;font-weight:800;color:var(--tx);margin:6px 0;">${data.audit.total_logs} Events</div>
-          <div class="sub" style="font-size:12px;">100% Immutable · 7-Year Statutory Retention</div>
+          <div class="sub" style="font-size:12px;">100% Immutable Â· 7-Year Statutory Retention</div>
         </div>
         <div class="card" style="padding:18px;">
           <div class="sub" style="font-size:11.5px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Regional Tax Engines</div>
@@ -10114,7 +10114,7 @@ async function securityCompliancePage(root) {
               ${data.soc2.controls.map(c => `
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface-glass-subtle);border:1px solid var(--bd);border-radius:8px;">
                   <div style="display:flex;align-items:center;gap:10px;">
-                    <span style="width:20px;height:20px;border-radius:50%;background:rgba(16,185,129,0.15);color:var(--up);display:grid;place-items:center;font-size:12px;font-weight:700;">✓</span>
+                    <span style="width:20px;height:20px;border-radius:50%;background:rgba(16,185,129,0.15);color:var(--up);display:grid;place-items:center;font-size:12px;font-weight:700;">âœ“</span>
                     <div>
                       <div style="font-size:13px;font-weight:600;">${esc(c.principle)} Principle</div>
                       <div class="sub" style="font-size:11px;">${esc(c.detail)}</div>
@@ -10151,7 +10151,7 @@ async function securityCompliancePage(root) {
                 <div class="sub" style="font-size:12px;margin-top:2px;">Complete tenant isolation, high availability, and out-of-the-box regional compliance</div>
               </div>
               <span class="pastel-chip chip-sky" style="font-size:12px;padding:4px 10px;">
-                Tenant ID: ${esc(data.tenant.organization_id)} · Tier: ${esc(data.tenant.tier)}
+                Tenant ID: ${esc(data.tenant.organization_id)} Â· Tier: ${esc(data.tenant.tier)}
               </span>
             </div>
 
@@ -10201,7 +10201,7 @@ async function securityCompliancePage(root) {
           title: 'MCA Rule 3 Statutory Audit Hash-Chain Verification',
           body: `
             <div style="text-align:center;padding:14px;">
-              <div style="width:50px;height:50px;border-radius:50%;background:rgba(16,185,129,0.15);color:var(--up);display:grid;place-items:center;font-size:24px;margin:0 auto 10px;">✓</div>
+              <div style="width:50px;height:50px;border-radius:50%;background:rgba(16,185,129,0.15);color:var(--up);display:grid;place-items:center;font-size:24px;margin:0 auto 10px;">âœ“</div>
               <h3 style="margin:0 0 4px;">Ledger Hash-Chain Validated</h3>
               <div class="sub" style="margin-bottom:14px;">Complies with MCA (Ministry of Corporate Affairs) Rule 3 audit-trail requirements.</div>
               <div style="background:var(--surface-glass-subtle);padding:12px;border-radius:8px;border:1px solid var(--bd);text-align:left;font-size:12px;">
@@ -10220,13 +10220,13 @@ async function securityCompliancePage(root) {
     const secConvoAssistantBtn = $('#secConvoAssistantBtn', root);
     if (secConvoAssistantBtn) secConvoAssistantBtn.addEventListener('click', () => convoMigrationModal());
 
-    $('#mfaToggleBtn', root).addEventListener('click', () => {
+    on('#mfaToggleBtn', 'click', () => {
       totpMfaModal();
     });
 
-    $('#gdprExportBtn', root).addEventListener('click', async () => {
+    on('#gdprExportBtn', 'click', async () => {
       try {
-        toast('Generating GDPR Article 15 Data Portability export…', 'ok');
+        toast('Generating GDPR Article 15 Data Portability exportâ€¦', 'ok');
         const exp = await api('security/gdpr-export/', { method: 'POST' });
         const blob = new Blob([JSON.stringify(exp, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -10241,7 +10241,7 @@ async function securityCompliancePage(root) {
       } catch (e) { toast(e.message, 'err'); }
     });
 
-    $('#soc2ReportBtn', root).addEventListener('click', () => {
+    on('#soc2ReportBtn', 'click', () => {
       const report = {
         attestation: 'SOC 2 Type II System and Organization Controls Readiness Assessment',
         organization: org.name || 'Convosis Technologies',
@@ -10273,7 +10273,7 @@ async function securityCompliancePage(root) {
 }
 
 async function subscriptionBillingPage(root) {
-  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Subscription & Usage Metrics…</div>`;
+  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Subscription & Usage Metricsâ€¦</div>`;
   try {
     const data = await api('subscription/summary/');
 
@@ -10283,8 +10283,8 @@ async function subscriptionBillingPage(root) {
     const trialDays = data.trial_days_remaining || 0;
     const purchasedAddons = data.purchased_addons || {};
 
-    const checkIcon = `<span style="color:#10b981;font-size:16px;font-weight:700;display:inline-block;width:18px;">✓</span>`;
-    const crossIcon = `<span style="color:#94a3b8;font-size:15px;display:inline-block;width:18px;">✕</span>`;
+    const checkIcon = `<span style="color:#10b981;font-size:16px;font-weight:700;display:inline-block;width:18px;">âœ“</span>`;
+    const crossIcon = `<span style="color:#94a3b8;font-size:15px;display:inline-block;width:18px;">âœ•</span>`;
 
     root.innerHTML = `
       <div class="bc">Home / Settings / Subscription & Billing</div>
@@ -10299,7 +10299,7 @@ async function subscriptionBillingPage(root) {
       <div class="card" style="margin-top:10px;padding:20px 24px;border-radius:16px;background:var(--surface-glass-elevated);border:1px solid var(--bd);">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--bd-light);">
           <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(99,102,241,0.15));color:#2563eb;display:grid;place-items:center;font-size:22px;">⚡</div>
+            <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(99,102,241,0.15));color:#2563eb;display:grid;place-items:center;font-size:22px;">âš¡</div>
             <div>
               <div style="display:flex;align-items:center;gap:10px;">
                 <h2 style="font-size:18px;margin:0;font-weight:700;">${esc(data.tier_display || 'Free Plan')}</h2>
@@ -10310,7 +10310,7 @@ async function subscriptionBillingPage(root) {
                 `}
               </div>
               <div class="sub" style="font-size:12.5px;margin-top:3px;">
-                Billed ${esc(data.billing_cycle || 'annually')} · Auto-renew setting: ${data.auto_renew ? 'ON (not processed)' : 'OFF'} · ${data.payment_method ? `Payment method: ${esc(data.payment_method)}` : 'Online billing is not configured'}
+                Billed ${esc(data.billing_cycle || 'annually')} Â· Auto-renew setting: ${data.auto_renew ? 'ON (not processed)' : 'OFF'} Â· ${data.payment_method ? `Payment method: ${esc(data.payment_method)}` : 'Online billing is not configured'}
               </div>
             </div>
           </div>
@@ -10362,8 +10362,8 @@ async function subscriptionBillingPage(root) {
               <h3 style="font-size:19px;font-weight:700;margin:0;">Free</h3>
               ${curTier === 'free' ? '<span class="pastel-chip chip-indigo" style="font-size:11px;padding:2px 8px;font-weight:700;">Current Plan</span>' : ''}
             </div>
-            <div style="font-size:36px;font-weight:800;color:var(--tx-main);margin:14px 0 2px;">₹0 <span style="font-size:13px;font-weight:500;color:var(--tx-muted);">/ year</span></div>
-            <div class="sub" style="font-size:12.5px;color:var(--tx-muted);margin-bottom:14px;">just ₹0 a month</div>
+            <div style="font-size:36px;font-weight:800;color:var(--tx-main);margin:14px 0 2px;">â‚¹0 <span style="font-size:13px;font-weight:500;color:var(--tx-muted);">/ year</span></div>
+            <div class="sub" style="font-size:12.5px;color:var(--tx-muted);margin-bottom:14px;">just â‚¹0 a month</div>
             <p style="font-size:13px;color:var(--tx-muted);line-height:1.45;margin:0 0 20px;min-height:38px;">Small team operations starting their finance journey.</p>
             
             <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:13px;line-height:2.1;color:var(--tx-main);">
@@ -10394,8 +10394,8 @@ async function subscriptionBillingPage(root) {
               <h3 style="font-size:19px;font-weight:700;margin:0;">Professional</h3>
               ${curTier === 'professional' ? '<span class="pastel-chip chip-mint" style="font-size:11px;padding:2px 8px;font-weight:700;">Current Plan</span>' : ''}
             </div>
-            <div style="font-size:36px;font-weight:800;color:var(--tx-main);margin:14px 0 2px;">₹5,000 <span style="font-size:13px;font-weight:500;color:var(--tx-muted);">/ org / year</span></div>
-            <div class="sub" style="font-size:12.5px;color:var(--tx-muted);margin-bottom:14px;">just ₹417 a month</div>
+            <div style="font-size:36px;font-weight:800;color:var(--tx-main);margin:14px 0 2px;">â‚¹5,000 <span style="font-size:13px;font-weight:500;color:var(--tx-muted);">/ org / year</span></div>
+            <div class="sub" style="font-size:12.5px;color:var(--tx-muted);margin-bottom:14px;">just â‚¹417 a month</div>
             <p style="font-size:13px;color:var(--tx-muted);line-height:1.45;margin:0 0 20px;min-height:38px;">The complete core growth tier for operational control.</p>
 
             <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:13px;line-height:2.05;color:var(--tx-main);">
@@ -10433,8 +10433,8 @@ async function subscriptionBillingPage(root) {
               <h3 style="font-size:19px;font-weight:700;margin:0;">Premium</h3>
               ${curTier === 'premium' ? '<span class="pastel-chip chip-mint" style="font-size:11px;padding:2px 8px;font-weight:700;">Current Plan</span>' : ''}
             </div>
-            <div style="font-size:36px;font-weight:800;color:var(--tx-main);margin:14px 0 2px;">₹20,000 <span style="font-size:13px;font-weight:500;color:var(--tx-muted);">/ org / year</span></div>
-            <div class="sub" style="font-size:12.5px;color:var(--tx-muted);margin-bottom:14px;">just ₹1,667 a month</div>
+            <div style="font-size:36px;font-weight:800;color:var(--tx-main);margin:14px 0 2px;">â‚¹20,000 <span style="font-size:13px;font-weight:500;color:var(--tx-muted);">/ org / year</span></div>
+            <div class="sub" style="font-size:12.5px;color:var(--tx-muted);margin-bottom:14px;">just â‚¹1,667 a month</div>
             <p style="font-size:13px;color:var(--tx-muted);line-height:1.45;margin:0 0 20px;min-height:38px;">Maximum scale, warehousing, custom APIs and analytics.</p>
 
             <ul style="list-style:none;padding:0;margin:0 0 24px;font-size:13px;line-height:2.05;color:var(--tx-main);">
@@ -10618,7 +10618,7 @@ async function subscriptionBillingPage(root) {
     window.startTrialAction = async (targetTier) => {
       const planNames = { professional: 'Professional Plan', premium: 'Premium Plan' };
       try {
-        toast('Activating 45-day free trial…', 'info');
+        toast('Activating 45-day free trialâ€¦', 'info');
         const res = await api('subscription/trial/', { method: 'POST', body: { tier: targetTier } });
         toast(`45-Day Free Trial activated for ${planNames[targetTier] || 'Professional'}! Enjoy full access.`, 'ok');
         subscriptionBillingPage(root);
@@ -10644,7 +10644,7 @@ async function subscriptionBillingPage(root) {
     };
 
     // Toggle Auto-Renew
-    $('#btnToggleAutoRenew', root).addEventListener('click', async () => {
+    on('#btnToggleAutoRenew', 'click', async () => {
       try {
         const res = await api('subscription/autorenew/', { method: 'POST', body: { auto_renew: !data.auto_renew } });
         toast(`Auto-renew turned ${res.auto_renew ? 'ON' : 'OFF'}.`, 'ok');
@@ -10655,7 +10655,7 @@ async function subscriptionBillingPage(root) {
     });
 
     // Update Payment Method
-    $('#btnUpdatePaymentMethod', root).addEventListener('click', () => {
+    on('#btnUpdatePaymentMethod', 'click', () => {
       Modal.open({
         title: 'Update Billing & Payment Method',
         body: `
@@ -10698,14 +10698,14 @@ async function subscriptionBillingPage(root) {
         `
       });
 
-      $('#btnSubmitSalesLead').addEventListener('click', () => {
+      on('#btnSubmitSalesLead', 'click', () => {
         toast('Your inquiry has been submitted! Our enterprise team will contact you shortly.', 'ok');
         Modal.close();
       });
     };
 
-    $('#btnContactSales', root).addEventListener('click', () => showSalesModal('Contact Enterprise Sales'));
-    $('#btnBookDemo', root).addEventListener('click', () => showSalesModal('Schedule a Dedicated Product Demo'));
+    on('#btnContactSales', 'click', () => showSalesModal('Contact Enterprise Sales'));
+    on('#btnBookDemo', 'click', () => showSalesModal('Schedule a Dedicated Product Demo'));
 
   } catch (e) {
     root.innerHTML = errBox(e.message, true);
@@ -10715,7 +10715,7 @@ async function subscriptionBillingPage(root) {
 }
 
 async function tenantAdminPage(root) {
-  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Tenant Administration…</div>`;
+  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Tenant Administrationâ€¦</div>`;
   try {
     const data = await api('tenant/admin/summary/');
 
@@ -10744,7 +10744,7 @@ async function tenantAdminPage(root) {
               <span class="pastel-chip chip-sky" style="font-size:11px;">Tenant ID: ${esc(data.organization.id)}</span>
             </div>
             <div class="sub" style="font-size:12px;margin-top:2px;">
-              GSTIN: <b>${esc(data.organization.gstin)}</b> · Primary Currency: <b>${esc(data.organization.currency)}</b> · State: <b>${esc(data.organization.state)}</b>
+              GSTIN: <b>${esc(data.organization.gstin)}</b> Â· Primary Currency: <b>${esc(data.organization.currency)}</b> Â· State: <b>${esc(data.organization.state)}</b>
             </div>
           </div>
           <div style="display:flex;gap:8px;">
@@ -10808,7 +10808,7 @@ async function tenantAdminPage(root) {
                 </td>
                 <td>
                   <span style="font-size:12px;color:${u.mfa_enabled ? 'var(--up)' : 'var(--bad)'};font-weight:600;">
-                    ${u.mfa_enabled ? '✓ Active' : '⚠ Inactive'}
+                    ${u.mfa_enabled ? 'âœ“ Active' : 'âš  Inactive'}
                   </span>
                 </td>
                 <td>${esc(u.date_joined)}</td>
@@ -10850,7 +10850,7 @@ async function tenantAdminPage(root) {
         `
       });
 
-      $('#btnSaveRole').addEventListener('click', async () => {
+      on('#btnSaveRole', 'click', async () => {
         const role = $('#editMemberRole').value;
         try {
           await api(`tenant/admin/users/${userId}/role/`, { method: 'POST', body: { role } });
@@ -10878,7 +10878,7 @@ async function tenantAdminPage(root) {
           <div style="padding:10px 0;">
             <div class="fg">
               <label>New Password (min 4 characters)</label>
-              <input class="in" type="password" id="resetMemberPassword" placeholder="Enter new password…" required>
+              <input class="in" type="password" id="resetMemberPassword" placeholder="Enter new passwordâ€¦" required>
             </div>
           </div>
         `,
@@ -10888,7 +10888,7 @@ async function tenantAdminPage(root) {
         `
       });
 
-      $('#btnSaveResetPassword').addEventListener('click', async () => {
+      on('#btnSaveResetPassword', 'click', async () => {
         const pwd = $('#resetMemberPassword').value;
         if (!pwd || pwd.length < 4) { toast('Password must be at least 4 characters long.', 'err'); return; }
         try {
@@ -10899,7 +10899,7 @@ async function tenantAdminPage(root) {
       });
     };
 
-    $('#btnInviteMember', root).addEventListener('click', () => {
+    on('#btnInviteMember', 'click', () => {
       Modal.open({
         title: 'Invite Team Member to Tenant',
         body: `
@@ -10941,7 +10941,7 @@ async function tenantAdminPage(root) {
         `
       });
 
-      $('#btnSendInvite').addEventListener('click', async () => {
+      on('#btnSendInvite', 'click', async () => {
         const fullName = ($('#invFullName') ? $('#invFullName').value : '').trim();
         const username = $('#invUsername').value.trim();
         const email = $('#invEmail').value.trim();
@@ -10968,7 +10968,7 @@ async function tenantAdminPage(root) {
 
 async function developerPlatformPage(root, tab = 'keys') {
   PAGE.reload = () => developerPlatformPage(root, tab);
-  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Developer Platform…</div>`;
+  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Developer Platformâ€¦</div>`;
 
   try {
     const [keysData, webhooksData] = await Promise.all([
@@ -11006,9 +11006,9 @@ async function developerPlatformPage(root, tab = 'keys') {
       <div id="dev-tab-content"></div>
     `;
 
-    $('#tabBtnKeys', root).addEventListener('click', () => developerPlatformPage(root, 'keys'));
-    $('#tabBtnWebhooks', root).addEventListener('click', () => developerPlatformPage(root, 'webhooks'));
-    $('#tabBtnDocs', root).addEventListener('click', () => developerPlatformPage(root, 'docs'));
+    on('#tabBtnKeys', 'click', () => developerPlatformPage(root, 'keys'));
+    on('#tabBtnWebhooks', 'click', () => developerPlatformPage(root, 'webhooks'));
+    on('#tabBtnDocs', 'click', () => developerPlatformPage(root, 'docs'));
 
     const contentBox = $('#dev-tab-content', root);
 
@@ -11086,7 +11086,7 @@ async function developerPlatformPage(root, tab = 'keys') {
           `
         });
 
-        $('#btnSubmitGenerateKey').addEventListener('click', async () => {
+        on('#btnSubmitGenerateKey', 'click', async () => {
           const name = $('#modalKeyName').value.trim();
           const scopes = $$('.chk-scope:checked').map(c => c.value);
           if (!name) { toast('Please provide a key name', 'err'); return; }
@@ -11097,7 +11097,7 @@ async function developerPlatformPage(root, tab = 'keys') {
               title: 'API Key Created Successfully',
               body: `
                 <div style="padding:14px;text-align:center;">
-                  <div style="font-size:28px;margin-bottom:8px;">🔑</div>
+                  <div style="font-size:28px;margin-bottom:8px;">ðŸ”‘</div>
                   <h3 style="margin:0 0 4px;">Save your Secret API Key</h3>
                   <p class="sub" style="margin-bottom:14px;font-size:12px;">Please copy this key now. You will not be able to view it again.</p>
                   <div style="background:var(--surface-glass-subtle);padding:12px;border-radius:8px;border:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px;">
@@ -11140,7 +11140,7 @@ async function developerPlatformPage(root, tab = 'keys') {
                     <span class="sub" style="font-size:11px;margin-left:6px;">${esc(w.last_delivery_at)}</span>
                   </td>
                   <td class="r">
-                    <button class="btn" style="font-size:11px;padding:3px 9px;" onclick="testWebhookPing(${w.id})">⚡ Test Ping</button>
+                    <button class="btn" style="font-size:11px;padding:3px 9px;" onclick="testWebhookPing(${w.id})">âš¡ Test Ping</button>
                   </td>
                 </tr>
               `).join('')}
@@ -11207,7 +11207,7 @@ async function developerPlatformPage(root, tab = 'keys') {
           `
         });
 
-        $('#btnSubmitWebhook').addEventListener('click', async () => {
+        on('#btnSubmitWebhook', 'click', async () => {
           const url = $('#modalWebhookUrl').value.trim();
           const events = $$('.chk-event:checked').map(c => c.value);
           if (!url) { toast('Please specify an endpoint URL', 'err'); return; }
@@ -11357,7 +11357,7 @@ async function viewQuoteDetail(id) {
               <div style="font-size:24px;font-weight:800;color:#0f172a;letter-spacing:-0.5px;">${esc(APP.org.name)}</div>
               <div class="sub" style="font-size:12px;margin-top:4px;color:#64748b;line-height:1.5;">
                 ${esc(APP.org.address)}<br>
-                GSTIN: <b>${esc(APP.org.gstin || '—')}</b> · State: ${esc(APP.org.state)}
+                GSTIN: <b>${esc(APP.org.gstin || 'â€”')}</b> Â· State: ${esc(APP.org.state)}
               </div>
             </div>
             <div style="text-align:right;">
@@ -11385,13 +11385,13 @@ async function viewQuoteDetail(id) {
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;padding:16px;border-radius:8px;border:1px solid #e2e8f0;font-size:12px;">
               <div><b>Quote Date:</b></div><div>${fd(q.date)}</div>
-              <div><b>Expiry Date:</b></div><div>${q.expiry_date ? fd(q.expiry_date) : '—'}</div>
-              <div><b>Sales Order Number:</b></div><div>${esc(q.order_number || '—')}</div>
-              <div><b>Reference#:</b></div><div>${esc(q.reference_number || '—')}</div>
-              <div><b>Branch:</b></div><div>${esc(q.branch || '—')}</div>
-              <div><b>Salesperson:</b></div><div>${esc(q.salesperson || '—')}</div>
-              <div><b>Project:</b></div><div>${esc(q.project_name || '—')}</div>
-              <div><b>Place of Supply:</b></div><div>${esc(q.place_of_supply || '—')}</div>
+              <div><b>Expiry Date:</b></div><div>${q.expiry_date ? fd(q.expiry_date) : 'â€”'}</div>
+              <div><b>Sales Order Number:</b></div><div>${esc(q.order_number || 'â€”')}</div>
+              <div><b>Reference#:</b></div><div>${esc(q.reference_number || 'â€”')}</div>
+              <div><b>Branch:</b></div><div>${esc(q.branch || 'â€”')}</div>
+              <div><b>Salesperson:</b></div><div>${esc(q.salesperson || 'â€”')}</div>
+              <div><b>Project:</b></div><div>${esc(q.project_name || 'â€”')}</div>
+              <div><b>Place of Supply:</b></div><div>${esc(q.place_of_supply || 'â€”')}</div>
             </div>
           </div>
 
@@ -11420,7 +11420,7 @@ async function viewQuoteDetail(id) {
                   <td style="padding:10px 12px;"><b>${esc(l.description || 'Item')}</b>${l.hsn_sac ? ` <small style="color:#64748b;">(HSN ${esc(l.hsn_sac)})</small>` : ''}</td>
                   <td style="padding:10px 12px;text-align:right;">${qty(l.quantity)}</td>
                   <td style="padding:10px 12px;text-align:right;">${inr(l.rate)}</td>
-                  <td style="padding:10px 12px;text-align:right;">${(l.discount_type === 'amount' || (l.discount_amount && num(l.discount_amount) > 0)) ? inr(l.discount_amount || l.discount || 0) : ((num(l.discount_percent) > 0 || num(l.discount) > 0) ? (l.discount_percent || l.discount) + '%' : '—')}</td>
+                  <td style="padding:10px 12px;text-align:right;">${(l.discount_type === 'amount' || (l.discount_amount && num(l.discount_amount) > 0)) ? inr(l.discount_amount || l.discount || 0) : ((num(l.discount_percent) > 0 || num(l.discount) > 0) ? (l.discount_percent || l.discount) + '%' : 'â€”')}</td>
                   <td style="padding:10px 12px;text-align:right;">${l.gst_rate}%</td>
                   <td style="padding:10px 12px;text-align:right;font-weight:600;">${inr(l.line_total)}</td>
                 </tr>
@@ -11490,7 +11490,7 @@ async function viewQuoteDetail(id) {
         <div style="display:flex;justify-content:space-between;align-items:center;width:100%;flex-wrap:wrap;gap:10px;">
           <div>
             <button type="button" class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / PDF</button>
-            <button type="button" class="btn" id="btn-q-sign"><i class="fa-solid fa-signature"></i> ${q.signature_data ? 'Signed ✓' : 'Sign'}</button>
+            <button type="button" class="btn" id="btn-q-sign"><i class="fa-solid fa-signature"></i> ${q.signature_data ? 'Signed âœ“' : 'Sign'}</button>
             ${!isConverted ? `<button type="button" class="btn" id="btn-view-edit-q"><i class="fa-solid fa-pen"></i> Edit Quote</button>` : ''}
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
@@ -11592,7 +11592,7 @@ async function viewSalesOrderDetail(id) {
               <div style="font-size:24px;font-weight:800;color:#0f172a;letter-spacing:-0.5px;">${esc(APP.org.name)}</div>
               <div class="sub" style="font-size:12px;margin-top:4px;color:#64748b;line-height:1.5;">
                 ${esc(APP.org.address)}<br>
-                GSTIN: <b>${esc(APP.org.gstin || '—')}</b> · State: ${esc(APP.org.state)}
+                GSTIN: <b>${esc(APP.org.gstin || 'â€”')}</b> Â· State: ${esc(APP.org.state)}
               </div>
             </div>
             <div style="text-align:right;">
@@ -11620,9 +11620,9 @@ async function viewSalesOrderDetail(id) {
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f8fafc;padding:16px;border-radius:8px;border:1px solid #e2e8f0;font-size:12px;">
               <div><b>Order Date:</b></div><div>${fd(so.date)}</div>
-              <div><b>Expected Shipment:</b></div><div>${so.expected_shipment_date ? fd(so.expected_shipment_date) : (so.due_date ? fd(so.due_date) : '—')}</div>
-              <div><b>Reference Number:</b></div><div>${esc(so.reference_number || so.order_number || '—')}</div>
-              <div><b>Place of Supply:</b></div><div>${esc(so.place_of_supply || '—')}</div>
+              <div><b>Expected Shipment:</b></div><div>${so.expected_shipment_date ? fd(so.expected_shipment_date) : (so.due_date ? fd(so.due_date) : 'â€”')}</div>
+              <div><b>Reference Number:</b></div><div>${esc(so.reference_number || so.order_number || 'â€”')}</div>
+              <div><b>Place of Supply:</b></div><div>${esc(so.place_of_supply || 'â€”')}</div>
             </div>
           </div>
 
@@ -11645,7 +11645,7 @@ async function viewSalesOrderDetail(id) {
                   <td style="padding:10px 12px;"><b>${esc(l.description || 'Item')}</b>${l.hsn_sac ? ` <small style="color:#64748b;">(HSN ${esc(l.hsn_sac)})</small>` : ''}</td>
                   <td style="padding:10px 12px;text-align:right;">${qty(l.quantity)}</td>
                   <td style="padding:10px 12px;text-align:right;">${inr(l.rate)}</td>
-                  <td style="padding:10px 12px;text-align:right;">${(l.discount_type === 'amount' || (l.discount_amount && num(l.discount_amount) > 0)) ? inr(l.discount_amount || l.discount || 0) : ((num(l.discount_percent) > 0 || num(l.discount) > 0) ? (l.discount_percent || l.discount) + '%' : '—')}</td>
+                  <td style="padding:10px 12px;text-align:right;">${(l.discount_type === 'amount' || (l.discount_amount && num(l.discount_amount) > 0)) ? inr(l.discount_amount || l.discount || 0) : ((num(l.discount_percent) > 0 || num(l.discount) > 0) ? (l.discount_percent || l.discount) + '%' : 'â€”')}</td>
                   <td style="padding:10px 12px;text-align:right;">${l.gst_rate}%</td>
                   <td style="padding:10px 12px;text-align:right;font-weight:600;">${inr(l.line_total)}</td>
                 </tr>
@@ -11707,7 +11707,7 @@ async function viewSalesOrderDetail(id) {
         <div style="display:flex;justify-content:space-between;align-items:center;width:100%;flex-wrap:wrap;gap:10px;">
           <div>
             <button type="button" class="btn" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / PDF</button>
-            <button type="button" class="btn" id="btn-so-sign"><i class="fa-solid fa-signature"></i> ${so.signature_data ? 'Signed ✓' : 'Sign'}</button>
+            <button type="button" class="btn" id="btn-so-sign"><i class="fa-solid fa-signature"></i> ${so.signature_data ? 'Signed âœ“' : 'Sign'}</button>
             ${so.status !== 'void' ? `<button type="button" class="btn" id="btn-view-edit-so"><i class="fa-solid fa-pen"></i> Edit Order</button>` : ''}
           </div>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
@@ -11762,7 +11762,7 @@ async function viewSalesOrderDetail(id) {
             message: `All items in Sales Order ${so.number} have sufficient stock. You can fulfill via Delivery Challan or Convert to Invoice.`
           });
         } else {
-          const listHtml = shortages.map(s => `• <b>${esc(s.item_name)}</b>: Order qty ${s.ordered_quantity}, available ${s.available_stock} (Shortage: <span style="color:#dc2626;">${s.shortage}</span>)`).join('<br>');
+          const listHtml = shortages.map(s => `â€¢ <b>${esc(s.item_name)}</b>: Order qty ${s.ordered_quantity}, available ${s.available_stock} (Shortage: <span style="color:#dc2626;">${s.shortage}</span>)`).join('<br>');
           const ok = await confirmBox({
             title: 'Low Stock Detected!',
             message: `<p>The following items are low in stock:</p><div style="margin:10px 0;padding:10px;background:#fef2f2;border-radius:6px;font-size:12px;">${listHtml}</div><p>Would you like to convert low-stock items into a Purchase Order?</p>`,
@@ -11855,7 +11855,7 @@ async function superAdminDashboard(root) {
     return;
   }
 
-  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Platform Super Admin Control Center…</div>`;
+  root.innerHTML = `<div class="spin" style="margin:40px auto;">Loading Platform Super Admin Control Centerâ€¦</div>`;
   try {
     const data = await api('super-admin/overview/');
     renderSuperAdminUI(root, data);
@@ -12046,7 +12046,7 @@ function renderSuperAdminUI(root, data) {
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-              <input type="text" id="suUserSearch" class="inp" placeholder="Search user, email, company…" style="width:220px;font-size:12px;padding:6px 10px;">
+              <input type="text" id="suUserSearch" class="inp" placeholder="Search user, email, companyâ€¦" style="width:220px;font-size:12px;padding:6px 10px;">
               <select id="suUserStatusFilter" class="inp" style="width:120px;font-size:12px;padding:6px 10px;">
                 <option value="">All Statuses</option>
                 <option value="active">Active</option>
@@ -12060,7 +12060,7 @@ function renderSuperAdminUI(root, data) {
             </div>
           </div>
           <div id="suUsersTableWrap">
-            <div class="spin" style="margin:20px auto;">Loading users…</div>
+            <div class="spin" style="margin:20px auto;">Loading usersâ€¦</div>
           </div>
         </div>
       `;
@@ -12080,7 +12080,7 @@ function renderSuperAdminUI(root, data) {
       async function loadUsersTable() {
         const wrap = container.querySelector('#suUsersTableWrap');
         if (!wrap) return;
-        wrap.innerHTML = `<div class="spin" style="margin:20px auto;">Loading users…</div>`;
+        wrap.innerHTML = `<div class="spin" style="margin:20px auto;">Loading usersâ€¦</div>`;
         const q = searchInput ? searchInput.value.trim() : '';
         const st = statusSelect ? statusSelect.value : '';
         const cid = companySelect ? companySelect.value : '';
@@ -12204,19 +12204,22 @@ function renderSuperAdminUI(root, data) {
   root.innerHTML = buildHtml();
   renderTabContent();
 
-  root.querySelector('#tabCompanies').addEventListener('click', () => {
+  const tabCompaniesEl = root.querySelector('#tabCompanies');
+  const tabUsersEl = root.querySelector('#tabUsers');
+  const tabAuditEl = root.querySelector('#tabAudit');
+  if (tabCompaniesEl) tabCompaniesEl.addEventListener('click', () => {
     activeTab = 'companies';
     root.innerHTML = buildHtml();
     attachHeaderEvents();
     renderTabContent();
   });
-  root.querySelector('#tabUsers').addEventListener('click', () => {
+  if (tabUsersEl) tabUsersEl.addEventListener('click', () => {
     activeTab = 'users';
     root.innerHTML = buildHtml();
     attachHeaderEvents();
     renderTabContent();
   });
-  root.querySelector('#tabAudit').addEventListener('click', () => {
+  if (tabAuditEl) tabAuditEl.addEventListener('click', () => {
     activeTab = 'audit';
     root.innerHTML = buildHtml();
     attachHeaderEvents();
@@ -12251,7 +12254,7 @@ function renderSuperAdminUI(root, data) {
 }
 window.superAdminDashboard = superAdminDashboard;
 
-// ─── Reverse Journal Modal ───────────────────────────────────────────────────
+// â”€â”€â”€ Reverse Journal Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function reverseJournalModal(r) {
   formModal({
     title: `Reverse Journal: ${esc(r.number)}`,
@@ -12276,7 +12279,7 @@ async function reverseJournalModal(r) {
 }
 window.reverseJournalModal = reverseJournalModal;
 
-// ─── Lock Date Modal ──────────────────────────────────────────────────────────
+// â”€â”€â”€ Lock Date Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function lockDateModal(module) {
   const moduleLabels = { sales: 'Sales', purchases: 'Purchases', banking: 'Banking', accountant: 'Accountant', all: 'All Transactions' };
   const label = moduleLabels[module] || (module ? module.charAt(0).toUpperCase() + module.slice(1) : 'All Transactions');
@@ -12306,7 +12309,7 @@ async function lockDateModal(module) {
 }
 window.lockDateModal = lockDateModal;
 
-// ─── Chart of Accounts Page ───────────────────────────────────────────────────
+// â”€â”€â”€ Chart of Accounts Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function chartOfAccountsPage(root) {
   PAGE.reload = () => chartOfAccountsPage(root);
   let curView = 'active';
@@ -12323,7 +12326,7 @@ async function chartOfAccountsPage(root) {
         <div class="act">
           <button class="btn" id="coa-find-accountants" type="button"><i class="fa-solid fa-magnifying-glass"></i> Find Accountants</button>
           <div class="export-dropdown-wrap" style="position:relative;display:inline-block;">
-            <button class="btn" id="coa-menu-btn" type="button"><i class="fa-solid fa-ellipsis-vertical"></i> More ▾</button>
+            <button class="btn" id="coa-menu-btn" type="button"><i class="fa-solid fa-ellipsis-vertical"></i> More â–¾</button>
             <div class="pop right coa-menu-pop" id="coa-menu-pop" style="display:none;position:absolute;top:100%;right:0;margin-top:4px;min-width:170px;z-index:90;padding:6px;background:var(--surface-glass-elevated);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.18);border:1px solid var(--bd);">
               <div style="padding:4px 8px;font-size:11px;font-weight:600;color:var(--tx-muted);text-transform:uppercase;letter-spacing:.04em;">Sort By</div>
               <button type="button" class="btn coa-sort-btn" data-sort="name" style="width:100%;text-align:left;padding:5px 10px;font-size:12px;background:transparent;border:none;">Account Name</button>
@@ -12351,7 +12354,7 @@ async function chartOfAccountsPage(root) {
             <option value="income" ${curView==='income'?'selected':''}>Income Accounts</option>
             <option value="expense" ${curView==='expense'?'selected':''}>Expense Accounts</option>
           </select>
-          <input class="in" id="coa-q" type="search" placeholder="Search accounts…" style="max-width:240px;" value="${esc(curQ)}">
+          <input class="in" id="coa-q" type="search" placeholder="Search accountsâ€¦" style="max-width:240px;" value="${esc(curQ)}">
           <span class="sub" id="coa-cnt"></span>
         </div>
         <div id="coa-table-wrap">${spinner}</div>
@@ -12359,9 +12362,9 @@ async function chartOfAccountsPage(root) {
     `;
 
     // Events
-    $('#coa-new-btn', root).addEventListener('click', () => { if (typeof accountForm === 'function') accountForm(null, () => chartOfAccountsPage(root)); });
-    $('#coa-find-accountants', root).addEventListener('click', () => { toast('Find Accountants feature coming soon.'); });
-    $('#coa-menu-btn', root).addEventListener('click', e => {
+    on('#coa-new-btn', 'click', () => { if (typeof accountForm === 'function') accountForm(null, () => chartOfAccountsPage(root)); });
+    on('#coa-find-accountants', 'click', () => { toast('Find Accountants feature coming soon.'); });
+    on('#coa-menu-btn', 'click', e => {
       e.stopPropagation();
       const pop = $('#coa-menu-pop', root);
       pop.style.display = pop.style.display === 'none' ? 'block' : 'none';
@@ -12375,9 +12378,9 @@ async function chartOfAccountsPage(root) {
       });
     });
     $('#coa-refresh-btn', root)?.addEventListener('click', () => loadAccounts());
-    $('#coa-view-sel', root).addEventListener('change', e => { curView = e.target.value; loadAccounts(); });
+    on('#coa-view-sel', 'change', e => { curView = e.target.value; loadAccounts(); });
     let qTimer;
-    $('#coa-q', root).addEventListener('input', e => { clearTimeout(qTimer); curQ = e.target.value; qTimer = setTimeout(loadAccounts, 350); });
+    on('#coa-q', 'input', e => { clearTimeout(qTimer); curQ = e.target.value; qTimer = setTimeout(loadAccounts, 350); });
     loadAccounts();
   }
 
@@ -12414,9 +12417,9 @@ async function chartOfAccountsPage(root) {
             <tbody>
               ${rows.map(r => {
                 const indent = r.parent_id ? 'padding-left:28px;' : '';
-                const childIcon = r.has_children ? '<span style="color:var(--tx-muted);margin-right:4px;font-size:10px;">▶</span>' : (r.parent_id ? '<span style="display:inline-block;width:14px;"></span>' : '');
+                const childIcon = r.has_children ? '<span style="color:var(--tx-muted);margin-right:4px;font-size:10px;">â–¶</span>' : (r.parent_id ? '<span style="display:inline-block;width:14px;"></span>' : '');
                 const systemBadge = r.is_system ? '<span class="pastel-chip chip-sky" style="font-size:10px;padding:1px 5px;margin-left:4px;">System</span>' : '';
-                const watchStar = r.watchlist ? '<span style="color:var(--warn);font-size:11px;margin-left:4px;" title="On Watchlist">★</span>' : '';
+                const watchStar = r.watchlist ? '<span style="color:var(--warn);font-size:11px;margin-left:4px;" title="On Watchlist">â˜…</span>' : '';
                 const typDisplay = esc(r.account_type_display || (r.sub_type || r.account_type || '').replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase()));
                 const actions = r.is_system
                   ? `<button class="btn" type="button" data-act="view_tx" data-id="${r.id}" title="View Transactions" style="font-size:11px;padding:2px 7px;">View Tx</button>`
@@ -12427,10 +12430,10 @@ async function chartOfAccountsPage(root) {
                     </div>`;
                 return `<tr class="coa-row" style="border-bottom:1px solid var(--bd);" data-id="${r.id}">
                   <td style="padding:8px 12px;${indent}">${childIcon}<b>${esc(r.name)}</b>${systemBadge}${watchStar}</td>
-                  <td style="padding:8px 12px;font-family:monospace;">${r.code ? esc(r.code) : '—'}</td>
+                  <td style="padding:8px 12px;font-family:monospace;">${r.code ? esc(r.code) : 'â€”'}</td>
                   <td style="padding:8px 12px;">${typDisplay}</td>
-                  <td style="padding:8px 12px;text-align:right;">${r.document_count != null ? r.document_count : '—'}</td>
-                  <td style="padding:8px 12px;">${esc(r.parent_name || '—')}</td>
+                  <td style="padding:8px 12px;text-align:right;">${r.document_count != null ? r.document_count : 'â€”'}</td>
+                  <td style="padding:8px 12px;">${esc(r.parent_name || 'â€”')}</td>
                   <td style="padding:8px 12px;text-align:center;">${actions}</td>
                 </tr>`;
               }).join('')}
@@ -12498,4 +12501,5 @@ if (typeof window !== 'undefined') {
   window.lockDateModal = lockDateModal;
   window.chartOfAccountsPage = chartOfAccountsPage;
 }
+
 
