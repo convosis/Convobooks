@@ -980,10 +980,10 @@ window.openChangeContactModal = function(initialType = 'email') {
     verStep.style.display = 'none';
   }
 
-  if (tabEmail) tabEmail.addEventListener('click', () => { activeType = 'email'; updateTypeView(); });
-  if (tabMobile) tabMobile.addEventListener('click', () => { activeType = 'mobile'; updateTypeView(); });
-  if (btnCancel) btnCancel.addEventListener('click', () => m.close());
-  if (btnBack) btnBack.addEventListener('click', () => { reqStep.style.display = 'block'; verStep.style.display = 'none'; });
+  tabEmail.addEventListener('click', () => { activeType = 'email'; updateTypeView(); });
+  tabMobile.addEventListener('click', () => { activeType = 'mobile'; updateTypeView(); });
+  btnCancel.addEventListener('click', () => m.close());
+  btnBack.addEventListener('click', () => { reqStep.style.display = 'block'; verStep.style.display = 'none'; });
 
   boxes.forEach((box, idx) => {
     box.addEventListener('input', () => {
@@ -1031,9 +1031,9 @@ window.openChangeContactModal = function(initialType = 'email') {
     }
   }
 
-  if (btnSend) btnSend.addEventListener('click', triggerSend);
+  btnSend.addEventListener('click', triggerSend);
 
-  if (btnVerify) btnVerify.addEventListener('click', async () => {
+  btnVerify.addEventListener('click', async () => {
     const code = boxes.map(b => b.value.trim()).join('');
     if (code.length !== 6) {
       toast('Please enter the full 6-digit code.', 'error');
