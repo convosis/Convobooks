@@ -3663,9 +3663,9 @@ async function itemForm(id, onDone, onCancel) {
         { val: 'Employee Advance', label: 'Employee Advance' },
         { val: 'IGST TDS Receivable', label: 'IGST TDS Receivable' },
         { val: 'Input Tax Credits', label: 'Input Tax Credits' },
-        { val: 'Input CGST', label: '  â€¢ Input CGST' },
-        { val: 'Input IGST', label: '  â€¢ Input IGST' },
-        { val: 'Input SGST', label: '  â€¢ Input SGST' },
+        { val: 'Input CGST', label: '  • Input CGST' },
+        { val: 'Input IGST', label: '  • Input IGST' },
+        { val: 'Input SGST', label: '  • Input SGST' },
         { val: 'Prepaid Expenses', label: 'Prepaid Expenses' },
         { val: 'Reverse Charge Tax Input but not due', label: 'Reverse Charge Tax Input but not due' },
         { val: 'SGST TDS Receivable', label: 'SGST TDS Receivable' },
@@ -3684,9 +3684,9 @@ async function itemForm(id, onDone, onCancel) {
         { val: 'CGST TDS Payable', label: 'CGST TDS Payable' },
         { val: 'Employee Reimbursements', label: 'Employee Reimbursements' },
         { val: 'GST Payable', label: 'GST Payable' },
-        { val: 'Output CGST', label: '  â€¢ Output CGST' },
-        { val: 'Output IGST', label: '  â€¢ Output IGST' },
-        { val: 'Output SGST', label: '  â€¢ Output SGST' },
+        { val: 'Output CGST', label: '  • Output CGST' },
+        { val: 'Output IGST', label: '  • Output IGST' },
+        { val: 'Output SGST', label: '  • Output SGST' },
         { val: 'IGST TDS Payable', label: 'IGST TDS Payable' },
         { val: 'Opening Balance Adjustments', label: 'Opening Balance Adjustments' },
         { val: 'Overseas Tax Payable', label: 'Overseas Tax Payable' },
@@ -3764,7 +3764,7 @@ async function itemForm(id, onDone, onCancel) {
       <option value="28" ${curRate === 28 ? 'selected' : ''}>GST28 [28%]</option>
       <option value="40" ${curRate === 40 ? 'selected' : ''}>GST40 [40%]</option>
     </optgroup>
-    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rateâ€¦</option>
+    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rate…</option>
   `;
 
   const interOptionsHtml = `
@@ -3777,7 +3777,7 @@ async function itemForm(id, onDone, onCancel) {
       <option value="28" ${curRate === 28 ? 'selected' : ''}>IGST28 [28%]</option>
       <option value="40" ${curRate === 40 ? 'selected' : ''}>IGST40 [40%]</option>
     </optgroup>
-    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rateâ€¦</option>
+    <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Tax Rate…</option>
   `;
 
   formModal({
@@ -3794,16 +3794,16 @@ async function itemForm(id, onDone, onCancel) {
     <div class="convosis-item-modal convo-item-modal zb-form-wrap">
 
       <div class="zb-form-row">
-        <label class="zb-form-label">Type <span class="zb-info-tip" title="Goods have physical inventory, services do not.">â“˜</span></label>
+        <label class="zb-form-label">Type <span class="zb-info-tip" title="Goods have physical inventory, services do not."><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span></label>
         <div class="zb-form-ctrl">
           <div class="convosis-radio-group convo-radio-group" style="height:35px;">
             <label class="radio-label">
               <input type="radio" name="item_type" value="goods" ${isGoods ? 'checked' : ''}>
-              <span>ðŸ“¦ Goods</span>
+              <span><i class="fa-solid fa-box" aria-hidden="true"></i> Goods</span>
             </label>
             <label class="radio-label">
               <input type="radio" name="item_type" value="service" ${!isGoods ? 'checked' : ''}>
-              <span>âš™ï¸ Service</span>
+              <span><i class="fa-solid fa-gears" aria-hidden="true"></i> Service</span>
             </label>
           </div>
           <div class="er" data-err="item_type" role="alert"></div>
@@ -3819,14 +3819,14 @@ async function itemForm(id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label for="item_unit_select" class="zb-form-label">Unit <span class="zb-info-tip" title="Measuring unit for GST & billing">â“˜</span></label>
+        <label for="item_unit_select" class="zb-form-label">Unit <span class="zb-info-tip" title="Measuring unit for GST & billing"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span></label>
         <div class="zb-form-ctrl">
           <div style="display:flex;gap:8px;">
             <select class="in" id="item_unit_select" style="max-width:240px;">
-              <option value="">Select Unitâ€¦</option>
+              <option value="">Select Unit…</option>
               ${unitOptsHtml}
               ${extraUnitOpt}
-              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Unitâ€¦</option>
+              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Unit…</option>
             </select>
             <input class="in" type="text" id="item_unit" name="unit" value="${esc(r.unit || 'pcs')}" placeholder="Unit" maxlength="20" required style="max-width:140px;">
           </div>
@@ -3835,7 +3835,7 @@ async function itemForm(id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label for="item_sku" class="zb-form-label">SKU <span class="zb-info-tip" title="Stock Keeping Unit (Optional - auto-generated if left blank)">â“˜</span></label>
+        <label for="item_sku" class="zb-form-label">SKU <span class="zb-info-tip" title="Stock Keeping Unit (Optional - auto-generated if left blank)"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span></label>
         <div class="zb-form-ctrl">
           <input class="in" type="text" id="item_sku" name="sku" value="${esc(r.sku || '')}" placeholder="Optional (e.g. PROD-001 or auto)" maxlength="60" style="text-transform:uppercase;max-width:260px;">
           <div class="er" data-err="sku" role="alert"></div>
@@ -3843,7 +3843,7 @@ async function itemForm(id, onDone, onCancel) {
       </div>
 
       <div class="zb-form-row">
-        <label for="item_hsn" class="zb-form-label">HSN / SAC Code <span class="zb-info-tip" title="6-digit GST classification code">â“˜</span></label>
+        <label for="item_hsn" class="zb-form-label">HSN / SAC Code <span class="zb-info-tip" title="6-digit GST classification code"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span></label>
         <div class="zb-form-ctrl">
           <div class="hsn-search-wrap" id="hsnSearchWrap" style="position:relative;max-width:320px;">
             <input class="in" type="text" id="item_hsn" name="hsn_sac" autocomplete="off" value="${esc(r.hsn_sac || '')}" placeholder="6-digit HSN/SAC code (e.g. 847130)" maxlength="6">
@@ -3936,7 +3936,7 @@ async function itemForm(id, onDone, onCancel) {
             <select class="in" id="item_sales_account" name="sales_account">
               ${salesAccountsHtml}
               ${extraSalesOpt}
-              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Accountâ€¦</option>
+              <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Account…</option>
             </select>
             <div class="er" data-err="sales_account" role="alert"></div>
           </div>
@@ -3944,7 +3944,7 @@ async function itemForm(id, onDone, onCancel) {
         <div class="zb-form-row align-top">
           <label for="item_sales_desc" class="zb-form-label">Description</label>
           <div class="zb-form-ctrl">
-            <textarea class="in" id="item_sales_desc" name="description" rows="2" placeholder="Sales description for customer invoicesâ€¦">${esc(r.description || '')}</textarea>
+            <textarea class="in" id="item_sales_desc" name="description" rows="2" placeholder="Sales description for customer invoices…">${esc(r.description || '')}</textarea>
           </div>
         </div>
       </div>
@@ -3978,21 +3978,21 @@ async function itemForm(id, onDone, onCancel) {
               <select class="in" id="item_purchase_account" name="purchase_account">
                 ${purchaseAccountsHtml}
                 ${extraPurchOpt}
-                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Accountâ€¦</option>
+                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Account…</option>
               </select>
               <div class="er" data-err="purchase_account" role="alert"></div>
             </div>
           </div>
           <div class="zb-form-row">
-            <label for="item_preferred_vendor_search" class="zb-form-label">Preferred Vendor <span class="zb-info-tip" title="Choose default vendor for purchase orders">â“˜</span></label>
+            <label for="item_preferred_vendor_search" class="zb-form-label">Preferred Vendor <span class="zb-info-tip" title="Choose default vendor for purchase orders"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span></label>
             <div class="zb-form-ctrl">
               <div class="lookup-combobox-wrap" id="preferredVendorLookupWrap" style="position:relative;width:100%;max-width:380px;">
                 <input type="hidden" name="preferred_vendor_id" id="item_preferred_vendor" value="${curVendorId}">
                 <div class="lookup-input-box" style="position:relative;display:flex;align-items:center;width:100%;">
-                  <input class="in lookup-search-input" id="item_preferred_vendor_search" type="text" autocomplete="off" placeholder="Select or search a vendorâ€¦" value="${esc(curVendorName)}" style="padding-right:54px;cursor:pointer;">
+                  <input class="in lookup-search-input" id="item_preferred_vendor_search" type="text" autocomplete="off" placeholder="Select or search a vendor…" value="${esc(curVendorName)}" style="padding-right:54px;cursor:pointer;">
                   <div style="position:absolute;right:8px;display:flex;align-items:center;gap:4px;z-index:2;">
-                    <button type="button" class="lookup-clear-btn" id="item_preferred_vendor_clear" title="Clear vendor selection" aria-label="Clear vendor" style="background:none;border:none;cursor:pointer;color:var(--tx-muted);font-size:14px;padding:2px 4px;line-height:1;display:${curVendorId ? 'inline-block' : 'none'};">âœ•</button>
-                    <span class="lookup-caret" style="pointer-events:none;color:var(--tx-muted);font-size:10px;margin-right:2px;">â–¼</span>
+                    <button type="button" class="lookup-clear-btn" id="item_preferred_vendor_clear" title="Clear vendor selection" aria-label="Clear vendor" style="background:none;border:none;cursor:pointer;color:var(--tx-muted);font-size:14px;padding:2px 4px;line-height:1;display:${curVendorId ? 'inline-block' : 'none'};"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                    <span class="lookup-caret" style="pointer-events:none;color:var(--tx-muted);font-size:10px;margin-right:2px;"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span>
                   </div>
                 </div>
                 <div class="lookup-dropdown-menu pop" id="item_preferred_vendor_menu" role="listbox" style="position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:220px;overflow-y:auto;z-index:100;padding:4px;box-shadow:var(--shadow-glass-lg, 0 10px 25px rgba(0,0,0,0.15));border-radius:8px;background:var(--surface-glass-solid, #ffffff);border:1px solid var(--bd, #cbd5e1);display:none;"></div>
@@ -4003,7 +4003,7 @@ async function itemForm(id, onDone, onCancel) {
           <div class="zb-form-row align-top">
             <label for="item_purchase_desc" class="zb-form-label">Description</label>
             <div class="zb-form-ctrl">
-              <textarea class="in" id="item_purchase_desc" rows="2" placeholder="Purchase description for vendor billsâ€¦"></textarea>
+              <textarea class="in" id="item_purchase_desc" rows="2" placeholder="Purchase description for vendor bills…"></textarea>
             </div>
           </div>
         </div>
@@ -4021,12 +4021,12 @@ async function itemForm(id, onDone, onCancel) {
         </div>
         <div id="inventoryBody" style="${r.track_inventory ? '' : 'display:none;'}">
           <div class="zb-form-row">
-            <label for="item_warehouse" class="zb-form-label">Warehouse Code <span class="zb-info-tip" title="Primary storage warehouse or sub-warehouse">â“˜</span></label>
+            <label for="item_warehouse" class="zb-form-label">Warehouse Code <span class="zb-info-tip" title="Primary storage warehouse or sub-warehouse"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span></label>
             <div class="zb-form-ctrl">
               <select class="in" id="item_warehouse" name="warehouse_id" style="max-width:280px;">
-                <option value="">Select Warehouseâ€¦</option>
+                <option value="">Select Warehouse…</option>
                 ${(warehouses || []).map(w => `<option value="${w.id}" ${(String(w.id) === String(r.warehouse_id) || w.code === r.warehouse_code) ? 'selected' : ''}>${esc(w.code)} - ${esc(w.name)}${w.is_sub_warehouse ? ' (Sub)' : ''}</option>`).join('')}
-                <option value="__new_warehouse__">+ Add New Warehouseâ€¦</option>
+                <option value="__new_warehouse__">+ Add New Warehouse…</option>
               </select>
             </div>
           </div>
@@ -4050,7 +4050,7 @@ async function itemForm(id, onDone, onCancel) {
               <select class="in" id="item_inventory_account" name="inventory_account">
                 ${inventoryAccountsHtml}
                 ${extraInvOpt}
-                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Accountâ€¦</option>
+                <option value="__add_new__" style="color:var(--accent); font-weight:600;">+ Add New Account…</option>
               </select>
             </div>
           </div>
@@ -4070,6 +4070,10 @@ async function itemForm(id, onDone, onCancel) {
     `,
     onReady: (form, m) => {
       itemForm._opening = false;
+      const closeButton = $('.x[data-close]', m.el);
+      if (closeButton) {
+        closeButton.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+      }
       const fileInput = $('#itemImageFileInput', form);
       const dataInput = $('#itemImageDataInput', form);
       const emptyState = $('#dropzoneEmpty', form);
@@ -4110,38 +4114,55 @@ async function itemForm(id, onDone, onCancel) {
         reader.readAsDataURL(file);
       };
 
-      $('#btnBrowseImage', form).onclick = e => { e.preventDefault(); e.stopPropagation(); fileInput.click(); };
-      $('#btnChangeImage', form).onclick = e => { e.preventDefault(); e.stopPropagation(); fileInput.click(); };
-      $('#btnRemoveImage', form).onclick = e => {
-        e.preventDefault();
-        e.stopPropagation();
-        dataInput.value = '';
-        previewImg.src = '';
-        previewState.style.display = 'none';
-        emptyState.style.display = '';
-        fileInput.value = '';
-        m.markDirty();
-      };
-      dropzone.onclick = e => {
-        if (!previewState.style.display && emptyState.style.display !== 'none') {
-          fileInput.click();
-        }
-      };
-      fileInput.onchange = () => {
-        if (fileInput.files && fileInput.files[0]) processFile(fileInput.files[0]);
-      };
+      const browseButton = $('#btnBrowseImage', form);
+      const changeButton = $('#btnChangeImage', form);
+      const removeButton = $('#btnRemoveImage', form);
+      if (browseButton && fileInput) {
+        browseButton.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); fileInput.click(); });
+      }
+      if (changeButton && fileInput) {
+        changeButton.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); fileInput.click(); });
+      }
+      if (removeButton && dataInput && previewImg && previewState && emptyState && fileInput) {
+        removeButton.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          dataInput.value = '';
+          previewImg.src = '';
+          previewState.style.display = 'none';
+          emptyState.style.display = '';
+          fileInput.value = '';
+          m.markDirty();
+        });
+      }
+      if (dropzone && fileInput && previewState && emptyState) {
+        dropzone.addEventListener('click', e => {
+          if (!previewState.style.display && emptyState.style.display !== 'none') {
+            fileInput.click();
+          }
+        });
+      }
+      if (fileInput && dataInput && emptyState && previewState && previewImg) {
+        fileInput.addEventListener('change', () => {
+          if (fileInput.files && fileInput.files[0]) processFile(fileInput.files[0]);
+        });
+      }
 
-      ['dragenter', 'dragover'].forEach(evt => {
-        dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); });
-      });
-      ['dragleave', 'drop'].forEach(evt => {
-        dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover'); });
-      });
-      dropzone.addEventListener('drop', e => {
-        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-          processFile(e.dataTransfer.files[0]);
+      if (dropzone) {
+        ['dragenter', 'dragover'].forEach(evt => {
+          dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+          dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover'); });
+        });
+        if (fileInput && dataInput && emptyState && previewState && previewImg) {
+          dropzone.addEventListener('drop', e => {
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+              processFile(e.dataTransfer.files[0]);
+            }
+          });
         }
-      });
+      }
 
       const setupAddNew = (selectEl, { promptText, placeholder, onAdd }) => {
         if (!selectEl) return;
@@ -4236,48 +4257,52 @@ async function itemForm(id, onDone, onCancel) {
 
         hsnInput.addEventListener('focus', () => renderHsnMenu(hsnInput.value));
         hsnInput.addEventListener('input', e => renderHsnMenu(e.target.value));
-        document.addEventListener('click', e => {
+        m.el.addEventListener('click', e => {
           if (hsnWrap && !hsnWrap.contains(e.target)) {
-            if (hsnMenu) hsnMenu.style.display = 'none';
+            hsnMenu.style.display = 'none';
           }
         });
       }
 
       const unitSelect = $('#item_unit_select', form);
       const unitInput = $('#item_unit', form);
-      unitSelect.addEventListener('change', () => {
-        if (unitSelect.value && unitSelect.value !== '__add_new__') {
-          unitInput.value = unitSelect.value;
-          unitInput.dispatchEvent(new Event('input', { bubbles: true }));
-        }
-      });
-      unitInput.addEventListener('input', () => {
-        const val = unitInput.value.trim().toLowerCase();
-        const opt = Array.from(unitSelect.options).find(o => o.value.toLowerCase() === val || o.text.toLowerCase().startsWith(val));
-        if (opt && opt.value !== '__add_new__') {
-          unitSelect.value = opt.value;
-        } else {
-          unitSelect.value = '';
-        }
-      });
-      setupAddNew(unitSelect, {
-        promptText: 'Enter new unit of measurement (e.g. roll, bundle, set):',
-        onAdd: val => {
-          unitInput.value = val;
-          return { value: val, text: val };
-        }
-      });
+      if (unitSelect && unitInput) {
+        unitSelect.addEventListener('change', () => {
+          if (unitSelect.value && unitSelect.value !== '__add_new__') {
+            unitInput.value = unitSelect.value;
+            unitInput.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+        unitInput.addEventListener('input', () => {
+          const val = unitInput.value.trim().toLowerCase();
+          const opt = Array.from(unitSelect.options).find(o => o.value.toLowerCase() === val || o.text.toLowerCase().startsWith(val));
+          if (opt && opt.value !== '__add_new__') {
+            unitSelect.value = opt.value;
+          } else {
+            unitSelect.value = '';
+          }
+        });
+        setupAddNew(unitSelect, {
+          promptText: 'Enter new unit of measurement (e.g. roll, bundle, set):',
+          onAdd: val => {
+            unitInput.value = val;
+            return { value: val, text: val };
+          }
+        });
+      }
 
       const intra = $('#item_gst_intra', form);
       const inter = $('#item_gst_inter', form);
       const taxPref = $('#item_tax_pref', form);
 
-      intra.addEventListener('change', () => {
-        if (intra.value !== '__add_new__') inter.value = intra.value;
-      });
-      inter.addEventListener('change', () => {
-        if (inter.value !== '__add_new__') intra.value = inter.value;
-      });
+      if (intra && inter) {
+        intra.addEventListener('change', () => {
+          if (intra.value !== '__add_new__') inter.value = intra.value;
+        });
+        inter.addEventListener('change', () => {
+          if (inter.value !== '__add_new__') intra.value = inter.value;
+        });
+      }
 
       const handleNewTaxRate = async val => {
         const numVal = parseFloat(val);
@@ -4285,6 +4310,7 @@ async function itemForm(id, onDone, onCancel) {
           toast('Please enter a valid tax percentage between 0% and 100%', 'err');
           return false;
         }
+        if (!intra || !inter) return false;
         const rateStr = String(numVal);
         const intraText = `GST${numVal} [${numVal}%]`;
         const interText = `IGST${numVal} [${numVal}%]`;
@@ -4321,15 +4347,17 @@ async function itemForm(id, onDone, onCancel) {
 
       const syncTaxPref = () => {
         const isTaxable = taxPref.value === 'taxable';
-        intra.disabled = !isTaxable;
-        inter.disabled = !isTaxable;
+        if (intra) intra.disabled = !isTaxable;
+        if (inter) inter.disabled = !isTaxable;
         if (!isTaxable) {
-          intra.value = '0';
-          inter.value = '0';
+          if (intra) intra.value = '0';
+          if (inter) inter.value = '0';
         }
       };
-      taxPref.addEventListener('change', syncTaxPref);
-      syncTaxPref();
+      if (taxPref) {
+        taxPref.addEventListener('change', syncTaxPref);
+        syncTaxPref();
+      }
 
       const salesAcctSelect = $('#item_sales_account', form);
       setupAddNew(salesAcctSelect, {
@@ -4374,7 +4402,7 @@ async function itemForm(id, onDone, onCancel) {
           if (btnRetry) {
             btnRetry.addEventListener('click', async e => {
               e.stopPropagation();
-              btnRetry.textContent = 'Loadingâ€¦';
+              btnRetry.textContent = 'Loading…';
               btnRetry.disabled = true;
               try {
                 vendorRecords = await api('lookup/vendors/');
@@ -4396,7 +4424,7 @@ async function itemForm(id, onDone, onCancel) {
           const clearOpt = document.createElement('div');
           clearOpt.className = 'lookup-opt-clear';
           clearOpt.style.cssText = 'padding:7px 10px;border-radius:6px;cursor:pointer;font-size:12px;color:var(--tx-muted);font-style:italic;';
-          clearOpt.textContent = 'â€” None (No preferred vendor) â€”';
+          clearOpt.textContent = '— None (No preferred vendor) —';
           clearOpt.addEventListener('mousedown', e => {
             e.preventDefault();
             selectVendor('', '');
@@ -4440,7 +4468,7 @@ async function itemForm(id, onDone, onCancel) {
         addBtn.style.cssText = 'padding:8px 10px;margin-top:4px;border-top:1px solid var(--bd-glass, rgba(0,0,0,0.08));color:var(--accent);font-weight:600;font-size:12.5px;cursor:pointer;display:flex;align-items:center;gap:6px;';
         addBtn.innerHTML = `
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>+ Add New Vendorâ€¦</span>
+          <span>+ Add New Vendor…</span>
         `;
         addBtn.addEventListener('mousedown', async e => {
           e.preventDefault();
@@ -4486,38 +4514,37 @@ async function itemForm(id, onDone, onCancel) {
         pvSearch.value = selectedVendorName;
       };
 
-      pvSearch.addEventListener('focus', () => {
-        openPvMenu();
-      });
+      if (pvWrap && pvHidden && pvSearch && pvClear && pvMenu) {
+        pvSearch.addEventListener('focus', () => {
+          openPvMenu();
+        });
 
-      pvSearch.addEventListener('click', () => {
-        if (!isPvMenuOpen) openPvMenu();
-      });
+        pvSearch.addEventListener('click', () => {
+          if (!isPvMenuOpen) openPvMenu();
+        });
 
-      pvSearch.addEventListener('input', e => {
-        if (!isPvMenuOpen) openPvMenu();
-        renderPvDropdown(e.target.value);
-      });
+        pvSearch.addEventListener('input', e => {
+          if (!isPvMenuOpen) openPvMenu();
+          renderPvDropdown(e.target.value);
+        });
 
-      pvSearch.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          closePvMenu();
-        }
-      });
+        pvSearch.addEventListener('keydown', e => {
+          if (e.key === 'Escape') {
+            closePvMenu();
+          }
+        });
 
-      pvClear.addEventListener('click', e => {
-        e.preventDefault();
-        e.stopPropagation();
-        selectVendor('', '');
-        pvSearch.focus();
-      });
+        pvClear.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          selectVendor('', '');
+          pvSearch.focus();
+        });
 
-      const onDocClickPv = e => {
-        if (pvWrap && !pvWrap.contains(e.target)) {
-          if (isPvMenuOpen) closePvMenu();
-        }
-      };
-      document.addEventListener('click', onDocClickPv);
+        m.el.addEventListener('click', e => {
+          if (!pvWrap.contains(e.target) && isPvMenuOpen) closePvMenu();
+        });
+      }
 
       const invAcctSelect = $('#item_inventory_account', form);
       setupAddNew(invAcctSelect, {
@@ -4530,20 +4557,24 @@ async function itemForm(id, onDone, onCancel) {
 
       const invSec = $('#inventorySection', form);
       const trackInvCheck = $('#chkTrackInventory', form);
+      const invBody = $('#inventoryBody', form);
+      const syncTrackInv = () => {
+        if (invBody && trackInvCheck) {
+          invBody.style.display = trackInvCheck.checked ? 'grid' : 'none';
+        }
+      };
       const syncType = () => {
-        const isSvc = form.elements.item_type.value === 'service';
-        invSec.style.display = isSvc ? 'none' : '';
-        trackInvCheck.disabled = isSvc;
-        if (isSvc) trackInvCheck.checked = false;
+        const itemType = form.elements.item_type;
+        const isSvc = itemType && itemType.value === 'service';
+        if (invSec) invSec.style.display = isSvc ? 'none' : '';
+        if (trackInvCheck) {
+          trackInvCheck.disabled = isSvc;
+          if (isSvc) trackInvCheck.checked = false;
+        }
         syncTrackInv();
       };
       $$('input[name="item_type"]', form).forEach(r => r.addEventListener('change', syncType));
-
-      const invBody = $('#inventoryBody', form);
-      const syncTrackInv = () => {
-        invBody.style.display = trackInvCheck.checked ? 'grid' : 'none';
-      };
-      trackInvCheck.addEventListener('change', syncTrackInv);
+      if (trackInvCheck) trackInvCheck.addEventListener('change', syncTrackInv);
 
       const chkPurch = $('#chkPurchaseInfo', form);
       const wrapPurch = $('#purchaseFieldsWrap', form);

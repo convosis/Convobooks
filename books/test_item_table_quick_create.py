@@ -29,6 +29,9 @@ class ItemTableQuickCreateTestCase(TestCase):
         self.forms_js_path = os.path.join(settings.BASE_DIR, 'books', 'static', 'books', 'js', 'forms.js')
         with open(self.forms_js_path, 'r', encoding='utf-8') as f:
             self.content = f.read()
+        item_form_start = self.content.index('async function itemForm(id, onDone, onCancel)')
+        item_form_end = self.content.index('\n/* =========================================================================', item_form_start)
+        self.item_form_content = self.content[item_form_start:item_form_end]
 
     def test_handle_quick_create_has_on_cancel(self):
         """Ensure handleQuickCreateSelect defines and handles onCancel properly."""
@@ -77,3 +80,29 @@ class ItemTableQuickCreateTestCase(TestCase):
         self.assertIn("priceListModal(null, onCreated, onCancel);", self.content)
         self.assertIn("accountForm(null, onCreated, onCancel);", self.content)
         self.assertIn("bankAccountForm(null, onCreated, onCancel);", self.content)
+
+    def test_item_form_optional_controls_do_not_break_initialization(self):
+        """Optional conditional fields must not stop other item form handlers from binding."""
+        for guard in (
+            'if (browseButton && fileInput)',
+            'if (unitSelect && unitInput)',
+            'if (intra && inter)',
+            'if (pvWrap && pvHidden && pvSearch && pvClear && pvMenu)',
+            'if (trackInvCheck) trackInvCheck.addEventListener',
+        ):
+            with self.subTest(guard=guard):
+                self.assertIn(guard, self.item_form_content)
+
+    def test_item_form_click_handlers_are_limited_to_the_modal(self):
+        """Closing an item modal must release its outside-click handlers."""
+        self.assertIn("m.el.addEventListener('click'", self.item_form_content)
+        self.assertNotIn("document.addEventListener('click'", self.item_form_content)
+
+    def test_item_form_icons_and_labels_are_valid(self):
+        """Item type and informational icons use loaded icons, not corrupted emoji bytes."""
+        for icon in ('fa-box', 'fa-gears', 'fa-circle-info', 'hsn-search-icon', 'dropzone-icon'):
+            with self.subTest(icon=icon):
+                self.assertIn(icon, self.item_form_content)
+        for corrupted_text in ('ðŸ', 'â“˜', 'â€¦', 'âš™', 'â€¢', 'â€”', 'âœ•', 'â–¼'):
+            with self.subTest(corrupted_text=corrupted_text):
+                self.assertNotIn(corrupted_text, self.item_form_content)
